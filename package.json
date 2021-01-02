@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "dev-home": "rm src/index.js; cd src && ln -s home.js index.js && cd .. && npm start",
-    "build-home": "rm src/index.js; rm -rf build-home; cp src/home.js src/index.js && react-scripts build && mv build build-home",
+    "build-home": "rm src/index.js; rm build/home.js; cp src/home.js src/index.js && react-scripts build && cp build/index.js build/home.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

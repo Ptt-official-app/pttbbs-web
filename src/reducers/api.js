@@ -49,7 +49,8 @@ const callApi = (endpoint, { query, method='get', params, files, json, accessTok
   }
   request = request.withCredentials()
 
-  let csrftoken = '__CSRFTOKEN__'
+  let csrftokenDOM = document.getElementById('__csrftoken__')
+  let csrftoken = csrftokenDOM ? csrftokenDOM.getAttribute('value') : ''
   request = request.set({ 'X-CSRFToken': csrftoken })
 
   return request
