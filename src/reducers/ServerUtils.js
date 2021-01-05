@@ -11,3 +11,8 @@ export const Login = (username, password) => ({
     password,
   },
 })
+
+export const GetUserInfo = (userID) => ({
+  endpoint: '/api/user/'+userID,
+  method: 'get',
+})

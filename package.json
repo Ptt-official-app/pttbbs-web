@@ -21,8 +21,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev-home": "rm src/index.js; cd src && ln -s home.js index.js && cd .. && npm start",
-    "build-home": "rm src/index.js; rm build/home.html; cp src/home.js src/index.js && react-scripts build && cp build/index.html build/home.html",
+    "dev:home": "rm src/index.js; cd src && ln -s home.js index.js && cd ..",
+    "build:home": "rm src/index.js; rm build/home.html; cp src/home.js src/index.js && react-scripts build && cp build/index.html build/home.html",
+    "dev:user-info": "rm src/index.js; cd src && ln -s userInfo.js index.js && cd ..",
+    "build:user-info": "rm src/index.js; rm build/user-info.html; cp src/userInfo.js src/index.js && react-scripts build && cp build/index.html build/user-info.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

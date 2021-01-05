@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-import Routes from './routes/Home'
+import Routes from './routes/UserInfo'
 
 import 'normalize.css/normalize.css'
 import 'bootstrap/dist/css/bootstrap.css'
