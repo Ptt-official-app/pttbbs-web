@@ -19,7 +19,7 @@ export const Login = (myID, username, password) => {
   return (dispatch, getState) => (async() => {
     const {data, errmsg, status} = await api(ServerUtils.Login(username, password))
 
-    let accessToken = ((data||{}).AccessToken) || ''
+    let accessToken = ((data||{}).access_token) || ''
 
     if (!status) {
       dispatch(_setData(myID, {errmsg: errors.ERR_NETWORK}))
@@ -36,8 +36,7 @@ export const Login = (myID, username, password) => {
       return
     }
 
-    console.log('doHomePage.Login: data:', data)
-    dispatch(_setData(myID, {accessToken}))
+    window.location.href = "/user/" + data.user_id
   })()
 }
 
