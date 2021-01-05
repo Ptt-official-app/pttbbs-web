@@ -59,7 +59,7 @@ export default (props) => {
             <label>我是 {userPage.username}({userPage.nickname}) {userPage.realname}</label>
           </div>
           <div className='col'>
-            <button className="btn btn-primary" onClick={forgotPassword}>我忘記密碼了 Orz</button>
+            <button className="btn btn-primary" onClick={forgotPassword}>我想換密碼～</button>
           </div>
         </div>
         <div className='row'>
