@@ -10,7 +10,7 @@ const myClass = 'demo-pttbbs/UserInfoPage'
 export const init = (myID, doMe, parentID, doParent, userID) => {
   let theDate = new Date()
   return (dispatch, getState) => {
-    dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate}))
+    dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, userID}))
     dispatch(_getData(myID, userID))
   }
 }

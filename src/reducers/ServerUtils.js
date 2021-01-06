@@ -16,3 +16,16 @@ export const GetUserInfo = (userID) => ({
   endpoint: '/api/user/'+userID,
   method: 'get',
 })
+
+export const ChangePasswd = (userID, origPassword, password, passwordConfirm) => ({
+  endpoint: '/api/user/'+userID+'/updatepasswd',
+  method: 'post',
+  json: {
+    client_id: config['CLIENT_ID'],
+    client_secret: config['CLIENT_SECRET'],
+
+    orig_password: origPassword,
+    password,
+    password_confirm: passwordConfirm,
+  },
+})

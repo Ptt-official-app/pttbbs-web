@@ -86,7 +86,7 @@ export default (props) => {
           <div className={styles['following-item']}>
             <button className="btn btn-primary" onClick={register}>我想註冊</button>
           </div>
-          <div className='following-item col'>
+          <div className={'col'}>
             <label className={styles['errMsg']}>{allErrMsg}</label>
           </div>
           <div className='pull-right'>
