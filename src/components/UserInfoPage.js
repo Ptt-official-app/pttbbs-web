@@ -36,7 +36,11 @@ export default (props) => {
     height: innerHeight + 'px',
   }
 
-  let forgotPassword = () => {
+  let changePassword = () => {
+    window.location.href="/user/"+userid+"/resetpassword"
+  }
+
+  let logout = () => {
 
   }
 
@@ -55,11 +59,17 @@ export default (props) => {
     <div className={pageStyles['root']} style={style}>
       <div className={'container ' + styles['root']} style={style}>
         <div className='row'>
+          <div className='col'></div>
+          <div className='pull-right'>
+            <button className="btn btn-primary" onClick={logout}>登出</button>
+          </div>
+        </div>
+        <div className='row'>
           <div className='col'>
             <label>我是 {userPage.username}({userPage.nickname}) {userPage.realname}</label>
           </div>
           <div className='col'>
-            <button className="btn btn-primary" onClick={forgotPassword}>我想換密碼～</button>
+            <button className="btn btn-primary" onClick={changePassword}>我想換密碼～</button>
           </div>
         </div>
         <div className='row'>
@@ -72,7 +82,7 @@ export default (props) => {
             <label>我認證的 Email 是 {userPage.email} ({userPage.email_ts})</label>
           </div>
           <div className='col'>
-            <button className="btn btn-primary" onClick={changeEmail}>我要換 Email</button>
+            <button className="btn btn-primary" onClick={changeEmail}>我想換 Email</button>
           </div>
         </div>
         <div className='row'>
@@ -80,7 +90,7 @@ export default (props) => {
             <label>我認證的 Email {userPage.email_verified}通過認證 ({userPage.email_verified_ts})</label>
           </div>
           <div className='col'>
-            <button className="btn btn-primary" onClick={verifyEmail}>我要再一次認證 Email</button>
+            <button className="btn btn-primary" onClick={verifyEmail}>我想再一次認證 Email</button>
           </div>
         </div>
         <div className='row'>

@@ -7,7 +7,7 @@ fi
 
 theDir="$1"
 
-modules=("home" "user-info")
+modules=("home" "user-info" "change-passwd")
 
 for each in ${modules[@]}; do
     echo "module: ${each}"
