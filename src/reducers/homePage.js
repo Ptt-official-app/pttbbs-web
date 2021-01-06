@@ -27,7 +27,7 @@ export const Login = (myID, username, password) => {
     }
 
     if (status === 401) {
-      dispatch(_setData(myID, {errmsg: errors.ERR_LOGIN}))
+      dispatch(_setData(myID, {errmsg: errors.ERR_PASSWD}))
       return
     }
 
