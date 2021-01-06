@@ -25,6 +25,11 @@ export const ChangePasswd = (myID, userID, origPassword, password, passwordConfi
       return
     }
 
+    if (status === 403) {
+      dispatch(_setData(myID, {errmsg: "您是不是忘記密碼了呢？～"}))
+      return
+    }
+
     if (status !== 200) {
       dispatch(_setData(myID, {errmsg}))
       return

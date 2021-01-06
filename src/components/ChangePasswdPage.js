@@ -12,6 +12,8 @@ import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
 import * as DoChangePasswdPage from '../reducers/changePasswdPage'
 
+import Header from './Header'
+
 export default (props) => {
   const [stateChangePasswdPage, doChangePasswdPage] = useActionDispatchReducer(DoChangePasswdPage)
 
@@ -74,26 +76,27 @@ export default (props) => {
   return (
     <div className={pageStyles['root']} style={style}>
       <div className={'container'} style={style}>
+        <Header title='我想換密碼' userID={userid} />
         <div className='row'>
           <div className='col'>
             <label>我是 {userID}</label>
           </div>
         </div>
         <div className='row'>
-          <input className="form-control" type="text" placeholder="原本的 Password:" aria-label="OrigPasswd" value={origPasswd} onChange={(e) => changeOrigPasswd(e.target.value)}/>
+          <input className="form-control" type="text" placeholder="原本的密碼:" aria-label="OrigPasswd" value={origPasswd} onChange={(e) => changeOrigPasswd(e.target.value)}/>
         </div>
 
         <div className='row'>
-          <input className="form-control" type="password" placeholder="新的 Password:" aria-label="Password" value={password} onChange={(e) => changePassword(e.target.value)} />
+          <input className="form-control" type="password" placeholder="新的密碼:" aria-label="Password" value={password} onChange={(e) => changePassword(e.target.value)} />
         </div>
 
         <div className='row'>
-          <input className="form-control" type="password" placeholder="確認新的 Password:" aria-label="Password" value={passwordConfirm} onChange={(e) => changePasswordConfirm(e.target.value)} />
+          <input className="form-control" type="password" placeholder="確認新的密碼:" aria-label="Password" value={passwordConfirm} onChange={(e) => changePasswordConfirm(e.target.value)} />
         </div>
 
         <div className='row'>
           <div>
-            <button className="btn btn-primary" onClick={submit}>我確定要改 Password～</button>
+            <button className="btn btn-primary" onClick={submit}>我確定要改密碼～</button>
           </div>
           <div className='col'>
             <label className={styles['errMsg']}>{allErrMsg}</label>

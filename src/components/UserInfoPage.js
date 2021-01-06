@@ -12,6 +12,8 @@ import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
 import * as DoUserPage from '../reducers/userInfoPage'
 
+import Header from './Header'
+
 export default (props) => {
   const [stateUserPage, doUserPage] = useActionDispatchReducer(DoUserPage)
 
@@ -40,10 +42,6 @@ export default (props) => {
     window.location.href="/user/"+userid+"/resetpassword"
   }
 
-  let logout = () => {
-
-  }
-
   let changeEmail = () => {
 
   }
@@ -52,18 +50,14 @@ export default (props) => {
 
   }
 
-
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
+
+  let headerTitle = userid + '的資訊'
 
   return (
     <div className={pageStyles['root']} style={style}>
       <div className={'container ' + styles['root']} style={style}>
-        <div className='row'>
-          <div className='col'></div>
-          <div className='pull-right'>
-            <button className="btn btn-primary" onClick={logout}>登出</button>
-          </div>
-        </div>
+        <Header title={headerTitle} userID={userid} />
         <div className='row'>
           <div className='col'>
             <label>我是 {userPage.username}({userPage.nickname}) {userPage.realname}</label>
