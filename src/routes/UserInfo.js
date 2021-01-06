@@ -7,7 +7,7 @@ export default (props) => {
   return (
     <Router>
       <Switch>
-        <Route path="/user/:userid" component={UserInfoPage} />
+        <Route exact path="/user/:userid" component={UserInfoPage} />
       </Switch>
     </Router>
   )
