@@ -1,3 +1,5 @@
-export const GoHome = (userID) => {
-  window.location.href = "/user/" + userID
+import moment from 'moment'
+
+export const TSToDateTimeStr = (ts) => {
+  return moment.unix(ts).format('YYYY-MM-DD hh:mm:ss')
 }

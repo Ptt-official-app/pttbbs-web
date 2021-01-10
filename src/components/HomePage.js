@@ -87,7 +87,7 @@ export default (props) => {
             <button className="btn btn-primary" onClick={register}>我想註冊</button>
           </div>
           <div className={'col'}>
-            <label className={styles['errMsg']}>{allErrMsg}</label>
+            <label className={pageStyles['errMsg']}>{allErrMsg}</label>
           </div>
           <div className='pull-right'>
             <button className="btn btn-primary" onClick={forgotPassword}>我忘記密碼了 Orz</button>
