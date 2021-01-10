@@ -1,6 +1,25 @@
 # demo-pttbbs
 This is the demo of web-based pttbbs using openbbs-middleware.
 
+# Getting Started
+
+## Starting server at localhost
+
+``` sh
+npm install
+cp config.js.template node_modules/config.js
+
+# develop home page
+npm run dev:home
+npm start
+
+# develop user info page
+npm run dev:user-info
+npm start
+```
+
+Then you should be able to access the page on localhost:3000.
+
 # Development
 
 ## For building multiple html pages

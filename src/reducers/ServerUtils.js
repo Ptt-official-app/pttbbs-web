@@ -12,6 +12,21 @@ export const Login = (username, password) => ({
   },
 })
 
+export const Register = (username, password, password_confirm, email, over18) => ({
+  endpoint: '/api/account/register',
+  method: 'post',
+  json: {
+    client_id: config['CLIENT_ID'],
+    client_secret: config['CLIENT_SECRET'],
+
+    username,
+    password,
+    password_confirm,
+    email,
+    over18,
+  },
+})
+
 export const GetUserInfo = (userID) => ({
   endpoint: '/api/user/'+userID,
   method: 'get',
