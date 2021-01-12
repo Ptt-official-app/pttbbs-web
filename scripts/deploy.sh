@@ -1,10 +1,15 @@
 #!/bin/bash
 
-if [ "$1" == "" ]; then
-    echo "usage: deploy [dir]"
+if [ "$#" != "2" ]; then
+    echo "usage: deploy [module] [dir]"
     exit 255
 fi
 
-theDir="$1"
+
+theModule="$1"
+theDir="$2"
+
+npm run dev:${theModule}
+npm run build:${theModule}
 
 rsync -zah build/ ${theDir}

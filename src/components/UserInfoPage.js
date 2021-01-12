@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import pageStyles from './Page.module.css'
-import styles from './UserInfoPage.module.css'
 
 import * as errors from './errors'
 
@@ -11,6 +10,8 @@ import { useParams } from 'react-router-dom'
 import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
 import * as DoUserPage from '../reducers/userInfoPage'
+
+import { TSToDateTimeStr } from './utils'
 
 import Header from './Header'
 
@@ -39,24 +40,53 @@ export default (props) => {
   }
 
   let changePassword = () => {
-    window.location.href="/user/"+userid+"/resetpassword"
+    window.location.href = "/user/"+userid+"/resetpassword"
   }
 
   let changeEmail = () => {
-
+    window.location.href = "/user/"+userid+"/attemptchangeemail"
   }
 
-  let verifyEmail = () => {
+  let setIDEmail = () => {
+    window.location.href = "/user/"+userid+"/attemptsetidemail"
+  }
 
+  let renderPttEmail = () => {
+    if(!userPage.pttemail) {
+      return (<label>我在 Ptt 的 Email 是 (還沒有設定～)</label>)
+    }
+    if (!userPage.justify) {
+      return (<label>我在 Ptt 的 Email 是 {userPage.pttemail} (審核: 還沒有通過)</label>)
+    }
+
+    return (<label>我在 Ptt 的 Email 是 {userPage.pttemail} (審核: {userPage.justify})</label>)
+  }
+
+  let renderPost = () => {
+    let badposts = (!userPage.bad_post) ? '' : ' (被退 ' + userPage.bad_post + ' 篇)'
+
+    return (<label>我已經 po 了 {userPage.posts} 篇文章{badposts}</label>)
   }
 
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
   let headerTitle = userid + '的資訊'
 
+  let email = userPage.email || '(還沒有設定～)'
+  if(userPage.email && !userPage.email_set) {
+    email += '(正在設定～)'
+  }
+
+  let idemail = userPage.idemail || '(還沒有設定～)'
+  if(userPage.idemail && !userPage.idemail_set) {
+    idemail += '(正在設定～)'
+  }
+
+  let career = userPage.Career || '(某個角落)'
+
   return (
     <div className={pageStyles['root']} style={style}>
-      <div className={'container ' + styles['root']} style={style}>
+      <div className={'container'} style={style}>
         <Header title={headerTitle} userID={userid} />
         <div className='row'>
           <div className='col'>
@@ -68,23 +98,23 @@ export default (props) => {
         </div>
         <div className='row'>
           <div className='col'>
-            <label>我在 Ptt 的 Email 是 {userPage.PttEmail} (審核: {userPage.justify})</label>
+            {renderPttEmail()}
           </div>
         </div>
         <div className='row'>
           <div className='col'>
-            <label>我認證的 Email 是 {userPage.email} ({userPage.email_ts})</label>
+            <label>我平常聯絡的 Email 是 {email}</label>
           </div>
           <div className='col'>
-            <button className="btn btn-primary" onClick={changeEmail}>我想換 Email</button>
+            <button className="btn btn-primary" onClick={changeEmail}>我想換聯絡 Email</button>
           </div>
         </div>
         <div className='row'>
           <div className='col'>
-            <label>我認證的 Email {userPage.email_verified}通過認證 ({userPage.email_verified_ts})</label>
+            <label>我認證的 Email 是 {idemail}</label>
           </div>
           <div className='col'>
-            <button className="btn btn-primary" onClick={verifyEmail}>我想再一次認證 Email</button>
+            <button className="btn btn-primary" onClick={setIDEmail}>我想換認證 Email</button>
           </div>
         </div>
         <div className='row'>
@@ -99,12 +129,17 @@ export default (props) => {
         </div>
         <div className='row'>
           <div className='col'>
-            <label>我上次上站的 IP: {userPage.last_ip} ({userPage.last_host}) 時間: {userPage.last_login}</label>
+            <label>我上次上站的 IP: {userPage.last_ip} ({userPage.last_host}) 時間: {TSToDateTimeStr(userPage.last_login)}</label>
           </div>
         </div>
         <div className='row'>
           <div className='col'>
-            <label>我平常在 {userPage.career} 玩耍～</label>
+            {renderPost()}
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            <label>我平常在 {career} 畫圈圈～</label>
           </div>
         </div>
         <div className='row'>

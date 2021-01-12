@@ -7,11 +7,9 @@ fi
 
 theDir="$1"
 
-modules=("home" "user-info" "change-passwd")
+modules=("home" "user-info" "change-passwd" "attempt-change-email" "change-email" "attempt-set-id-email" "set-id-email")
 
 for each in ${modules[@]}; do
     echo "module: ${each}"
-    npm run dev:${each}
-    npm run build:${each}
-    ./scripts/deploy.sh "${theDir}"
+    ./scripts/deploy.sh "${each}" "${theDir}"
 done

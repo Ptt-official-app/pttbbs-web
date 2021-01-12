@@ -2,3 +2,7 @@
     color: #fff;
     background: #000;
 }
+
+.errMsg {
+    color: #f00;
+}

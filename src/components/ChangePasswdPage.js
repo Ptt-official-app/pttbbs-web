@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import pageStyles from './Page.module.css'
-import styles from './HomePage.module.css'
 
 import * as errors from './errors'
 
@@ -83,7 +82,7 @@ export default (props) => {
           </div>
         </div>
         <div className='row'>
-          <input className="form-control" type="text" placeholder="原本的密碼:" aria-label="OrigPasswd" value={origPasswd} onChange={(e) => changeOrigPasswd(e.target.value)}/>
+          <input className="form-control" type="password" placeholder="原本的密碼:" aria-label="OrigPasswd" value={origPasswd} onChange={(e) => changeOrigPasswd(e.target.value)}/>
         </div>
 
         <div className='row'>
@@ -99,7 +98,7 @@ export default (props) => {
             <button className="btn btn-primary" onClick={submit}>我確定要改密碼～</button>
           </div>
           <div className='col'>
-            <label className={styles['errMsg']}>{allErrMsg}</label>
+            <label className={pageStyles['errMsg']}>{allErrMsg}</label>
           </div>
         </div>
       </div>
