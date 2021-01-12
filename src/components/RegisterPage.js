@@ -86,7 +86,7 @@ export default (props) => {
             </div>
             <div className="form-group form-check">
               <input id="over18Field" className="form-check-input" type="checkbox" aria-label="Confirm age over 18"/>
-              <label htmlFor="over18Field" className="form-check-label">我已確認我年滿18歲</label>
+              <label htmlFor="over18Field" className="form-check-label">我已年滿18歲</label>
             </div>
 
             <div className='d-flex'>
