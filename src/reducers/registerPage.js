@@ -15,10 +15,10 @@ export const init = (myID, doMe, parentID, doParent) => {
   }
 }
 
-export const Register = (myID, username, password, password_confirm, over18) => {
+export const Register = (myID, username, password, passwordConfirm, email, over18) => {
   return (dispatch, getState) => (async() => {
 
-    const {data, errmsg, status} = await api(ServerUtils.Register(username, password, password_confirm, over18))
+    const {data, errmsg, status} = await api(ServerUtils.Register(username, password, passwordConfirm, email, over18))
 
     if (!status) {
       dispatch(_setData(myID, {errmsg: errors.ERR_NETWORK}))

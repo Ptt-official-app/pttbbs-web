@@ -12,7 +12,7 @@ export const Login = (username, password) => ({
   },
 })
 
-export const Register = (username, password, password_confirm, over18) => ({
+export const Register = (username, password, password_confirm, email, over18) => ({
   endpoint: '/api/account/register',
   method: 'post',
   json: {
@@ -22,6 +22,7 @@ export const Register = (username, password, password_confirm, over18) => ({
     username,
     password,
     password_confirm,
+    email,
     over18,
   },
 })
