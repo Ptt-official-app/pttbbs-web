@@ -16,6 +16,9 @@ export default (props) => {
   const [email, setEmail] = useState('')
   const [errMsg, setErrMsg] = useState('')
 
+  // for form validation
+  const [validating, setValidating] = useState('')
+
   //init
   useEffect(() => {
     let registerPageID = genUUID()
@@ -48,19 +51,6 @@ export default (props) => {
     }
   }
 
-  let _isFormValid = () => {
-    let form = document.getElementById("registrationForm")
-    form.classList.add("was-validated")
-
-    // if there's other
-    if(allErrMsg.length > 0) return false
-    if(form.checkValidity() === false) {
-      setErrMsg(errors.WARNING_FORM_INVALID)
-      return false
-    }
-    return true
-  }
-
   // ---------- Input Field Handlers -------------
   let changeUsername = (username) => {
     setUsername(username)
@@ -78,20 +68,23 @@ export default (props) => {
 
   let changeEmail = (text) => {
     setEmail(text);
-    let input =document.getElementById("emailField")
-    if (input.checkValidity() === false) {
+    if (
+      text.indexOf('@') === -1 ||
+      text[0] === '@' || text[text.length - 1] === '@' ||
+      text[0] === '.' || text[text.length - 1] === '.'
+    ) {
       setErrMsg(errors.WARNING_EMAIL_WRONGFORMAT);
     } else {
       cleanErr();
     }
   }
 
-
   let submit = () => {
     if(!_isInitSuccessful()) return
-    if(!_isFormValid()) return
-
+    // if there's other err
+    if(allErrMsg.length > 0) return
     cleanErr()
+
     doRegPage.Register(myID, username, password, passwordConfirm, email, document.getElementById("over18Field").checked)
   }
 
@@ -104,7 +97,7 @@ export default (props) => {
         <div className="row">
           <div className="col-12 col-md-6 mx-auto">
 
-            <form id="registrationForm" action="javascript:void(0);" novalidate>
+            <form action="javascript:void(0);" className={validating} onSubmit={submit} novalidate>
               <div className="form-group">
                 <label htmlFor="accountField">帳號</label>
                 <input id="accountField" className="form-control " type="text" placeholder="Username:" aria-label="Username" value={username} onChange={(e) => changeUsername(e.target.value)} required/>
@@ -113,12 +106,12 @@ export default (props) => {
               <div className="form-group">
                 <label htmlFor="passwordField">密碼</label>
                 <input id="passwordField" className="form-control" type="password" placeholder="Password:" aria-label="Password" value={password} onChange={(e) => changePassword(e.target.value)} required/>
-                <div className="invalid-feedback">請填寫帳號</div>
+                <div className="invalid-feedback">請填寫密碼</div>
               </div>
               <div className="form-group">
                 <label htmlFor="confirmField">確認密碼</label>
                 <input id="confirmField" className="form-control" type="password" placeholder="Confirm Password:" aria-label="Password Confirm" value={passwordConfirm} onChange={(e) => changeConfirm(e.target.value)} required/>
-                <div className="invalid-feedback">請確認帳號</div>
+                <div className="invalid-feedback">請確認密碼</div>
               </div>
               <div className="form-group">
                 <label htmlFor="emailField">連絡信箱</label>
@@ -135,7 +128,7 @@ export default (props) => {
                   <label className={pageStyles['errMsg']}>{allErrMsg}</label>
                 </div>
                 <div className='pull-right'>
-                  <button className="btn btn-primary" role="submit" onClick={submit}>註冊帳號</button>
+                  <button className="btn btn-primary" type="submit" onClick={() => setValidating("was-validated")}>註冊帳號</button>
                 </div>
               </div>
             </form>
