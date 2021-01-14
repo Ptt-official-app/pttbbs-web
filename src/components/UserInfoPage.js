@@ -68,6 +68,12 @@ export default (props) => {
     return (<label>我已經 po 了 {userPage.posts} 篇文章{badposts}</label>)
   }
 
+  let renderOver18 = () => {
+    let isOver18 = (!userPage.over18) ? '還沒' : '已經'
+
+    return (<label>我{isOver18}18歲～</label>)
+  }
+
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
   let headerTitle = userid + '的資訊'
@@ -135,6 +141,11 @@ export default (props) => {
         <div className='row'>
           <div className='col'>
             {renderPost()}
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            {renderOver18()}
           </div>
         </div>
         <div className='row'>

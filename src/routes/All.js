@@ -8,30 +8,20 @@ import AttemptChangeEmailPage from '../components/AttemptChangeEmailPage'
 import ChangeEmailPage from '../components/ChangeEmailPage'
 import AttemptSetIDEmailPage from '../components/AttemptSetIDEmailPage'
 import SetIDEmailPage from '../components/SetIDEmailPage'
+import RegisterPage from '../components/RegisterPage'
 
 export default (props) => {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={HomePage} />
-      </Switch>
-      <Switch>
+        <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/user/:userid" component={UserInfoPage} />
-      </Switch>
-      <Switch>
-        <Route path="/user/:userid/resetpassword" component={ChangePasswdPage} />
-      </Switch>
-      <Switch>
-        <Route path="/user/:userid/attemptchangeemail" component={AttemptChangeEmailPage} />
-      </Switch>
-      <Switch>
-        <Route path="/user/:userid/changeemail" component={ChangeEmailPage} />
-      </Switch>
-      <Switch>
-        <Route path="/user/:userid/attemptsetidemail" component={AttemptSetIDEmailPage} />
-      </Switch>
-      <Switch>
-        <Route path="/user/:userid/setidemail" component={SetIDEmailPage} />
+        <Route exact path="/user/:userid/resetpassword" component={ChangePasswdPage} />
+        <Route exact path="/user/:userid/attemptchangeemail" component={AttemptChangeEmailPage} />
+        <Route exact path="/user/:userid/changeemail" component={ChangeEmailPage} />
+        <Route exact path="/user/:userid/attemptsetidemail" component={AttemptSetIDEmailPage} />
+        <Route exact path="/user/:userid/setidemail" component={SetIDEmailPage} />
       </Switch>
     </Router>
   )

@@ -4,6 +4,8 @@ import * as ServerUtils from './ServerUtils'
 import api from './api'
 import * as errors from './errors'
 
+import { GoUserHome } from './utils'
+
 
 const myClass = 'demo-pttbbs/RegisterPage'
 
@@ -35,7 +37,9 @@ export const Register = (myID, username, password, password_confirm, over18) => 
       return
     }
 
-    window.location.href = "/register/succeeded"
+    const { user_id } = data
+
+    GoUserHome(user_id)
   })()
 }
 

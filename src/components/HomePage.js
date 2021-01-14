@@ -51,7 +51,7 @@ export default (props) => {
 
   // ---------- Handlers -------------
 
-  let _isInitSuccessful = () => {
+  let _isInit = () => {
     if(!myID) {
       setErrMsg(errors.ERR_SYS_INIT)
       return false
@@ -59,12 +59,12 @@ export default (props) => {
     return true
   }
   let login = () => {
-    if(!_isInitSuccessful()) return
+    if(!_isInit()) return
     doHomePage.Login(myID, username, password)
   }
 
   let register = () => {
-    if(!_isInitSuccessful()) return
+    if(!_isInit()) return
     window.location.href = "/register"
   }
 
