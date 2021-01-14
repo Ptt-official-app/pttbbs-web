@@ -18,8 +18,6 @@ export const ChangePasswd = (myID, userID, origPassword, password, passwordConfi
   return (dispatch, getState) => (async() => {
     const {data, errmsg, status} = await api(ServerUtils.ChangePasswd(userID, origPassword, password, passwordConfirm))
 
-    let accessToken = ((data||{}).access_token) || ''
-
     if (!status) {
       dispatch(_setData(myID, {errmsg: errors.ERR_NETWORK}))
       return

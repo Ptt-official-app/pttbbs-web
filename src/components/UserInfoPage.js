@@ -7,7 +7,7 @@ import { useWindowSize } from 'react-use'
 
 import { useParams } from 'react-router-dom'
 
-import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
+import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoUserPage from '../reducers/userInfoPage'
 
@@ -18,6 +18,7 @@ import Header from './Header'
 export default (props) => {
   const [stateUserPage, doUserPage] = useActionDispatchReducer(DoUserPage)
 
+  // eslint-disable-next-line
   const [errMsg, setErrMsg] = useState('')
 
   //init
@@ -90,6 +91,11 @@ export default (props) => {
 
   let career = userPage.Career || '(某個角落)'
 
+
+  //render
+  if(!myID) {
+    return (<Empty />)
+  }
   return (
     <div className={pageStyles['root']} style={style}>
       <div className={'container'} style={style}>
@@ -176,6 +182,11 @@ export default (props) => {
         <div className='row'>
           <div className='col'>
             <label>我的圍棋: 贏: {userPage.go_win} 輸: {userPage.go_lose} 和: {userPage.go_tie}</label>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            <label className={pageStyles['errMsg']}>{allErrMsg}</label>
           </div>
         </div>
       </div>

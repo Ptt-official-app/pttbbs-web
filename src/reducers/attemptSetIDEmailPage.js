@@ -18,7 +18,7 @@ export const init = (myID, doMe, parentID, doParent, userID) => {
 
 export const SetIDEmail = (myID, userID, password, email) => {
   return (dispatch, getState) => (async() => {
-    const {data, errmsg, status} = await api(ServerUtils.AttemptSetIDEmail(userID, password, email))
+    const {errmsg, status} = await api(ServerUtils.AttemptSetIDEmail(userID, password, email))
 
     if (!status) {
       dispatch(_setData(myID, {errmsg: errors.ERR_NETWORK}))
@@ -35,7 +35,6 @@ export const SetIDEmail = (myID, userID, password, email) => {
     }
 
     if (status !== 200) {
-      console.log('SetIDEmail: status:', status, 'data:', data, 'errmsg:', errmsg)
       dispatch(_setData(myID, {errmsg}))
       return
     }

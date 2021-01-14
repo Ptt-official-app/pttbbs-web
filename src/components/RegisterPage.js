@@ -3,7 +3,7 @@ import pageStyles from './Page.module.css'
 
 import * as errors from './errors'
 
-import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
+import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoRegisterPage from '../reducers/registerPage'
 
@@ -68,11 +68,6 @@ export default (props) => {
   // ---------- Handlers -------------
 
   let _isCheckSubmit = () => {
-    if(!myID) {
-      setErrMsg(errors.ERR_SYS_INIT)
-      return false
-    }
-
     if(username.length < 2) {
       setErrMsg(errors.ERR_USERNAME_TOO_SHORT)
       return false
@@ -83,7 +78,7 @@ export default (props) => {
       return false
     }
 
-    if(password != password_confirm) {
+    if(password !== password_confirm) {
       setErrMsg(errors.WARNING_PSD_UNMATCH)
       return false
     }
@@ -99,6 +94,9 @@ export default (props) => {
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
   // -------- Component Instance ----------
+  if(!myID) {
+    return (<Empty />)
+  }
   return (
     <div className={pageStyles['root']}>
       <div className='container vh-100'>
