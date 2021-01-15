@@ -23,6 +23,7 @@
   },
   "scripts": {
     "start": "npm run dev:all && react-scripts start",
+    "build": "npm run dev:all && react-scripts build",
     "dev:all": "rm src/index.js; cd src && ln -s all.js index.js && cd ..",
     "dev:home": "rm src/index.js; cd src && ln -s home.js index.js && cd ..",
     "build:home": "rm src/index.js; rm build/home.html; cp src/home.js src/index.js && react-scripts build && cp build/index.html build/home.html",

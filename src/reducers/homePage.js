@@ -19,8 +19,6 @@ export const Login = (myID, username, password) => {
   return (dispatch, getState) => (async() => {
     const {data, errmsg, status} = await api(ServerUtils.Login(username, password))
 
-    let accessToken = ((data||{}).access_token) || ''
-
     if (!status) {
       dispatch(_setData(myID, {errmsg: errors.ERR_NETWORK}))
       return

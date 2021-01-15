@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import pageStyles from './Page.module.css'
-
-import * as errors from './errors'
 
 import { useWindowSize } from 'react-use'
 
