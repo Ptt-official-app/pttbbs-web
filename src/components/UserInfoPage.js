@@ -7,7 +7,7 @@ import { useWindowSize } from 'react-use'
 
 import { useParams } from 'react-router-dom'
 
-import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
+import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoUserPage from '../reducers/userInfoPage'
 
@@ -18,6 +18,7 @@ import Header from './Header'
 export default (props) => {
   const [stateUserPage, doUserPage] = useActionDispatchReducer(DoUserPage)
 
+  // eslint-disable-next-line
   const [errMsg, setErrMsg] = useState('')
 
   //init
@@ -68,6 +69,12 @@ export default (props) => {
     return (<label>我已經 po 了 {userPage.posts} 篇文章{badposts}</label>)
   }
 
+  let renderOver18 = () => {
+    let isOver18 = (!userPage.over18) ? '還沒' : '已經'
+
+    return (<label>我{isOver18}18歲～</label>)
+  }
+
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
   let headerTitle = userid + '的資訊'
@@ -84,6 +91,11 @@ export default (props) => {
 
   let career = userPage.Career || '(某個角落)'
 
+
+  //render
+  if(!myID) {
+    return (<Empty />)
+  }
   return (
     <div className={pageStyles['root']} style={style}>
       <div className={'container'} style={style}>
@@ -139,6 +151,11 @@ export default (props) => {
         </div>
         <div className='row'>
           <div className='col'>
+            {renderOver18()}
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
             <label>我平常在 {career} 畫圈圈～</label>
           </div>
         </div>
@@ -165,6 +182,11 @@ export default (props) => {
         <div className='row'>
           <div className='col'>
             <label>我的圍棋: 贏: {userPage.go_win} 輸: {userPage.go_lose} 和: {userPage.go_tie}</label>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            <label className={pageStyles['errMsg']}>{allErrMsg}</label>
           </div>
         </div>
       </div>

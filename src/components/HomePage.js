@@ -5,7 +5,7 @@ import * as errors from './errors'
 
 import { useWindowSize } from 'react-use'
 
-import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
+import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoHomePage from '../reducers/homePage'
 
@@ -26,7 +26,6 @@ export default (props) => {
   let homePage = getRoot(stateHomePage) || {}
   let myID = homePage.id || ''
   let errmsg = homePage.errmsg || ''
-  let accessToken = homePage.AccessToken || ''
 
   //render
   const {height: innerHeight} = useWindowSize()
@@ -51,20 +50,11 @@ export default (props) => {
 
   // ---------- Handlers -------------
 
-  let _isInitSuccessful = () => {
-    if(!myID) {
-      setErrMsg(errors.ERR_SYS_INIT)
-      return false
-    }
-    return true
-  }
   let login = () => {
-    if(!_isInitSuccessful()) return
     doHomePage.Login(myID, username, password)
   }
 
   let register = () => {
-    if(!_isInitSuccessful()) return
     window.location.href = "/register"
   }
 
@@ -75,6 +65,9 @@ export default (props) => {
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
   // -------- Component Instance ----------
+  if(!myID) {
+    return (<Empty />)
+  }
   return (
     <div className={pageStyles['root']} style={style}>
       <div className={'container'} style={style}>
