@@ -17,10 +17,28 @@ export const init = (myID, doMe, parentID, doParent) => {
   }
 }
 
-export const Register = (myID, username, password, passwordConfirm, email, over18) => {
+export const VerifyEmail = (myID, username, email) => {
+  return (dispatch, getState) => (async() => {
+    const {data, errmsg, status} = await api(ServerUtils.AttemptRegister(username, email))
+
+    if (!status) {
+      dispatch(_setData(myID, {errmsg: errors.ERR_NETWORK}))
+      return
+    }
+
+    if (status !== 200) {
+      dispatch(_setData(myID, {errmsg}))
+    }
+
+    dispatch(_setData(myID, {infomsg: errors.INFO_VERIFY_EMAIL}))
+
+  })()
+}
+
+export const Register = (myID, username, password, passwordConfirm, email, over18, veriCode) => {
   return (dispatch, getState) => (async() => {
 
-    const {data, errmsg, status} = await api(ServerUtils.Register(username, password, passwordConfirm, email, over18))
+    const {data, errmsg, status} = await api(ServerUtils.Register(username, password, passwordConfirm, email, over18, veriCode))
 
     if (!status) {
       dispatch(_setData(myID, {errmsg: errors.ERR_NETWORK}))

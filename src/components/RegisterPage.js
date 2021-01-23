@@ -124,12 +124,12 @@ export default (props) => {
 
     cleanErr()
 
-    doRegPage.Register(myID, username, password, passwordConfirm, email, over18)
+    doRegPage.Register(myID, username, password, passwordConfirm, email, over18, veriCode)
   }
 
   let verifyEmail = () => {
-    document.getElementById("emailField").readOnly = true
-    //TODO: send verification code to the email
+    doRegPage.VerifyEmail(myID, username, email)
+    cleanErr('')
   }
 
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
