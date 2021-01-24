@@ -2,7 +2,6 @@ import {init as _init, setData as _setData, createReducer} from 'react-reducer-u
 
 import * as ServerUtils from './ServerUtils'
 import api from './api'
-import * as errors from './errors'
 
 import { GoUserHome } from './utils'
 

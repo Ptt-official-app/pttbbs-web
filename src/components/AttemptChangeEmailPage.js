@@ -45,7 +45,7 @@ export default (props) => {
   }, [isDone])
 
   //render
-  const {height: innerHeight, width: innerWidth} = useWindowSize()
+  const {height: innerHeight} = useWindowSize()
   let style = {
     height: innerHeight + 'px',
   }

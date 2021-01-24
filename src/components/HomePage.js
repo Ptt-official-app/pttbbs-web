@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import pageStyles from './Page.module.css'
-import styles from './HomePage.module.css'
 
 import * as errors from './errors'
 
 import { useWindowSize } from 'react-use'
 
-import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
+import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoHomePage from '../reducers/homePage'
 
@@ -27,7 +26,6 @@ export default (props) => {
   let homePage = getRoot(stateHomePage) || {}
   let myID = homePage.id || ''
   let errmsg = homePage.errmsg || ''
-  let accessToken = homePage.AccessToken || ''
 
   //render
   const {height: innerHeight} = useWindowSize()
@@ -50,47 +48,42 @@ export default (props) => {
     cleanErr()
   }
 
-  let login = () => {
-    if(!myID) {
-      setErrMsg(errors.ERR_SYS_INIT)
-      return
-    }
+  // ---------- Handlers -------------
 
+  let login = () => {
     doHomePage.Login(myID, username, password)
   }
 
   let register = () => {
+    window.location.href = "/register"
   }
 
   let forgotPassword = () => {
-
+    window.location.href = "/forgetPassword"
   }
 
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
+  // -------- Component Instance ----------
+  if(!myID) {
+    return (<Empty />)
+  }
   return (
     <div className={pageStyles['root']} style={style}>
       <div className={'container'} style={style}>
-        <div className='row'>
-          <input className="form-control" type="text" placeholder="Username:" aria-label="Username" value={username} onChange={(e) => changeUsername(e.target.value)}/>
-        </div>
+        <div className="row">
+          <div className="col-12 col-md-6 mx-auto">
 
-        <div className='row'>
-          <input className="form-control" type="password" placeholder="Password:" aria-label="Password" value={password} onChange={(e) => changePassword(e.target.value)} />
-        </div>
-
-        <div className='row'>
-          <div>
-            <button className="btn btn-primary" onClick={login}>我要登入</button>
-          </div>
-          <div className={styles['following-item']}>
-            <button className="btn btn-primary" onClick={register}>我想註冊</button>
-          </div>
-          <div className={'col'}>
+            <input className="form-control mb-3" type="text" placeholder="Username:" aria-label="Username" value={username} onChange={(e) => changeUsername(e.target.value)}/>
+            <input className="form-control mb-3" type="password" placeholder="Password:" aria-label="Password" value={password} onChange={(e) => changePassword(e.target.value)} />
+            <div className='d-flex justify-content-between'>
+              <div>
+                <button className="btn btn-primary mr-3" onClick={login}>我要登入</button>
+                <button className="btn btn-primary" onClick={register}>我想註冊</button>
+              </div>
+              <button className="btn btn-primary" onClick={forgotPassword}>我忘記密碼了 Orz</button>
+            </div>
             <label className={pageStyles['errMsg']}>{allErrMsg}</label>
-          </div>
-          <div className='pull-right'>
-            <button className="btn btn-primary" onClick={forgotPassword}>我忘記密碼了 Orz</button>
           </div>
         </div>
       </div>
