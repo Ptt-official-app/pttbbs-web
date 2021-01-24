@@ -27,6 +27,8 @@
     "dev:all": "rm src/index.js; cd src && ln -s all.js index.js && cd ..",
     "dev:home": "rm src/index.js; cd src && ln -s home.js index.js && cd ..",
     "build:home": "rm src/index.js; rm build/home.html; cp src/home.js src/index.js && react-scripts build && cp build/index.html build/home.html",
+    "dev:register": "rm src/index.js; cd src && ln -s register.js index.js && cd ..",
+    "build:register": "rm src/index.js; rm build/register.html; cp src/register.js src/index.js && react-scripts build && cp build/index.html build/register.html",
     "dev:user-info": "rm src/index.js; cd src && ln -s userInfo.js index.js && cd ..",
     "build:user-info": "rm src/index.js; rm build/user-info.html; cp src/userInfo.js src/index.js && react-scripts build && cp build/index.html build/user-info.html",
     "dev:change-passwd": "rm src/index.js; cd src && ln -s changePasswd.js index.js && cd ..",

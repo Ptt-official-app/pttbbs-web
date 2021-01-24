@@ -39,6 +39,8 @@ export default (props) => {
   let registerPage = getRoot(stateRegitsterPage) || {}
   let myID = registerPage.id || ''
   let errmsg = registerPage.errmsg || ''
+  let infomsg = registerPage.infomsg || ''
+  let isSetVerifyEmail = registerPage.isSetVerifyEmail || false
 
   let cleanErr = () => {
     setErrMsg('')
@@ -124,12 +126,17 @@ export default (props) => {
 
     cleanErr()
 
-    doRegPage.Register(myID, username, password, passwordConfirm, email, over18)
+    setValidating('was-validated')
+    doRegPage.Register(myID, username, password, passwordConfirm, email, over18, veriCode)
   }
 
   let verifyEmail = () => {
-    document.getElementById("emailField").readOnly = true
-    //TODO: send verification code to the email
+    doRegPage.VerifyEmail(myID, username, email)
+    cleanErr('')
+  }
+
+  let onSubmitForm = (e) => {
+    e.preventDefault()
   }
 
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
@@ -138,13 +145,14 @@ export default (props) => {
   if(!myID) {
     return (<Empty />)
   }
+
   return (
     <div className={pageStyles['root']}>
       <div className='container vh-100'>
         <div className="row">
           <div className="col-12 col-md-6 mx-auto">
 
-            <form action="javascript:void(0);" className={validating} onSubmit={submit} novalidate>
+            <form onSubmit={onSubmitForm} className={validating} noValidate>
               <div className="form-group">
                 <label htmlFor="accountField">我的帳號: <small className="text-muted">(長度2-12，可含英數字)</small></label>
                 <input
@@ -163,7 +171,7 @@ export default (props) => {
                 />
                 <div className="invalid-feedback">{errPassword}</div>
               </div>
-              <div className="form-group">
+              <div className="mm-group">
                 <label htmlFor="confirmField">確認密碼:</label>
                 <input
                   id="confirmField" className={isValid} type="password" placeholder="Confirm Password:"
@@ -177,7 +185,7 @@ export default (props) => {
                 <div className="input-group">
                   <input
                     id="emailField" className="form-control" type="email" placeholder="Email:"
-                    aria-label="Email" value={email} onChange={(e) => changeEmail(e.target.value)} required/>
+                    aria-label="Email" value={email} readOnly={isSetVerifyEmail}  onChange={(e) => changeEmail(e.target.value)} required/>
                   <div className="input-group-append">
                     <button role="button" className="btn btn-primary" onClick={verifyEmail}>寄出確認碼</button>
                   </div>
@@ -196,13 +204,17 @@ export default (props) => {
                 <input id="over18Field" className="form-check-input" type="checkbox" aria-label="Confirm age over 18" checked={over18} onChange={(e) => changeOver18(e.target.checked)} />
                 <label htmlFor="over18Field" className="form-check-label">我已經 18 歲囉～</label>
               </div>
-
+              <div className='row'>
+                <div className='col'>
+                  <label className={pageStyles['infoMsg']}>{infomsg}</label>
+                </div>
+              </div>
               <div className='d-flex'>
                 <div className='following-item col'>
                   <label className={pageStyles['errMsg']}>{allErrMsg}</label>
                 </div>
                 <div className='pull-right'>
-                  <button className="btn btn-primary" type="submit" onClick={() => setValidating("was-validated")}>我要註冊帳號</button>
+                  <button className="btn btn-primary" type="submit" onClick={submit}>我要註冊帳號</button>
                 </div>
               </div>
             </form>

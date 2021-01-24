@@ -12,7 +12,18 @@ export const Login = (username, password) => ({
   },
 })
 
-export const Register = (username, password, password_confirm, email, over18) => ({
+export const AttemptRegister = (username, email) => ({
+  endpoint: '/api/account/attemptregister',
+  method: 'post',
+  json: {
+    client_id: config['CLIENT_ID'],
+    client_secret: config['CLIENT_SECRET'],
+    username,
+    email,
+  },
+})
+
+export const Register = (username, password, password_confirm, email, over18, veriCode) => ({
   endpoint: '/api/account/register',
   method: 'post',
   json: {
@@ -24,6 +35,7 @@ export const Register = (username, password, password_confirm, email, over18) =>
     password_confirm,
     email,
     over18,
+    token: veriCode,
   },
 })
 
