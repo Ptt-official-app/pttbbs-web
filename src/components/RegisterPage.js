@@ -44,6 +44,7 @@ export default (props) => {
 
   let cleanErr = () => {
     setErrMsg('')
+    doRegPage.CleanMsg(myID)
   }
 
   // ---------- Helper functions ---------

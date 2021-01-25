@@ -28,6 +28,7 @@ export const VerifyEmail = (myID, username, email) => {
 
     if (status !== 200) {
       dispatch(_setData(myID, {errmsg}))
+      return
     }
 
     dispatch(_setData(myID, {infomsg: errors.INFO_VERIFY_EMAIL, isSetVerifyEmail: true}))
@@ -59,6 +60,12 @@ export const Register = (myID, username, password, passwordConfirm, email, over1
 
     GoUserHome(user_id)
   })()
+}
+
+export const CleanMsg = (myID) => {
+  return (dispatch, getState) => {
+    dispatch(_setData(myID, {infomsg: '', errmsg: ''}))
+  }
 }
 
 export default createReducer()
