@@ -1,3 +1,7 @@
+.root {
+    background-color: navy;
+}
+
 .title {
     text-align: center;
     font-size: x-large;
@@ -6,5 +10,5 @@
 .home {
     color: #ff8800;
     border-width: 0px;
-    background-color: #000000;
+    background-color: navy;
 }

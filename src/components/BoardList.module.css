@@ -1,0 +1,14 @@
+.number {
+    width: 10%;
+}
+
+.header {
+    color: #000;
+    background-color: #eee;
+    font-family: 'MingLiu;monospace;';
+}
+
+.default {
+    color: #000;
+    background-color: #000;
+}

@@ -1,12 +1,9 @@
 import React from 'react'
 import styles from './Header.module.css'
+import config from 'config'
 
 export default (props) => {
   const {title, userID} = props
-
-  let logout = () => {
-
-  }
 
   let goHome = () => {
     window.location.href = '/'
@@ -17,13 +14,10 @@ export default (props) => {
   }
 
   return (
-    <nav className='navbar'>
-      <button className={'navbar-brand ' + styles['home']} onClick={() => goHome()}>(回家)</button>
+    <nav className={'navbar ' + styles['root']}>
+      <button className={'navbar-brand ' + styles['home']} onClick={() => goHome()}>{config.BRAND}</button>
       <div className={'col ' + styles['title']}>{title}</div>
-      <button className={'pull-right ' + styles['home']} onClick={() => goUserHome(userID)}>(回我家)</button>
-      <div className='pull-right'>
-        <button className="btn btn-primary" onClick={logout}>登出</button>
-      </div>
+      <button className={'pull-right ' + styles['home']} onClick={() => goUserHome(userID)}>hi～ {userID}</button>
     </nav>
   )
 }
