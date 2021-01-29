@@ -20,6 +20,7 @@ const _getData = (myID, userID) => {
 
     if (status !== 200) {
       dispatch(_setData(myID, {errmsg}))
+      return
     }
 
     dispatch(_setData(myID, data))

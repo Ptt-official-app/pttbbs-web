@@ -1,8 +1,8 @@
+@import url(//fonts.googleapis.com/css?family=Inconsolata);
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "細明體", "AR PL UMing TW", "Inconsolata", "LiSongPro", monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -41,4 +41,19 @@ code {
 .public_fixedDataTableCell_main {
   background-color: #000;
   border-color: #000;
+}
+
+.fixedDataTableLayout_header,
+.fixedDataTableLayout_hasBottomBorder {
+  border-bottom-style: solid;
+  border-bottom-width: 0px;
+}
+
+.fixedDataTableLayout_footer .public_fixedDataTableCell_main {
+  border-top-style: solid;
+  border-top-width: 0px;
+}
+
+.public_fixedDataTableCell_cellContent {
+  padding: 0px;
 }

@@ -2,6 +2,8 @@ import React from 'react'
 import styles from './Header.module.css'
 import config from 'config'
 
+import { PTT_GUEST } from '../constants'
+
 export default (props) => {
   const {title, userID} = props
 
@@ -10,6 +12,9 @@ export default (props) => {
   }
 
   let goUserHome = (userID) => {
+    if(!userID || userID === PTT_GUEST) {
+      return
+    }
     window.location.href = '/user/' + userID
   }
 

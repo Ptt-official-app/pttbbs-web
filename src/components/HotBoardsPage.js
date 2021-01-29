@@ -5,538 +5,58 @@ import * as errors from './errors'
 
 import { useWindowSize } from 'react-use'
 
-import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
+import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
 import * as DoHotBoardsPage from '../reducers/hotBoardsPage'
 
-import * as constants from '../constants'
-
 import Header from './Header'
 import BoardList from './BoardList'
+import EmptyBoardList from './EmptyBoardList'
 
 export default (props) => {
   const [stateHotBoardsPage, doHotBoardsPage] = useActionDispatchReducer(DoHotBoardsPage)
 
+  // eslint-disable-next-line
+  const [errMsg, setErrMsg] = useState('')
+
+  //init
+
+  useEffect(() => {
+    let hotBoardsPageID = genUUID()
+    doHotBoardsPage.init(hotBoardsPageID, doHotBoardsPage, null, null)
+  }, [])
+
+  //get data
+  let hotBoardsPage = getRoot(stateHotBoardsPage) || {}
+  //let myID = hotBoardsPage.id || ''
+  let errmsg = hotBoardsPage.errmsg || ''
+  let boards = hotBoardsPage.list || []
+
   //render
   const {width: innerWidth, height: innerHeight} = useWindowSize()
-  let style = {
-    height: innerHeight + 'px',
-  }
 
-  let width = innerWidth - 30
+  let width = innerWidth
   let boardListHeight = innerHeight * 0.9
 
-  let userid = '[userid]'
   let headerTitle = '熱門看板'
-  let boards = _BOARDS
 
-  let fetchData = () => {
-    console.log('fetchData: start')
+  // eslint-disable-next-line
+  let allErrMsg = errors.mergeErr(errMsg, errmsg)
+
+  let renderBoardList = () => {
+    if(boards.length === 0) {
+      //return (<BoardList boards={boards} width={width} height={boardListHeight}/>)
+      return (<EmptyBoardList width={width} height={boardListHeight} prompt={"還沒有熱門看板囉～"} />)
+    }
+    else {
+      return (<BoardList boards={boards} width={width} height={boardListHeight}/>)
+    }
   }
 
   return (
     <div className={pageStyles['root']}>
-      <div className={'container-fluid'} style={style}>
-        <Header title={headerTitle} userID={userid} />
-        <BoardList boards={boards} width={width} height={boardListHeight}/>
-      </div>
+      <Header title={headerTitle} />
+      {renderBoardList()}
     </div>
   )
 }
-
-const _BOARDS = [
-  {
-    bid: "10_WhoAmI",
-    brdname: "WhoAmI",
-    title: "猜猜我是誰",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 6,
-    moderators: ["SYSOP"],
-    total: 123,
-    last_post_time: 1234567890,
-    idx: 1,
-  },
-  {
-    bid: "1_SYSOP",
-    brdname: "SYSOP",
-    title: "站長, 我要報告",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 2,
-  },
-  {
-    bid: "12_test",
-    brdname: "test",
-    title: "測試",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 2,
-  },
-  {
-    bid: "13_test2",
-    brdname: "test2",
-    title: "測試2",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 3,
-  },
-  {
-    bid: "14_test3",
-    brdname: "test3",
-    title: "測試3",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 4,
-  },
-  {
-    bid: "15_test4",
-    brdname: "test4",
-    title: "測試4",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "16_test5",
-    brdname: "test5",
-    title: "測試5",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "17_test6",
-    brdname: "test6",
-    title: "測試6",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "18_test7",
-    brdname: "test7",
-    title: "測試7",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "19_test8",
-    brdname: "test8",
-    title: "測試8",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "20_test9",
-    brdname: "test9",
-    title: "測試9",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "21_test10",
-    brdname: "test10",
-    title: "測試10",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "22_test11",
-    brdname: "test11",
-    title: "測試11",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "23_test12",
-    brdname: "test12",
-    title: "測試12",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "24_test13",
-    brdname: "test13",
-    title: "測試13",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "25_test14",
-    brdname: "test14",
-    title: "測試14",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "26_test15",
-    brdname: "test15",
-    title: "測試15",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test17",
-    brdname: "test17",
-    title: "測試17",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test17",
-    brdname: "test17",
-    title: "測試17",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test17",
-    brdname: "test17",
-    title: "測試17",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test17",
-    brdname: "test17",
-    title: "測試17",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-  {
-    bid: "27_test16",
-    brdname: "test16",
-    title: "測試16",
-    flag: 7,
-    type: "◎",
-    class: "嘰哩",
-    nuser: 8,
-    moderators: ["SYSOP"],
-    total: 124,
-    last_post_time: 1234567891,
-    idx: 5,
-  },
-]
