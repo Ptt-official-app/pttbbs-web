@@ -9,7 +9,6 @@ fi
 theModule="$1"
 theDir="$2"
 
-npm run dev:${theModule}
 npm run build:${theModule}
 
 rsync -zah build/ ${theDir}
