@@ -100,3 +100,8 @@ export const SetIDEmail = (userID, token) => ({
     token,
   },
 })
+
+export const LoadPopularBoards = () => ({
+  endpoint: '/api/boards/popular',
+  method: 'get',
+})

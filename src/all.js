@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import Routes from './routes/All'
 
 import 'normalize.css/normalize.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import 'fixed-data-table-2/dist/fixed-data-table.css'
+
+import './index.css'
+
 
 ReactDOM.render(
   <React.StrictMode>

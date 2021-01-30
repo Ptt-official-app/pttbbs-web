@@ -2,23 +2,24 @@ import {init as _init, setData as _setData, createReducer} from 'react-reducer-u
 
 import * as ServerUtils from './ServerUtils'
 import api from './api'
+//import * as errors from './errors'
 
-const myClass = 'demo-pttbbs/UserInfoPage'
+const myClass = 'demo-pttbbs/HotBoardsPage'
 
-// init
-export const init = (myID, doMe, parentID, doParent, userID) => {
+export const init = (myID, doMe, parentID, doParent) => {
   let theDate = new Date()
   return (dispatch, getState) => {
-    dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, userID}))
-    dispatch(_getData(myID, userID))
+    dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate}))
+    dispatch(_getData(myID))
   }
 }
 
-const _getData = (myID, userID) => {
-  return (dispatch, getState) => (async() => {
-    const {data, errmsg, status} = await api(ServerUtils.GetUserInfo(userID))
 
-    if (status !== 200) {
+const _getData = (myID) => {
+  return (dispatch, getState) => (async() => {
+    const {data, errmsg, status} = await api(ServerUtils.LoadPopularBoards())
+
+    if(status !== 200) {
       dispatch(_setData(myID, {errmsg}))
       return
     }

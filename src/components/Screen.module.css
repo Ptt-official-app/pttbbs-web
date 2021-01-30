@@ -1,0 +1,13 @@
+.number {
+    width: 10%;
+}
+
+.header {
+    color: #000;
+    background-color: #eee;
+}
+
+.default {
+    color: #000;
+    background-color: #000;
+}
