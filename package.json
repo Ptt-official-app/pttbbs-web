@@ -1,6 +1,6 @@
 {
   "name": "demo-pttbbs",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
@@ -23,25 +23,36 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "npm run dev:all && react-scripts start",
-    "build": "npm run dev:all && react-scripts build",
+    "start": "npm run dev:dev && react-scripts start",
+    "dev:dev": "rm src/index.js; cd src && ln -s dev.js index.js && cd ..",
+
     "dev:all": "rm src/index.js; cd src && ln -s all.js index.js && cd ..",
+    "build:all": "npm run dev:all && react-scripts build && cp build/index.html build/all.html",
+
     "dev:home": "rm src/index.js; cd src && ln -s home.js index.js && cd ..",
-    "build:home": "rm src/index.js; rm build/home.html; cp src/home.js src/index.js && react-scripts build && cp build/index.html build/home.html",
+    "build:home": "npm run dev:home && react-scripts build && cp build/index.html build/home.html",
+
     "dev:register": "rm src/index.js; cd src && ln -s register.js index.js && cd ..",
-    "build:register": "rm src/index.js; rm build/register.html; cp src/register.js src/index.js && react-scripts build && cp build/index.html build/register.html",
+    "build:register": "npm run dev:register && react-scripts build && cp build/index.html build/register.html",
+
     "dev:user-info": "rm src/index.js; cd src && ln -s userInfo.js index.js && cd ..",
-    "build:user-info": "rm src/index.js; rm build/user-info.html; cp src/userInfo.js src/index.js && react-scripts build && cp build/index.html build/user-info.html",
+    "build:user-info": "npm run dev:user-info && react-scripts build && cp build/index.html build/user-info.html",
+
     "dev:change-passwd": "rm src/index.js; cd src && ln -s changePasswd.js index.js && cd ..",
-    "build:change-passwd": "rm src/index.js; rm build/change-passwd.html; cp src/changePasswd.js src/index.js && react-scripts build && cp build/index.html build/change-passwd.html",
+    "build:change-passwd": "npm run dev:change-passwd && react-scripts build && cp build/index.html build/change-passwd.html",
+
     "dev:change-email": "rm src/index.js; cd src && ln -s changeEmail.js index.js && cd ..",
-    "build:change-email": "rm src/index.js; rm build/change-email.html; cp src/changeEmail.js src/index.js && react-scripts build && cp build/index.html build/change-email.html",
+    "build:change-email": "npm run dev:change-email && react-scripts build && cp build/index.html build/change-email.html",
+
     "dev:set-id-email": "rm src/index.js; cd src && ln -s setIDEmail.js index.js && cd ..",
-    "build:set-id-email": "rm src/index.js; rm build/set-id-email.html; cp src/setIDEmail.js src/index.js && react-scripts build && cp build/index.html build/set-id-email.html",
+    "build:set-id-email": "npm run dev:set-id-email && react-scripts build && cp build/index.html build/set-id-email.html",
+
     "dev:attempt-change-email": "rm src/index.js; cd src && ln -s attemptChangeEmail.js index.js && cd ..",
-    "build:attempt-change-email": "rm src/index.js; rm build/attempt-change-email.html; cp src/attemptChangeEmail.js src/index.js && react-scripts build && cp build/index.html build/attempt-change-email.html",
+    "build:attempt-change-email": "npm run dev:attempt-change-email && react-scripts build && cp build/index.html build/attempt-change-email.html",
+
     "dev:attempt-set-id-email": "rm src/index.js; cd src && ln -s attemptSetIDEmail.js index.js && cd ..",
-    "build:attempt-set-id-email": "rm src/index.js; rm build/attempt-set-id-email.html; cp src/attemptSetIDEmail.js src/index.js && react-scripts build && cp build/index.html build/attempt-set-id-email.html",
+    "build:attempt-set-id-email": "npm run dev:attempt-set-id-email && react-scripts build && cp build/index.html build/attempt-set-id-email.html",
+
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
