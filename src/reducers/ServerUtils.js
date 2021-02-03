@@ -101,7 +101,17 @@ export const SetIDEmail = (userID, token) => ({
   },
 })
 
+export const GetBoardSummary = (bid) => ({
+  endpoint: '/api/board/' + bid + '/summary',
+  method: 'get',
+})
+
 export const LoadPopularBoards = () => ({
   endpoint: '/api/boards/popular',
+  method: 'get',
+})
+
+export const LoadArticles = (bid) => ({
+  endpoint: '/api/board/'+ bid + '/articles',
   method: 'get',
 })
