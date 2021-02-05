@@ -43,6 +43,10 @@ code {
   border-color: #000;
 }
 
+.fixedDataTableCellLayout_main {
+  border-width: 0px;
+}
+
 .fixedDataTableLayout_header,
 .fixedDataTableLayout_hasBottomBorder {
   border-bottom-style: solid;
