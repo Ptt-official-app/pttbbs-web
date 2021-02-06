@@ -5,7 +5,7 @@ import { Cell } from 'fixed-data-table-2'
 import screenStyles from './Screen.module.css'
 
 import RowHighlightedCell from './cells/RowHighlightedCell'
-import { GenPlainText, GenDate, GenIdx, GenState, GenCommNum, GenCategory } from './cells/ContentGenerator'
+import { PlainText, PostDate, Idx, State, CommNum, Category } from './cells/ContentRenderer'
 
 import Screen from './Screen'
 
@@ -36,23 +36,23 @@ export default (props) => {
 
   let renderCell = (column, data, fontSize) => {
 
-    let generator = GenPlainText
+    let renderer = PlainText
 
     switch(column.accessor) {
     case 'idx':
-      generator = GenIdx
+      renderer = Idx
       break
     case 'read':
-      generator = GenState
+      renderer = State
       break
     case 'n_comments':
-      generator = GenCommNum
+      renderer = CommNum
       break
     case 'create_time':
-      generator = GenDate
+      renderer = PostDate
       break
     case 'class':
-      generator = GenCategory
+      renderer = Category
       break
     case 'title':
     case 'owner':
@@ -61,7 +61,7 @@ export default (props) => {
       return <Cell className={screenStyles['default']}></Cell>
     }
     return <RowHighlightedCell column={column} data={data} fontSize={fontSize}
-      contentGen={generator} setRowNum={setSeletedRow}
+      contentGen={renderer} setRowNum={setSeletedRow}
       highlightRow={selectedRow} highlightStyle={defaultHighlight}/>
   }
 

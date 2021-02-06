@@ -1,11 +1,10 @@
-export const GenPlainText = (data, rowIndex, columnKey) => {
+export const PlainText = (data, rowIndex, columnKey) => {
     let text = data[rowIndex][columnKey]
 
-    let style = {}
-    return {style, text}
+    return text
 }
 
-export const GenDate = (data, rowIndex, columnKey) => {
+export const PostDate = (data, rowIndex, columnKey) => {
 
     let item = data[rowIndex]
     let date = new Date(item[columnKey])
@@ -14,28 +13,28 @@ export const GenDate = (data, rowIndex, columnKey) => {
     let day = date.getDay()
     let text =  month.toString() + "/" + day.toString()
 
-    let style = {}
-    return {style, text}
+    return text
 }
 
-export const GenIdx = (data, rowIndex, columnKey) => {
+export const Idx = (data, rowIndex, columnKey) => {
     let idx = rowIndex + 1
     let text = idx.toString()
-    let style = {}
-    return {style, text}
+    return text
 }
 
-export const GenState = (data, rowIndex, columnKey) => {
+export const State = (data, rowIndex, columnKey) => {
     let item = data[rowIndex]
     let text = (item[columnKey] === true) ? '+' : '-'
 
     let style = {
         'color' : (item[columnKey] === true) ? '#fff' : '#000'
     }
-    return {style, text}
+    return (
+      <div style={style}>{text}</div>
+    )
 }
 
-export const GenCommNum = (data, rowIndex, columnKey) => {
+export const CommNum = (data, rowIndex, columnKey) => {
   let item = data[rowIndex]
   let color = 'green'
 
@@ -55,15 +54,16 @@ export const GenCommNum = (data, rowIndex, columnKey) => {
     'color': color,
   }
 
-  return {style, text}
+    return (
+      <div style={style}>{text}</div>
+    )
 }
 
-export const GenCategory = (data, rowIndex, columnKey) => {
+export const Category = (data, rowIndex, columnKey) => {
   let item = data[rowIndex]
   let text = '[' + item[columnKey] + ']'
 
-  let style = {}
-  return {style, text}
+  return text
 }
 
 
