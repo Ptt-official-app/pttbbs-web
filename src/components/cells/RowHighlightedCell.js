@@ -16,12 +16,15 @@ export default (props) => {
     style = {...style, ...highlightStyle}
   }
 
-  return(
-    <Cell style={style}
-      onMouseEnter={() => setRowNum(rowIndex)}
-      onMouseLeave={() => setRowNum(-1)}
-    >
-      {content}
-    </Cell>
+  let link = data[rowIndex]['url']
+
+  return (
+    <a href={link} style={style}>
+      <Cell style={style}
+        onMouseEnter={() => setRowNum(rowIndex)}
+        onMouseLeave={() => setRowNum(-1)} >
+          {content}
+      </Cell>
+    </a>
   )
 }
