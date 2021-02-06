@@ -1,14 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Cell } from 'fixed-data-table-2'
 
 import screenStyles from './Screen.module.css'
 
-import TextCell from './cells/TextCell'
-import StateCell from './cells/StateCell'
-import DateCell from './cells/DateCell'
-import CommNumCell from './cells/CommNumCell'
-import IdxCell from './cells/IdxCell'
+import RowHighlightedCell from './cells/RowHighlightedCell'
+import { PlainText, PostDate, Idx, State, CommNum, Category } from './cells/ContentRenderer'
 
 import Screen from './Screen'
 
@@ -30,25 +27,42 @@ const _COLUMNS = [
 export default (props) => {
   const {articles, width, height} = props
 
+  const [selectedRow, setSeletedRow] = useState(-1)
+
+  // assume that we will need to use different highlight for different cell
+  let defaultHighlight = {
+    'background-color' : '#333',
+  }
+
   let renderCell = (column, data, fontSize) => {
+
+    let renderer = PlainText
+
     switch(column.accessor) {
     case 'idx':
-      return <IdxCell column={column} data={data} fontSize={fontSize}/>
+      renderer = Idx
+      break
     case 'read':
-      return <StateCell column={column} data={data} fontSize={fontSize}/>
+      renderer = State
+      break
     case 'n_comments':
-      return <CommNumCell column={column} data={data} fontSize={fontSize}/>
+      renderer = CommNum
+      break
     case 'create_time':
-      return <DateCell column={column} data={data} fontSize={fontSize} />
+      renderer = PostDate
+      break
     case 'class':
-      return <TextCell column={column} data={data} fontSize={fontSize} isCategory={true}/>
+      renderer = Category
+      break
     case 'title':
-      return <TextCell column={column} data={data} fontSize={fontSize} />
     case 'owner':
-      return <TextCell column={column} data={data} fontSize={fontSize} />
+      break
     default:
       return <Cell className={screenStyles['default']}></Cell>
     }
+    return <RowHighlightedCell column={column} data={data} fontSize={fontSize}
+      contentGen={renderer} setRowNum={setSeletedRow}
+      highlightRow={selectedRow} highlightStyle={defaultHighlight}/>
   }
 
   let renderHeader = (column, fontSize) => {

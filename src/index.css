@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+a, a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
 .public_fixedDataTable_main {
   border-color: #000;
 }
@@ -41,6 +46,10 @@ code {
 .public_fixedDataTableCell_main {
   background-color: #000;
   border-color: #000;
+}
+
+.fixedDataTableCellLayout_main {
+  border-width: 0px;
 }
 
 .fixedDataTableLayout_header,
