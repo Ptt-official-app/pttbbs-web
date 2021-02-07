@@ -4,7 +4,7 @@ export const PlainText = (props) => {
   const {data, rowIndex, columnKey} = props
   let text = data[rowIndex][columnKey]
 
-  return text
+  return (<div>{text}</div>)
 }
 
 export const PostDate = (props) => {
@@ -16,13 +16,20 @@ export const PostDate = (props) => {
   let day = date.getDay()
   let text =  month.toString() + "/" + day.toString()
 
-  return text
+  return (<div>{text}</div>)
 }
 
 export const Idx = (props) => {
-  const {data, rowIndex, columnKey} = props
+  const {data, rowIndex, columnKey, loadPre, loadNext} = props
     let item = data[rowIndex]
     let text = item[columnKey]
+
+    if(rowIndex === 0 && loadPre) {
+      loadPre(item)
+    }
+    if(rowIndex === data.length - 1 && loadNext) {
+      loadNext(item)
+    }
 
     return (<div className={styles['idx']}>{text}</div>)
 }
@@ -80,5 +87,5 @@ export const Category = (props) => {
     return ''
   }
 
-  return '[' + text + ']'
+  return (<div>{'[' + text + ']'}</div>)
 }

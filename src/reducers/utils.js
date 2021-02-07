@@ -6,8 +6,8 @@ export const GoHome = () => {
   window.location.href = '/'
 }
 
-export const MergeList = (origList, newList, isReverse, isAppend, isIncludeStartIdx, startNumIdx) => {
-  if(!isIncludeStartIdx && newList.length > 0) {
+export const MergeList = (origList, newList, desc, startNumIdx) => {
+  if(desc && newList.length > 0) { //desc not include start-item
     newList = newList.slice(1)
   }
 
@@ -15,17 +15,17 @@ export const MergeList = (origList, newList, isReverse, isAppend, isIncludeStart
     return origList
   }
 
-  if(isReverse) {
-    newList = newList.reverse()
-  }
+  if(desc) {
+    let newStartNumIdx = origList.length ? (origList[0].numIdx-1) : startNumIdx
+    newList.map((each, idx) => each.numIdx = newStartNumIdx-idx)
 
-  if(isAppend) {
+    newList = newList.reverse()
+
+    return newList.concat(origList)
+  } else {
     let newStartNumIdx = origList.length ? (origList[origList.length-1].numIdx+1) : startNumIdx
     newList.map((each, idx) => each.numIdx = newStartNumIdx+idx)
+
     return origList.concat(newList)
-  } else {
-    let newStartNumIdx = origList.length ? (origList[0].numIdx-1) : startNumIdx
-    newList.map((each, idx) => each.numIdx = newStartNumIdx+idx)
-    return newList.concat(origList)
   }
 }

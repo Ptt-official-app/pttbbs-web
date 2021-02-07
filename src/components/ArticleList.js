@@ -25,7 +25,7 @@ const _COLUMNS = [
 ]
 
 export default (props) => {
-  const {articles, width, height} = props
+  const {articles, width, height, loadPre, loadNext, scrollToRow, onVerticalScroll, scrollTop} = props
 
   const [selectedRow, setSeletedRow] = useState(-1)
 
@@ -34,13 +34,18 @@ export default (props) => {
     backgroundColor: '#333',
   }
 
+  let renderIdx = (props) => {
+    const {data, rowIndex, columnKey} = props
+    return (<Idx data={data} rowIndex={rowIndex} columnKey={columnKey} loadPre={loadPre} loadNext={loadNext} />)
+  }
+
   let renderCell = (column, data, fontSize) => {
 
     let renderer = PlainText
 
     switch(column.accessor) {
     case 'numIdx':
-      renderer = Idx
+      renderer = (props) => renderIdx(props)
       break
     case 'read':
       renderer = State
@@ -84,6 +89,6 @@ export default (props) => {
   }
 
   return (
-    <Screen width={width} height={height} columns={_COLUMNS} data={articles} renderCell={renderCell} renderHeader={renderHeader} />
+    <Screen width={width} height={height} columns={_COLUMNS} data={articles} renderCell={renderCell} renderHeader={renderHeader} scrollToRow={scrollToRow} onVerticalScroll={onVerticalScroll} scrollTop={scrollTop} />
   )
 }
