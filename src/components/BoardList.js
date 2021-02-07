@@ -14,7 +14,7 @@ import { CHAR_WIDTH } from './utils'
 
 const _COLUMNS = [
   {Header: '', accessor: '', width: 0, fixed: true, type: 'rest'},
-  {Header: '編號', accessor: 'idx', width: CHAR_WIDTH*6, fixed: true},
+  {Header: '編號', accessor: 'numIdx', width: CHAR_WIDTH*6, fixed: true},
   {Header: '', accessor: 'read', width: CHAR_WIDTH*4, fixed: true, type: 'read'},
   {Header: '看板', accessor: 'brdname', width: CHAR_WIDTH*12, fixed: true},
   {Header: '類別', accessor: 'class', width: CHAR_WIDTH*4, fixed: true},
@@ -30,12 +30,12 @@ export default (props) => {
 
   let renderCell = (column, data, fontSize) => {
     switch(column.accessor) {
-    case 'idx':
-      return <TextCell column={column} data={data} fontSize={fontSize}/>
+    case 'numIdx':
+      return <TextCell column={column} data={data} fontSize={fontSize} />
     case 'read':
-      return <TextCell column={column} data={data} fontSize={fontSize}/>
+      return <TextCell column={column} data={data} fontSize={fontSize} />
     case 'brdname':
-      return <TextCell column={column} data={data} fontSize={fontSize}/>
+      return <TextCell column={column} data={data} fontSize={fontSize} />
     case 'class':
       return <TextCell column={column} data={data} fontSize={fontSize} />
     case 'type':
@@ -53,7 +53,7 @@ export default (props) => {
 
   let renderHeader = (column, fontSize) => {
     let style = {
-      'font-size': fontSize + 'px',
+      fontSize: fontSize + 'px',
     }
 
     return (<Cell className={screenStyles['header']} style={style}>{column.Header}</Cell>)

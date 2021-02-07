@@ -7,7 +7,7 @@ export default (props) => {
   let item = data[rowIndex]
 
   let style = {
-    'font-size': fontSize + 'px',
+    fontSize: fontSize + 'px',
   }
 
   return(

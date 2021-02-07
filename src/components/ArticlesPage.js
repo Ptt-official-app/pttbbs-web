@@ -39,7 +39,7 @@ export default (props) => {
   let width = innerWidth
   let listHeight = innerHeight * 0.9
 
-  let headerTitle = '文章列表: 看版 ' + brdname + ' - ' + title
+  let headerTitle = brdname + ' - ' + title
 
   // eslint-disable-next-line
   let allErrMsg = errors.mergeErr(errMsg, errmsg)

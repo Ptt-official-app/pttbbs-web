@@ -11,10 +11,16 @@ export default (props) => {
   }
 
   let style = {
-    'font-size': fontSize + 'px',
+    fontSize: fontSize + 'px',
+  }
+
+  let onClick = () => {
+    if(!item.click) return
+
+    item.click()
   }
 
   return(
-    <Cell className={styles['text']} style={style}>{text}</Cell>
+    <Cell className={styles['text']} style={style} onClick={onClick}>{text}</Cell>
   )
 }
