@@ -14,24 +14,29 @@ import { CHAR_WIDTH } from './utils'
 
 const _COLUMNS = [
   {Header: '', accessor: '', width: 0, fixed: true, type: 'rest'},
-  {Header: '編號', accessor: 'idx', width: CHAR_WIDTH*6, fixed: true},
-  {Header: '', accessor: 'read', width: CHAR_WIDTH*3, fixed: true},
-  {Header: '', accessor: 'n_comments', width: CHAR_WIDTH*5, fixed: true},
+  {Header: '編號', accessor: 'numIdx', width: CHAR_WIDTH*6, fixed: true},
+  {Header: '', accessor: 'read', width: CHAR_WIDTH*2, fixed: true},
+  {Header: '', accessor: 'n_comments', width: CHAR_WIDTH*2, fixed: true},
   {Header: '日期', accessor: 'create_time', width: CHAR_WIDTH*5, fixed: true},
   {Header: '作者', accessor: 'owner', width: CHAR_WIDTH*14, fixed: true},
-  {Header: '類別', accessor: 'class', width: CHAR_WIDTH*8, fixed: true},
-  {Header: '標題', accessor: 'title', width: CHAR_WIDTH*48, fixed: true},
+  {Header: '類別', accessor: 'class', width: CHAR_WIDTH*6, fixed: true},
+  {Header: '標 題', accessor: 'title', width: CHAR_WIDTH*48, fixed: true, 'header-text-align': 'left'},
   {Header: '', accessor: '', width: 0, fixed: true, type: 'rest'},
 ]
 
 export default (props) => {
-  const {articles, width, height} = props
+  const {articles, width, height, loadPre, loadNext, scrollToRow, onVerticalScroll, scrollTop} = props
 
   const [selectedRow, setSeletedRow] = useState(-1)
 
   // assume that we will need to use different highlight for different cell
   let defaultHighlight = {
-    'background-color' : '#333',
+    backgroundColor: '#333',
+  }
+
+  let renderIdx = (props) => {
+    const {data, rowIndex, columnKey} = props
+    return (<Idx data={data} rowIndex={rowIndex} columnKey={columnKey} loadPre={loadPre} loadNext={loadNext} />)
   }
 
   let renderCell = (column, data, fontSize) => {
@@ -39,8 +44,8 @@ export default (props) => {
     let renderer = PlainText
 
     switch(column.accessor) {
-    case 'idx':
-      renderer = Idx
+    case 'numIdx':
+      renderer = (props) => renderIdx(props)
       break
     case 'read':
       renderer = State
@@ -61,13 +66,17 @@ export default (props) => {
       return <Cell className={screenStyles['default']}></Cell>
     }
     return <RowHighlightedCell column={column} data={data} fontSize={fontSize}
-      contentGen={renderer} setRowNum={setSeletedRow}
-      highlightRow={selectedRow} highlightStyle={defaultHighlight}/>
+      content={renderer} setRowNum={setSeletedRow}
+      highlightRow={selectedRow} highlightStyle={defaultHighlight} />
   }
 
   let renderHeader = (column, fontSize) => {
     let style = {
-      'font-size': fontSize + 'px',
+      fontSize: fontSize + 'px',
+    }
+    let textAlign = column['header-text-align'] || ''
+    if(textAlign !== '') {
+      style['textAlign'] = textAlign
     }
 
     return (<Cell className={screenStyles['header']} style={style}>{column.Header}</Cell>)
@@ -80,6 +89,6 @@ export default (props) => {
   }
 
   return (
-    <Screen width={width} height={height} columns={_COLUMNS} data={articles} renderCell={renderCell} renderHeader={renderHeader} />
+    <Screen width={width} height={height} columns={_COLUMNS} data={articles} renderCell={renderCell} renderHeader={renderHeader} scrollToRow={scrollToRow} onVerticalScroll={onVerticalScroll} scrollTop={scrollTop} />
   )
 }

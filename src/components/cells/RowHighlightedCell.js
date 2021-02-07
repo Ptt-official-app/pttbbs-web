@@ -1,13 +1,13 @@
 import { Cell } from 'fixed-data-table-2'
 
 export default (props) => {
-  const {data, fontSize, rowIndex, columnKey, contentGen, setRowNum, highlightRow, highlightStyle} = props
+  const {data, fontSize, rowIndex, columnKey, content: Content, setRowNum, highlightRow, highlightStyle} = props
 
-  let content = contentGen(data, rowIndex, columnKey)
+  let render = () => (<Content data={data} rowIndex={rowIndex} columnKey={columnKey} />)
 
   let style = {
     'display' : 'block',
-    'font-size': fontSize + 'px',
+    fontSize: fontSize + 'px',
   }
 
   if (rowIndex === highlightRow) {
@@ -22,7 +22,7 @@ export default (props) => {
       <Cell style={style}
         onMouseEnter={() => setRowNum(rowIndex)}
         onMouseLeave={() => setRowNum(-1)} >
-          {content}
+          {render()}
       </Cell>
     </a>
   )

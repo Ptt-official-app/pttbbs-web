@@ -1,45 +1,64 @@
-export const PlainText = (data, rowIndex, columnKey) => {
-    let text = data[rowIndex][columnKey]
+import styles from './ContentRenderer.module.css'
 
-    return text
+export const PlainText = (props) => {
+  const {data, rowIndex, columnKey} = props
+  let text = data[rowIndex][columnKey]
+
+  return (<div>{text}</div>)
 }
 
-export const PostDate = (data, rowIndex, columnKey) => {
+export const PostDate = (props) => {
+  const {data, rowIndex, columnKey} = props
+  let item = data[rowIndex]
+  let date = new Date(item[columnKey])
 
+  let month = date.getMonth() + 1
+  let day = date.getDay()
+  let text =  month.toString() + "/" + day.toString()
+
+  return (<div>{text}</div>)
+}
+
+export const Idx = (props) => {
+  const {data, rowIndex, columnKey, loadPre, loadNext} = props
     let item = data[rowIndex]
-    let date = new Date(item[columnKey])
+    let text = item[columnKey]
 
-    let month = date.getMonth() + 1
-    let day = date.getDay()
-    let text =  month.toString() + "/" + day.toString()
-
-    return text
-}
-
-export const Idx = (data, rowIndex, columnKey) => {
-    let idx = rowIndex + 1
-    let text = idx.toString()
-    return text
-}
-
-export const State = (data, rowIndex, columnKey) => {
-    let item = data[rowIndex]
-    let text = (item[columnKey] === true) ? '+' : '-'
-
-    let style = {
-        'color' : (item[columnKey] === true) ? '#fff' : '#000'
+    if(rowIndex === 0 && loadPre) {
+      loadPre(item)
     }
-    return (
-      <div style={style}>{text}</div>
-    )
+    if(rowIndex === data.length - 1 && loadNext) {
+      loadNext(item)
+    }
+
+    return (<div className={styles['idx']}>{text}</div>)
 }
 
-export const CommNum = (data, rowIndex, columnKey) => {
+export const State = (props) => {
+  const {data, rowIndex, columnKey} = props
+
+  let item = data[rowIndex]
+  let text = (item[columnKey] === true) ? '+' : '-'
+
+  let style = {
+      'color' : (item[columnKey] === true) ? '#fff' : '#000'
+  }
+  return (
+    <div style={style}>{text}</div>
+  )
+}
+
+export const CommNum = (props) => {
+  const {data, rowIndex, columnKey} = props
+
   let item = data[rowIndex]
   let color = 'green'
 
-  let text = item[columnKey]
+  let text = item[columnKey] || 0
   let num = parseInt(text)
+  if(num === 0) {
+    return (<div></div>)
+  }
   if (Number.isInteger(num)) {
     if (num > 9) {
       color = 'yellow'
@@ -54,17 +73,27 @@ export const CommNum = (data, rowIndex, columnKey) => {
     'color': color,
   }
 
-    return (
-      <div style={style}>{text}</div>
-    )
+  return (
+    <div style={style}>{text}</div>
+  )
 }
 
-export const Category = (data, rowIndex, columnKey) => {
+export const Category = (props) => {
+  const {data, rowIndex, columnKey} = props
   let item = data[rowIndex]
-  let text = '[' + item[columnKey] + ']'
 
-  return text
+  let text = item[columnKey] || ''
+  if(text === '') {
+    return ''
+  }
+
+  return (<div>{'[' + text + ']'}</div>)
 }
 
+export const Moderators = (props) => {
+  const {data, rowIndex, columnKey} = props
 
+  let item = data[rowIndex]
 
+  return(<div>{item[columnKey].join('/')}</div>)
+}

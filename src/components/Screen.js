@@ -15,7 +15,7 @@ const _DEFAULT_COLUMNS = [
 ]
 
 export default (props) => {
-  const {width, height, columns: propsColumns, data, renderCell: propsRenderCell, renderHeader} = props
+  const {width, height, columns: propsColumns, data, renderCell: propsRenderCell, renderHeader, scrollTop, onVerticalScroll, scrollToRow} = props
 
   let columns = propsColumns || _DEFAULT_COLUMNS
 
@@ -52,6 +52,18 @@ export default (props) => {
     )
   }
 
+  let scroll = {}
+
+  if(typeof scrollToRow !== 'undefined' && scrollToRow !== null) {
+    scroll.scrollTop = scrollToRow * rowHeight
+  } else if(typeof scrollTop !== 'undefined' && scrollTop !== null) {
+    scroll.scrollTop = scrollTop
+  }
+
+  if(typeof onVerticalScroll !== 'undefined' && onVerticalScroll !== null) {
+    scroll.onVerticalScroll = onVerticalScroll
+  }
+
   return (
     <Table
       rowHeight={rowHeight}
@@ -60,7 +72,7 @@ export default (props) => {
       width={width}
       height={height}
       showScrollbarX={false}
-      showScrollbarY={false}>
+      showScrollbarY={false} {...scroll}>
       {columns.map((column, idx) => renderColumn(column, idx, data))}
     </Table>
   )

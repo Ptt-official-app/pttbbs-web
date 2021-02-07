@@ -66,3 +66,12 @@ a, a:hover {
 .public_fixedDataTableCell_cellContent {
   padding: 0px;
 }
+
+.fixedDataTableCellLayout_wrap2 {
+  display: block;
+}
+
+.fixedDataTableCellLayout_wrap3 {
+  display: block;
+  vertical-align: middle;
+}

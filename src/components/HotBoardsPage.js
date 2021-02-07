@@ -53,6 +53,8 @@ export default (props) => {
     }
   }
 
+  console.log('hotBoardsPage: to render: boards:', boards)
+
   return (
     <div className={pageStyles['root']}>
       <Header title={headerTitle} />
