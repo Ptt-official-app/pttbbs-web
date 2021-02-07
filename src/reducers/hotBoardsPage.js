@@ -31,7 +31,7 @@ const _getData = (myID) => {
       window.location.href = `/board/${each.bid}/articles`
     })
 
-    let newList = MergeList([], dataList, false, true, true)
+    let newList = MergeList([], dataList, false, 1)
 
     data.list = newList
 

@@ -89,3 +89,11 @@ export const Category = (props) => {
 
   return (<div>{'[' + text + ']'}</div>)
 }
+
+export const Moderators = (props) => {
+  const {data, rowIndex, columnKey} = props
+
+  let item = data[rowIndex]
+
+  return(<div>{item[columnKey].join('/')}</div>)
+}
