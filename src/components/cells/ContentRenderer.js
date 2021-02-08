@@ -1,4 +1,5 @@
 import styles from './ContentRenderer.module.css'
+import moment from 'moment'
 
 export const PlainText = (props) => {
   const {data, rowIndex, columnKey} = props
@@ -10,11 +11,7 @@ export const PlainText = (props) => {
 export const PostDate = (props) => {
   const {data, rowIndex, columnKey} = props
   let item = data[rowIndex]
-  let date = new Date(item[columnKey] * 1000) //js is milli-ts based.
-
-  let month = date.getMonth() + 1
-  let day = date.getDay()
-  let text =  month.toString() + "/" + day.toString()
+  let text = moment(item[columnKey] * 1000).format('MM/DD') //js is milli-ts based.
 
   return (<div>{text}</div>)
 }
