@@ -10,7 +10,7 @@ export const PlainText = (props) => {
 export const PostDate = (props) => {
   const {data, rowIndex, columnKey} = props
   let item = data[rowIndex]
-  let date = new Date(item[columnKey])
+  let date = new Date(item[columnKey] * 1000) //js is milli-ts based.
 
   let month = date.getMonth() + 1
   let day = date.getDay()
@@ -21,17 +21,17 @@ export const PostDate = (props) => {
 
 export const Idx = (props) => {
   const {data, rowIndex, columnKey, loadPre, loadNext} = props
-    let item = data[rowIndex]
-    let text = item[columnKey]
+  let item = data[rowIndex]
+  let text = item[columnKey]
 
-    if(rowIndex === 0 && loadPre) {
-      loadPre(item)
-    }
-    if(rowIndex === data.length - 1 && loadNext) {
-      loadNext(item)
-    }
+  if(rowIndex === 0 && loadPre) {
+    loadPre(item)
+  }
+  if(rowIndex === data.length - 1 && loadNext) {
+    loadNext(item)
+  }
 
-    return (<div className={styles['idx']}>{text}</div>)
+  return (<div className={styles['idx']}>{text}</div>)
 }
 
 export const State = (props) => {
@@ -41,7 +41,7 @@ export const State = (props) => {
   let text = (item[columnKey] === true) ? '+' : ''
 
   let style = {
-      'color' : (item[columnKey] === true) ? '#fff' : '#000'
+    color : (item[columnKey] === true) ? '#fff' : '#000'
   }
   return (
     <div style={style}>{text}</div>
@@ -70,7 +70,7 @@ export const CommNum = (props) => {
   }
 
   let style = {
-    'color': color,
+    color: color,
   }
 
   return (
