@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
-import Routes from './routes/All'
+import Routes from './routes/Dev'
 
 import 'normalize.css/normalize.css'
 import 'bootstrap/dist/css/bootstrap.css'

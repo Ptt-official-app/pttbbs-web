@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+a, a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
 .public_fixedDataTable_main {
   border-color: #000;
 }
@@ -43,6 +48,10 @@ code {
   border-color: #000;
 }
 
+.fixedDataTableCellLayout_main {
+  border-width: 0px;
+}
+
 .fixedDataTableLayout_header,
 .fixedDataTableLayout_hasBottomBorder {
   border-bottom-style: solid;
@@ -56,4 +65,13 @@ code {
 
 .public_fixedDataTableCell_cellContent {
   padding: 0px;
+}
+
+.fixedDataTableCellLayout_wrap2 {
+  display: block;
+}
+
+.fixedDataTableCellLayout_wrap3 {
+  display: block;
+  vertical-align: middle;
 }

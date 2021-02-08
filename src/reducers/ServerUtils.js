@@ -1,5 +1,7 @@
 import config from 'config'
 
+const LIST_LIMIT = config.LIST_LIMIT || 10
+
 export const Login = (username, password) => ({
   endpoint: '/api/account/login',
   method: 'post',
@@ -101,7 +103,27 @@ export const SetIDEmail = (userID, token) => ({
   },
 })
 
+export const GetBoardSummary = (bid) => ({
+  endpoint: '/api/board/' + bid + '/summary',
+  method: 'get',
+})
+
 export const LoadPopularBoards = () => ({
   endpoint: '/api/boards/popular',
   method: 'get',
 })
+
+export const LoadArticles = (bid, title, startIdx, desc) => {
+  let query = {
+    title: title || '',
+    start_idx: startIdx || '',
+    limit: LIST_LIMIT,
+    desc: desc || false,
+  }
+
+  return {
+    endpoint: '/api/board/'+ bid + '/articles',
+    method: 'get',
+    query: query,
+  }
+}

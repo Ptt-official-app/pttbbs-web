@@ -18,6 +18,7 @@ import Header from './Header'
 export default (props) => {
   const [stateUserPage, doUserPage] = useActionDispatchReducer(DoUserPage)
 
+  // eslint-disable-next-line
   const [errMsg, setErrMsg] = useState('')
 
   //init

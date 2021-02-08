@@ -4,6 +4,8 @@ import * as ServerUtils from './ServerUtils'
 import api from './api'
 //import * as errors from './errors'
 
+import { MergeList } from './utils'
+
 const myClass = 'demo-pttbbs/HotBoardsPage'
 
 export const init = (myID, doMe, parentID, doParent) => {
@@ -23,6 +25,15 @@ const _getData = (myID) => {
       dispatch(_setData(myID, {errmsg}))
       return
     }
+
+    let dataList = data.list || []
+    dataList.map((each) => each.click = () => {
+      window.location.href = `/board/${each.bid}/articles`
+    })
+
+    let newList = MergeList([], dataList, false, 1)
+
+    data.list = newList
 
     dispatch(_setData(myID, data))
   })()

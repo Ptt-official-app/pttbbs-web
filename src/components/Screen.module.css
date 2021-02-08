@@ -5,9 +5,11 @@
 .header {
     color: #000;
     background-color: #eee;
+    text-align: center;
 }
 
 .default {
     color: #000;
     background-color: #000;
 }
+

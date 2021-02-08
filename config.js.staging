@@ -1,0 +1,8 @@
+module.exports = {
+  BRAND: 'DevPtt',
+  API_ROOT: 'https://api.devptt.site:3457',
+  CLIENT_ID: 'test_client_id',
+  CLIENT_SECRET: 'test_client_secret',
+  TERM_URL: 'https://term.devptt.site',
+  LIST_LIMIT: 25,
+}
