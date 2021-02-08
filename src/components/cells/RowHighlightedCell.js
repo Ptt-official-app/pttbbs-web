@@ -6,7 +6,8 @@ export default (props) => {
   let render = () => (<Content data={data} rowIndex={rowIndex} columnKey={columnKey} />)
 
   let style = {
-    'display' : 'block',
+    display : 'block',
+    height : '100%',
     fontSize: fontSize + 'px',
   }
 
