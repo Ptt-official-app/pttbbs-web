@@ -27,9 +27,7 @@ const _getData = (myID) => {
     }
 
     let dataList = data.list || []
-    dataList.map((each) => each.click = () => {
-      window.location.href = `/board/${each.bid}/articles`
-    })
+    dataList.map((each) => each.url = `/board/${each.bid}/articles`)
 
     let newList = MergeList([], dataList, false, 1)
 

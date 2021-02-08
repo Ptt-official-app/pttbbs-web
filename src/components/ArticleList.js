@@ -34,18 +34,13 @@ export default (props) => {
     backgroundColor: '#333',
   }
 
-  let renderIdx = (props) => {
-    const {data, rowIndex, columnKey} = props
-    return (<Idx data={data} rowIndex={rowIndex} columnKey={columnKey} loadPre={loadPre} loadNext={loadNext} />)
-  }
-
   let renderCell = (column, data, fontSize) => {
 
     let renderer = PlainText
 
     switch(column.accessor) {
     case 'numIdx':
-      renderer = (props) => renderIdx(props)
+      renderer = Idx
       break
     case 'read':
       renderer = State
@@ -67,7 +62,7 @@ export default (props) => {
     }
     return <RowHighlightedCell column={column} data={data} fontSize={fontSize}
       content={renderer} setRowNum={setSeletedRow}
-      highlightRow={selectedRow} highlightStyle={defaultHighlight} />
+      highlightRow={selectedRow} highlightStyle={defaultHighlight} loadPre={loadPre} loadNext={loadNext} />
   }
 
   let renderHeader = (column, fontSize) => {
