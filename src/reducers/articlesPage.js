@@ -45,21 +45,28 @@ export const GetArticles = (myID, bid, title, startIdx, desc) => {
     //check busy
     let lastPre = me.lastPre || ''
     let lastNext = me.lastNext || ''
+    let isBusyLoading = me.isBusyLoading || false
+    if(isBusyLoading) {
+      return
+    }
     if(desc) {
       if(lastPre === startIdx) {
         return
       }
-      dispatch(_setData(myID, {lastPre: startIdx}))
+
     } else {
       if(lastNext === startIdx) {
         return
       }
-      dispatch(_setData(myID, {lastNext: startIdx}))
+
     }
 
+    dispatch(_setData(myID, {isBusyLoading: true}))
+
     const {data, errmsg, status} = await api(ServerUtils.LoadArticles(bid, title, startIdx, desc))
+    console.log('doArticlesPage.GetArticles: after LoadArticles: data:', data)
     if (status !== 200) {
-      dispatch(_setData(myID, {errmsg, lastPre: '', lastNext: ''}))
+      dispatch(_setData(myID, {errmsg, isBusyLoading: false}))
       return
     }
 
@@ -74,10 +81,15 @@ export const GetArticles = (myID, bid, title, startIdx, desc) => {
     }
     if(!desc) {
       toUpdate.nextIdx = data.next_idx
+      toUpdate.lastNext = startIdx
+      toUpdate.isBusyLoading = false
     } else {
       toUpdate.scrollToRow = dataList.length - 1 //only dataList.length - 1 new items.
+      toUpdate.lastPre = startIdx
+      toUpdate.isBusyLoading = false
     }
 
+    console.log('doArticlesPage.GetArticles: to update:', toUpdate)
     dispatch(_setData(myID, toUpdate))
   })()
 }

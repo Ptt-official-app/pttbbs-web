@@ -26,9 +26,10 @@ export default (props) => {
   useEffect(() => {
     let articlesPageID = genUUID()
     const query = QueryString.parse(window.location.search)
-    const {start_idx: startIdx} = query
+    const {start_idx: startIdx, title: queryTitle} = query
+    let searchTitle = queryTitle || ''
 
-    doArticlesPage.init(articlesPageID, doArticlesPage, null, null, bid, null, startIdx)
+    doArticlesPage.init(articlesPageID, doArticlesPage, null, null, bid, searchTitle, startIdx)
   }, [])
 
   //get data
@@ -38,8 +39,9 @@ export default (props) => {
   let articles = articlesPage.list || []
   let brdname = articlesPage.brdname || ''
   let title = articlesPage.title || ''
+  let searchTitle = articlesPage.searchTitle || ''
   let nextIdx = articlesPage.nextIdx || ''
-  let nextCreateTime = articlesPage.nextCreateTime || 0
+  //let nextCreateTime = articlesPage.nextCreateTime || 0
   let scrollToRow = (typeof articlesPage.scrollToRow === 'undefined') ? null : articlesPage.scrollToRow
 
   //render
@@ -60,14 +62,14 @@ export default (props) => {
     if(!idx) {
       return
     }
-    doArticlesPage.GetArticles(myID, bid, title, idx, true)
+    doArticlesPage.GetArticles(myID, bid, searchTitle, idx, true)
   }
 
   let loadNext = (item) => {
     if(!nextIdx) {
       return
     }
-    doArticlesPage.GetArticles(myID, bid, title, nextIdx, false)
+    doArticlesPage.GetArticles(myID, bid, searchTitle, nextIdx, false)
   }
 
   let onVerticalScroll = (scrollTop) => {

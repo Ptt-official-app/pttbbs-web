@@ -1,9 +1,9 @@
 import { Cell } from 'fixed-data-table-2'
 
 export default (props) => {
-  const {data, fontSize, rowIndex, columnKey, content: Content, setRowNum, highlightRow, highlightStyle} = props
+  const {data, fontSize, rowIndex, columnKey, content: Content, setRowNum, highlightRow, highlightStyle, ...params} = props
 
-  let render = () => (<Content data={data} rowIndex={rowIndex} columnKey={columnKey} />)
+  let render = () => (<Content data={data} rowIndex={rowIndex} columnKey={columnKey} {...params} />)
 
   let style = {
     display : 'block',
