@@ -7,8 +7,22 @@
     font-size: x-large;
 }
 
-.home {
+.navbar-link {
     color: #ff8800;
-    border-width: 0px;
-    background-color: navy;
+    background: none;
+    border: none;
+}
+
+.navbar-link:hover {
+    color: #ffffff;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+    background-color: #ff8800;
+}
+
+.logo:hover {
+    background-color: #ffffff;
 }
