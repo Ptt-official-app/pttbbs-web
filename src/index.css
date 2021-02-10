@@ -75,3 +75,8 @@ a, a:hover {
   display: block;
   vertical-align: middle;
 }
+
+.logo-github {
+  -webkit-mask: url(./assets/img/github.svg) no-repeat center;
+  mask: url(./assets/img/github.svg) no-repeat center;
+}

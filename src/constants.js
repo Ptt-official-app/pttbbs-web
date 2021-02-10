@@ -5,3 +5,5 @@ export const MAX_PWLEN = 30
 export const MIN_PWLEN = 6
 
 export const PTT_GUEST = 'guest'
+
+export const GITHUB_LINK = 'https://github.com/Ptt-official-app/demo-pttbbs'
