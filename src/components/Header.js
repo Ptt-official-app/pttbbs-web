@@ -49,8 +49,8 @@ export default (props) => {
       {renderHeader()}
       <button className={'pull-right ' + styles['navbar-link']} onClick={() => goUserHome(userID)}>hi～ {userID}</button>
       <a className={styles['navbar-link']} href={GITHUB_LINK}>
-        <div className={'logo-github ' + styles['logo']}></div>
-        </a>
+        <div className={'ml-3 logo-github ' + styles['logo']}></div>
+      </a>
     </nav>
   )
 }

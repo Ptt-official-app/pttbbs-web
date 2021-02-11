@@ -77,6 +77,5 @@ a, a:hover {
 }
 
 .logo-github {
-  -webkit-mask: url(./assets/img/github.svg) no-repeat center;
-  mask: url(./assets/img/github.svg) no-repeat center;
+  background: center / cover no-repeat url(./assets/img/GitHub-Mark-Light-64px.png);
 }
