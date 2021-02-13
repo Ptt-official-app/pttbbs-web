@@ -6,6 +6,7 @@ import * as errors from './errors'
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoRegisterPage from '../reducers/registerPage'
+import Header from './Header'
 
 import * as constants from '../constants'
 
@@ -143,13 +144,16 @@ export default (props) => {
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
   // -------- Component Instance ----------
+  let headerTitle = "註冊新帳號"
+
   if(!myID) {
     return (<Empty />)
   }
 
   return (
     <div className={pageStyles['root']}>
-      <div className='container vh-100'>
+      <Header title={headerTitle} />
+      <div className='container vh-100 mt-4'>
         <div className="row">
           <div className="col-12 col-md-6 mx-auto">
 

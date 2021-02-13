@@ -8,6 +8,7 @@ import { useWindowSize } from 'react-use'
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoHomePage from '../reducers/homePage'
+import Header from './Header'
 
 export default (props) => {
   const [stateHomePage, doHomePage] = useActionDispatchReducer(DoHomePage)
@@ -65,12 +66,15 @@ export default (props) => {
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
   // -------- Component Instance ----------
+  let headerTitle = "\\歡迎登入 PTT～/"
+
   if(!myID) {
     return (<Empty />)
   }
   return (
     <div className={pageStyles['root']} style={style}>
-      <div className={'container'} style={style}>
+      <Header title={headerTitle}/>
+      <div className={'container mt-5 '} style={style}>
         <div className="row">
           <div className="col-12 col-md-6 mx-auto">
 

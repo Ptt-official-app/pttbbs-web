@@ -9,6 +9,7 @@ import { Empty } from 'react-reducer-utils'
 export default (props) => {
   const {title: paramsTitle, userID, renderHeader: paramsRenderHander} = props
 
+  // Links
   let goHome = () => {
     window.location.href = '/'
   }
@@ -17,11 +18,17 @@ export default (props) => {
     window.location.href = config.TERM_URL
   }
 
-  let goUserHome = (userID) => {
-    if(!userID || userID === PTT_GUEST) {
-      return
-    }
+  let goUserHome = () => {
     window.location.href = '/user/' + userID
+  }
+
+  let renderUserHome = () => {
+    if(!userID || userID === PTT_GUEST) {
+      return <Empty />
+    }
+    return (
+      <button className={'pull-right ' + styles['navbar-link']} onClick={() => goUserHome()}>hi～{userID}</button>
+    )
   }
 
   let renderHeader = () => {
@@ -47,7 +54,7 @@ export default (props) => {
       <button className={'navbar-brand ' + styles['navbar-link']} onClick={() => goHome()}>{config.BRAND}</button>
       {renderTerm()}
       {renderHeader()}
-      <button className={'pull-right ' + styles['navbar-link']} onClick={() => goUserHome(userID)}>hi～ {userID}</button>
+      {renderUserHome()}
       <a className={styles['navbar-link']} href={GITHUB_LINK}>
         <div className={'logo-github ' + styles['logo']}></div>
         </a>
