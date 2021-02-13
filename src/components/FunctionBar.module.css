@@ -1,0 +1,13 @@
+.root {
+    background-color: navy;
+}
+
+.navbar-link {
+    color: #ff8800;
+    background: none;
+    border: none;
+}
+
+.navbar-link:hover {
+    color: #ffffff;
+}

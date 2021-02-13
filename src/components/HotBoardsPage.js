@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef  } from 'react'
 import pageStyles from './Page.module.css'
 
 import * as errors from './errors'
@@ -12,6 +12,7 @@ import * as DoHotBoardsPage from '../reducers/hotBoardsPage'
 import Header from './Header'
 import BoardList from './BoardList'
 import EmptyBoardList from './EmptyBoardList'
+import FunctionBar from './FunctionBar'
 
 export default (props) => {
   const [stateHotBoardsPage, doHotBoardsPage] = useActionDispatchReducer(DoHotBoardsPage)
@@ -24,6 +25,9 @@ export default (props) => {
   useEffect(() => {
     let hotBoardsPageID = genUUID()
     doHotBoardsPage.init(hotBoardsPageID, doHotBoardsPage, null, null)
+
+    if(headerRef.current !== null) setHeaderHeight(headerRef.current.clientHeight)
+    if(funcbarRef.current !== null) setFuncbarHeight(funcbarRef.current.clientHeight)
   }, [])
 
   //get data
@@ -33,10 +37,15 @@ export default (props) => {
   let boards = hotBoardsPage.list || []
 
   //render
+  const [headerHeight, setHeaderHeight] = useState(0)
+  const [funcbarHeight, setFuncbarHeight] = useState(0)
+  const headerRef = useRef(null)
+  const funcbarRef = useRef(null)
   const {width: innerWidth, height: innerHeight} = useWindowSize()
 
   let width = innerWidth
-  let boardListHeight = innerHeight * 0.9
+  //let boardListHeight = innerHeight * SCREEN_RATIO
+  let boardListHeight = innerHeight - headerHeight - funcbarHeight
 
   let headerTitle = '熱門看板'
 
@@ -55,10 +64,26 @@ export default (props) => {
 
   console.log('hotBoardsPage: to render: boards:', boards)
 
+  let loptions = [
+    {text: "搜尋看板", action: ()=>{}},
+    {text: "排序", action: ()=>{}},
+  ]
+  let roptions = [
+    {text: "我的最愛", action: ()=>{}},
+    {text: "全部看板", action: ()=>{}},
+  ]
+
+  // NOTE: ref can only be used directly on html tags to get element attributes
+  // Will fail if used on React components. e.g. Header
   return (
     <div className={pageStyles['root']}>
-      <Header title={headerTitle} />
+      <div ref={headerRef}>
+        <Header title={headerTitle} />
+      </div>
       {renderBoardList()}
+      <div ref={funcbarRef}>
+        <FunctionBar optionsLeft={loptions} optionsRight={roptions}/>
+      </div>
     </div>
   )
 }
