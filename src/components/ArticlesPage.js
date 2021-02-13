@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import pageStyles from './Page.module.css'
 
 import * as errors from './errors'
@@ -12,6 +12,7 @@ import * as DoArticlesPage from '../reducers/articlesPage'
 
 import Header from './Header'
 import ArticleList from './ArticleList'
+import FunctionBar from './FunctionBar'
 
 import QueryString from 'query-string'
 
@@ -30,7 +31,11 @@ export default (props) => {
     let searchTitle = queryTitle || ''
 
     doArticlesPage.init(articlesPageID, doArticlesPage, null, null, bid, searchTitle, startIdx)
+
+    if(headerRef.current !== null) setHeaderHeight(headerRef.current.clientHeight)
+    if(funcbarRef.current !== null) setFuncbarHeight(funcbarRef.current.clientHeight)
   }, [])
+
 
   //get data
   let articlesPage = getRoot(stateArticlesPage) || {}
@@ -45,11 +50,15 @@ export default (props) => {
   let scrollToRow = (typeof articlesPage.scrollToRow === 'undefined') ? null : articlesPage.scrollToRow
 
   //render
+  const [headerHeight, setHeaderHeight] = useState(0)
+  const [funcbarHeight, setFuncbarHeight] = useState(0)
+  const headerRef = useRef(null)
+  const funcbarRef = useRef(null)
   const {width: innerWidth, height: innerHeight} = useWindowSize()
   const [scrollTop, setScrollTop] = useState(0)
 
   let width = innerWidth
-  let listHeight = innerHeight * 0.9
+  let listHeight = innerHeight - headerHeight - funcbarHeight
 
   let headerTitle = brdname + ' - ' + title
 
@@ -97,10 +106,25 @@ export default (props) => {
     }
   }
 
+  let loptions = [
+    {text: "發表文章", action: ()=>{}},
+  ]
+  let roptions = [
+    {text: "精華區", action: ()=>{}},
+    {text: "看板設定/說明", action: ()=>{}},
+  ]
+
+  // NOTE: ref can only be used directly on html tags to get element attributes
+  // Will fail if used on React components.
   return (
     <div className={pageStyles['root']}>
-      <Header title={headerTitle} />
+      <div ref={headerRef}>
+        <Header title={headerTitle} />
+      </div>
       {renderArticles()}
+      <div ref={funcbarRef}>
+        <FunctionBar optionsLeft={loptions} optionsRight={roptions}/>
+      </div>
     </div>
   )
 }
