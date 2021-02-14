@@ -18,16 +18,15 @@ export default (props) => {
     window.location.href = config.TERM_URL
   }
 
-  let goUserHome = () => {
-    window.location.href = '/user/' + userID
-  }
-
   let renderUserHome = () => {
+    let text = userID
+    let url = '/user/' + userID
     if(!userID || userID === PTT_GUEST) {
-      return <Empty />
+      text = "guest"
+      url = '/login'
     }
     return (
-      <button className={'pull-right ' + styles['navbar-link']} onClick={() => goUserHome()}>hi～{userID}</button>
+      <a className={'pull-right ' + styles['navbar-link']} href={url}>hi~{text}</a>
     )
   }
 
@@ -56,7 +55,7 @@ export default (props) => {
       {renderHeader()}
       {renderUserHome()}
       <a className={styles['navbar-link']} href={GITHUB_LINK}>
-        <div className={'logo-github ' + styles['logo']}></div>
+        <div className={'ml-3 logo-github ' + styles['logo']}></div>
         </a>
     </nav>
   )

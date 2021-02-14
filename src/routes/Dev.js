@@ -17,6 +17,7 @@ export default (props) => {
     <Router>
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/login" component={HomePage} />
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/user/:userid" component={UserInfoPage} />
         <Route exact path="/user/:userid/resetpassword" component={ChangePasswdPage} />
