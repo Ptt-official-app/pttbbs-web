@@ -98,8 +98,8 @@ export default (props) => {
   }
   return (
     <div className={pageStyles['root']} style={style}>
+      <Header title={headerTitle} userID={userid} />
       <div className={'container'} style={style}>
-        <Header title={headerTitle} userID={userid} />
         <div className='row'>
           <div className='col'>
             <label>我是 {userPage.username}({userPage.nickname}) {userPage.realname}</label>

@@ -9,6 +9,7 @@ export default (props) => {
     <Router>
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/login" component={HomePage} />
         <Route exact path="/boards/popular" component={HotBoardsPage} />
         <Route exact path="/board/:bid/articles" component={ArticlesPage} />
       </Switch>
