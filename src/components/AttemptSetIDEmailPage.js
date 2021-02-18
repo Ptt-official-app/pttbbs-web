@@ -10,11 +10,13 @@ import { useParams } from 'react-router-dom'
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoAttemptSetIDEmailPage from '../reducers/attemptSetIDEmailPage'
+import * as DoHeader from '../reducers/header'
 
 import Header from './Header'
 
 export default (props) => {
   const [stateAttemptSetIDEmailPage, doAttemptSetIDEmailPage] = useActionDispatchReducer(DoAttemptSetIDEmailPage)
+  const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
@@ -24,6 +26,9 @@ export default (props) => {
   let { userid } = useParams()
 
   useEffect(() => {
+    let headerID = genUUID()
+    doHeader.init(headerID, doHeader, null, null)
+
     let attemptSetIDEmailPageID = genUUID()
     doAttemptSetIDEmailPage.init(attemptSetIDEmailPageID, doAttemptSetIDEmailPage, null, null, userid)
   }, [])
@@ -93,7 +98,7 @@ export default (props) => {
   return (
     <div className={pageStyles['root']} style={style}>
       <div className={'container'}>
-        <Header title='我想換認證 Email' userID={userid} />
+        <Header title='我想換認證 Email' stateHeader={stateHeader} />
         <div className='row'>
           <div className='col'>
             <label>我是 {userID}</label>

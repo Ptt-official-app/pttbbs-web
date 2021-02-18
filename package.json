@@ -24,6 +24,7 @@
   },
   "scripts": {
     "start": "npm run dev:dev && react-scripts start",
+    "start-no-dev": "react-scripts start",
     "dev:dev": "rm src/index.js; cd src && ln -s dev.js index.js && cd ..",
 
     "dev:all": "rm src/index.js; cd src && ln -s all.js index.js && cd ..",
@@ -31,6 +32,9 @@
 
     "dev:home": "rm src/index.js; cd src && ln -s home.js index.js && cd ..",
     "build:home": "npm run dev:home && react-scripts build && cp build/index.html build/home.html",
+
+    "dev:login": "rm src/index.js; cd src && ln -s login.js index.js && cd ..",
+    "build:login": "npm run dev:login && react-scripts build && cp build/index.html build/login.html",
 
     "dev:register": "rm src/index.js; cd src && ln -s register.js index.js && cd ..",
     "build:register": "npm run dev:register && react-scripts build && cp build/index.html build/register.html",

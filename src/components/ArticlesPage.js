@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
 import * as DoArticlesPage from '../reducers/articlesPage'
+import * as DoHeader from '../reducers/header'
 
 import Header from './Header'
 import ArticleList from './ArticleList'
@@ -18,6 +19,7 @@ import QueryString from 'query-string'
 
 export default (props) => {
   const [stateArticlesPage, doArticlesPage] = useActionDispatchReducer(DoArticlesPage)
+  const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   // eslint-disable-next-line
   const [errMsg, setErrMsg] = useState('')
@@ -25,6 +27,9 @@ export default (props) => {
   //init
   let { bid } = useParams()
   useEffect(() => {
+    let headerID = genUUID()
+    doHeader.init(headerID, doHeader, null, null)
+
     let articlesPageID = genUUID()
     const query = QueryString.parse(window.location.search)
     const {start_idx: startIdx, title: queryTitle} = query
@@ -119,7 +124,7 @@ export default (props) => {
   return (
     <div className={pageStyles['root']}>
       <div ref={headerRef}>
-        <Header title={headerTitle} />
+        <Header title={headerTitle} stateHeader={stateHeader} />
       </div>
       {renderArticles()}
       <div ref={funcbarRef}>

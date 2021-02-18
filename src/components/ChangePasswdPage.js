@@ -10,11 +10,13 @@ import { useParams } from 'react-router-dom'
 import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
 import * as DoChangePasswdPage from '../reducers/changePasswdPage'
+import * as DoHeader from '../reducers/header'
 
 import Header from './Header'
 
 export default (props) => {
   const [stateChangePasswdPage, doChangePasswdPage] = useActionDispatchReducer(DoChangePasswdPage)
+  const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   const [origPasswd, setOrigPasswd] = useState('')
   const [password, setPassword] = useState('')
@@ -25,6 +27,9 @@ export default (props) => {
   let { userid } = useParams()
 
   useEffect(() => {
+    let headerID = genUUID()
+    doHeader.init(headerID, doHeader, null, null)
+
     let changePasswdPageID = genUUID()
     doChangePasswdPage.init(changePasswdPageID, doChangePasswdPage, null, null, userid)
   }, [])
@@ -75,7 +80,7 @@ export default (props) => {
   return (
     <div className={pageStyles['root']} style={style}>
       <div className={'container'} style={style}>
-        <Header title='我想換密碼' userID={userid} />
+        <Header title='我想換密碼' stateHeader={stateHeader} />
         <div className='row'>
           <div className='col'>
             <label>我是 {userID}</label>

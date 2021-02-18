@@ -8,6 +8,7 @@ import { useWindowSize } from 'react-use'
 import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
 import * as DoHotBoardsPage from '../reducers/hotBoardsPage'
+import * as DoHeader from '../reducers/header'
 
 import Header from './Header'
 import BoardList from './BoardList'
@@ -16,6 +17,7 @@ import FunctionBar from './FunctionBar'
 
 export default (props) => {
   const [stateHotBoardsPage, doHotBoardsPage] = useActionDispatchReducer(DoHotBoardsPage)
+  const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   // eslint-disable-next-line
   const [errMsg, setErrMsg] = useState('')
@@ -23,6 +25,9 @@ export default (props) => {
   //init
 
   useEffect(() => {
+    let headerID = genUUID()
+    doHeader.init(headerID, doHeader, null, null)
+
     let hotBoardsPageID = genUUID()
     doHotBoardsPage.init(hotBoardsPageID, doHotBoardsPage, null, null)
 
@@ -78,7 +83,7 @@ export default (props) => {
   return (
     <div className={pageStyles['root']}>
       <div ref={headerRef}>
-        <Header title={headerTitle} />
+        <Header title={headerTitle} stateHeader={stateHeader} />
       </div>
       {renderBoardList()}
       <div ref={funcbarRef}>

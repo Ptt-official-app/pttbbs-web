@@ -8,21 +8,21 @@
 }
 
 .navbar-link {
-    color: #ff8800;
+    color: #ffff00;
     background: none;
     border: none;
 }
 
 .navbar-link:hover {
-    color: #ffffff;
+    color: #cccccc;
 }
 
 .logo {
     width: 32px;
     height: 32px;
-    background-color: #ff8800;
+    background-color: #ffff00;
 }
 
 .logo:hover {
-    background-color: #ffffff;
+    background-color: #cccccc;
 }

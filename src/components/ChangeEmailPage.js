@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom'
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoChangeEmailPage from '../reducers/changeEmailPage'
+import * as DoHeader from '../reducers/header'
 
 import Header from './Header'
 
@@ -15,12 +16,16 @@ import QueryString from 'query-string'
 
 export default (props) => {
   const [stateChangeEmailPage, doChangeEmailPage] = useActionDispatchReducer(DoChangeEmailPage)
+  const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   //init
   let { userid } = useParams()
 
   useEffect(() => {
     const { token } = QueryString.parse(window.location.search)
+
+    let headerID = genUUID()
+    doHeader.init(headerID, doHeader, null, null)
 
     let changeEmailPageID = genUUID()
     doChangeEmailPage.init(changeEmailPageID, doChangeEmailPage, null, null, userid, token)
@@ -66,7 +71,7 @@ export default (props) => {
   return (
     <div className={pageStyles['root']} style={style}>
       <div className={'container'} style={style}>
-        <Header title='更改聯絡信箱' userID={userid} />
+        <Header title='更改聯絡信箱' stateHeader={stateHeader} />
         <div className='row'>
           <div className='col'>
             {renderData()}

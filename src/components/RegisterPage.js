@@ -6,12 +6,15 @@ import * as errors from './errors'
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoRegisterPage from '../reducers/registerPage'
+import * as DoHeader from '../reducers/header'
+
 import Header from './Header'
 
 import * as constants from '../constants'
 
 export default (props) => {
   const [stateRegitsterPage, doRegPage] = useActionDispatchReducer(DoRegisterPage)
+  const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -32,6 +35,9 @@ export default (props) => {
 
   //init
   useEffect(() => {
+    let headerID = genUUID()
+    doHeader.init(headerID, doHeader, null, null)
+
     let registerPageID = genUUID()
     doRegPage.init(registerPageID, doRegPage)
   }, [])
@@ -152,7 +158,7 @@ export default (props) => {
 
   return (
     <div className={pageStyles['root']}>
-      <Header title={headerTitle} />
+      <Header title={headerTitle} stateHeader={stateHeader} />
       <div className='container vh-100 mt-4'>
         <div className="row">
           <div className="col-12 col-md-6 mx-auto">

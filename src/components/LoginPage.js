@@ -7,12 +7,13 @@ import { useWindowSize } from 'react-use'
 
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
-import * as DoHomePage from '../reducers/homePage'
-import Header from './Header'
+import * as DoLoginPage from '../reducers/loginPage'
 import * as DoHeader from '../reducers/header'
 
+import Header from './Header'
+
 export default (props) => {
-  const [stateHomePage, doHomePage] = useActionDispatchReducer(DoHomePage)
+  const [stateLoginPage, doLoginPage] = useActionDispatchReducer(DoLoginPage)
   const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   const [username, setUsername] = useState('')
@@ -24,15 +25,14 @@ export default (props) => {
     let headerID = genUUID()
     doHeader.init(headerID, doHeader, null, null)
 
-    let homePageID = genUUID()
-    doHomePage.init(homePageID, doHomePage)
-
+    let loginPageID = genUUID()
+    doLoginPage.init(loginPageID, doLoginPage)
   }, [])
 
   //get data
-  let homePage = getRoot(stateHomePage) || {}
-  let myID = homePage.id || ''
-  let errmsg = homePage.errmsg || ''
+  let loginPage = getRoot(stateLoginPage) || {}
+  let myID = loginPage.id || ''
+  let errmsg = loginPage.errmsg || ''
 
   //render
   const {height: innerHeight} = useWindowSize()
@@ -42,7 +42,7 @@ export default (props) => {
 
   let cleanErr = () => {
     setErrMsg('')
-    doHomePage.CleanErr(myID)
+    doLoginPage.CleanErr(myID)
   }
 
   let changeUsername = (username) => {
@@ -58,7 +58,7 @@ export default (props) => {
   // ---------- Handlers -------------
 
   let login = () => {
-    doHomePage.Login(myID, username, password)
+    doLoginPage.Login(myID, username, password)
   }
 
   let register = () => {
