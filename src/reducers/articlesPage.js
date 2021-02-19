@@ -13,7 +13,8 @@ export const init = (myID, doMe, parentID, doParent, bid, title, startIdx) => {
   return (dispatch, getState) => {
     dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, title, startIdx, scrollTo: null}))
     dispatch(_getBoardSummary(myID, bid))
-    dispatch(GetArticles(myID, bid, title, startIdx, false))
+    let desc = startIdx ? false : true
+    dispatch(GetArticles(myID, bid, title, startIdx, desc, false))
   }
 }
 
@@ -36,7 +37,7 @@ export const SetData = (myID, data) => {
   }
 }
 
-export const GetArticles = (myID, bid, title, startIdx, desc) => {
+export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
   return (dispatch, getState) => (async() => {
     const state = getState()
     const me = getMe(state, myID)
@@ -73,7 +74,7 @@ export const GetArticles = (myID, bid, title, startIdx, desc) => {
     let dataList = data.list || []
     let startNumIdx = data.start_num_idx || 1
 
-    let newList = MergeList(myList, dataList, desc, startNumIdx)
+    let newList = MergeList(myList, dataList, desc, startNumIdx, isExclude)
 
     let toUpdate = {
       list: newList,
@@ -83,10 +84,17 @@ export const GetArticles = (myID, bid, title, startIdx, desc) => {
       toUpdate.nextIdx = data.next_idx
       toUpdate.lastNext = startIdx
       toUpdate.isBusyLoading = false
+      if(!data.next_idx) {
+        toUpdate.isNextEnd = true
+      }
+
     } else {
       toUpdate.scrollToRow = dataList.length - 1 //only dataList.length - 1 new items.
       toUpdate.lastPre = startIdx
       toUpdate.isBusyLoading = false
+      if(!data.next_idx) {
+        toUpdate.isPreEnd = true
+      }
     }
 
     console.log('doArticlesPage.GetArticles: to update:', toUpdate)

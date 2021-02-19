@@ -6,8 +6,8 @@ export const GoHome = () => {
   window.location.href = '/'
 }
 
-export const MergeList = (origList, newList, desc, startNumIdx) => {
-  if(desc && newList.length > 0) { //desc not include start-item
+export const MergeList = (origList, newList, desc, startNumIdx, isExclude) => {
+  if(isExclude) { //desc not include start-item
     newList = newList.slice(1)
   }
 
