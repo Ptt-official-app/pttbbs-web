@@ -18,8 +18,13 @@ export const PostDate = (props) => {
 }
 
 export class Idx extends Component {
-  shouldComponentUpdate = (nextProps, nextState) => {
-    const {data, rowIndex, loadPre, loadNext} = nextProps
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
+  static getDerivedStateFromProps = (props, state) => {
+    const {data, rowIndex, loadPre, loadNext} = props
     let item = data[rowIndex]
 
     if(rowIndex === 0 && loadPre) {

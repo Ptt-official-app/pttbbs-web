@@ -118,6 +118,26 @@ export const LoadPopularBoards = () => ({
   method: 'get',
 })
 
+export const LoadGeneralBoardsByClass = (title, startIdx, desc) => ({
+  endpoint: '/api/boards/byclass',
+  query: {
+    title: title || '',
+    start_idx: startIdx || '',
+    asc: !desc,
+    limit: LIST_LIMIT,
+  },
+})
+
+export const LoadGeneralBoards = (title, startIdx, desc) => ({
+  endpoint: '/api/boards',
+  query: {
+    title: title || '',
+    start_idx: startIdx || '',
+    asc: !desc,
+    limit: LIST_LIMIT,
+  },
+})
+
 export const LoadArticles = (bid, title, startIdx, desc) => {
   let query = {
     title: title || '',

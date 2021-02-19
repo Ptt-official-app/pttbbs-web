@@ -16,15 +16,19 @@ export const MergeList = (origList, newList, desc, startNumIdx, isExclude) => {
   }
 
   if(desc) {
-    let newStartNumIdx = origList.length ? (origList[0].numIdx-1) : startNumIdx
-    newList.map((each, idx) => each.numIdx = newStartNumIdx-idx)
+    if(startNumIdx !== null) {
+      let newStartNumIdx = origList.length ? (origList[0].numIdx-1) : startNumIdx
+      newList.map((each, idx) => each.numIdx = newStartNumIdx-idx)
+    }
 
     newList = newList.reverse()
 
     return newList.concat(origList)
   } else {
-    let newStartNumIdx = origList.length ? (origList[origList.length-1].numIdx+1) : startNumIdx
-    newList.map((each, idx) => each.numIdx = newStartNumIdx+idx)
+    if(startNumIdx !== null) {
+      let newStartNumIdx = origList.length ? (origList[origList.length-1].numIdx+1) : startNumIdx
+      newList.map((each, idx) => each.numIdx = newStartNumIdx+idx)
+    }
 
     return origList.concat(newList)
   }
