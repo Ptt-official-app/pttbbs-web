@@ -5,13 +5,13 @@ import api from './api'
 
 import { MergeList, SantizeBoard } from './utils'
 
-const myClass = 'demo-pttbbs/GeneralBoardsPage'
+const myClass = 'demo-pttbbs/UserFavoritesPage'
 
-export const init = (myID, doMe, parentID, doParent, title, startIdx, isByClass) => {
+export const init = (myID, doMe, parentID, doParent, userID, level, startIdx) => {
   let theDate = new Date()
   return (dispatch, getState) => {
-    dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, title, startIdx, scrollTo: null}))
-    dispatch(GetBoards(myID, title, startIdx, false, false, isByClass))
+    dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, level, startIdx, scrollTo: null}))
+    dispatch(GetBoards(myID, userID, level, startIdx, false, false))
   }
 }
 
@@ -21,7 +21,7 @@ export const SetData = (myID, data) => {
   }
 }
 
-export const GetBoards = (myID, title, startIdx, desc, isExclude, isByClass) => {
+export const GetBoards = (myID, userID, level, startIdx, desc, isExclude) => {
   return (dispatch, getState) => (async() => {
     const state = getState()
     const me = getMe(state, myID)
@@ -39,20 +39,16 @@ export const GetBoards = (myID, title, startIdx, desc, isExclude, isByClass) => 
       if(lastPre === startIdx) {
         return
       }
-
     } else {
       if(lastNext === startIdx) {
         return
       }
-
     }
 
     dispatch(_setData(myID, {isBusyLoading: true}))
 
-    let loadBoards = isByClass ? ServerUtils.LoadGeneralBoardsByClass : ServerUtils.LoadGeneralBoards
-
-    const {data, errmsg, status} = await api(loadBoards(title, startIdx, desc))
-    console.log('doGeneralBoardsPage.GetBoards: after loadBoards: data:', data)
+    const {data, errmsg, status} = await api(ServerUtils.LoadFavoriteBoards(userID, level, startIdx, desc))
+    console.log('doUserFavoritesPage.GetBoards: after loadBoards: data:', data)
     if (status !== 200) {
       dispatch(_setData(myID, {errmsg, isBusyLoading: false}))
       return
@@ -62,6 +58,7 @@ export const GetBoards = (myID, title, startIdx, desc, isExclude, isByClass) => 
     dataList = dataList.map((each) => SantizeBoard(each))
 
     let newList = MergeList(myList, dataList, desc, null, isExclude)
+
 
     let toUpdate = {
       list: newList,
@@ -73,7 +70,6 @@ export const GetBoards = (myID, title, startIdx, desc, isExclude, isByClass) => 
       if(!data.next_idx) {
         toUpdate.isNextEnd = true
       }
-
     } else {
       toUpdate.scrollToRow = dataList.length - 1 //only dataList.length - 1 new items.
       toUpdate.lastPre = startIdx
@@ -83,7 +79,7 @@ export const GetBoards = (myID, title, startIdx, desc, isExclude, isByClass) => 
       }
     }
 
-    console.log('doGeneralBoardsPage.GetBoards: to update:', toUpdate)
+    console.log('doUserFavoritesPage.GetBoards: to update:', toUpdate)
     dispatch(_setData(myID, toUpdate))
   })()
 }

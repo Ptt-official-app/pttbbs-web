@@ -1,9 +1,4 @@
-import {init as _init, setData as _setData, createReducer} from 'react-reducer-utils'
-
-import * as ServerUtils from './ServerUtils'
-import api from './api'
-import * as errors from './errors'
-
+import {init as _init, createReducer} from 'react-reducer-utils'
 
 const myClass = 'demo-pttbbs/HomePage'
 
@@ -15,33 +10,5 @@ export const init = (myID, doMe, parentID, doParent) => {
   }
 }
 
-export const Login = (myID, username, password) => {
-  return (dispatch, getState) => (async() => {
-    const {data, errmsg, status} = await api(ServerUtils.Login(username, password))
-
-    if (!status) {
-      dispatch(_setData(myID, {errmsg: errors.ERR_NETWORK}))
-      return
-    }
-
-    if (status === 401) {
-      dispatch(_setData(myID, {errmsg: errors.ERR_PASSWD}))
-      return
-    }
-
-    if (status !== 200) {
-      dispatch(_setData(myID, {errmsg}))
-      return
-    }
-
-    window.location.href = "/user/" + data.user_id
-  })()
-}
-
-export const CleanErr = (myID) => {
-  return (dispatch, getState) => {
-    dispatch(_setData(myID, {errmsg: ''}))
-  }
-}
 
 export default createReducer()

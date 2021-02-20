@@ -4,7 +4,7 @@ import * as ServerUtils from './ServerUtils'
 import api from './api'
 //import * as errors from './errors'
 
-import { MergeList } from './utils'
+import { MergeList, SantizeBoard } from './utils'
 
 const myClass = 'demo-pttbbs/HotBoardsPage'
 
@@ -27,7 +27,7 @@ const _getData = (myID) => {
     }
 
     let dataList = data.list || []
-    dataList.map((each) => each.url = `/board/${each.bid}/articles`)
+    dataList = dataList.map((each) => SantizeBoard(each))
 
     let newList = MergeList([], dataList, false, 1)
 
