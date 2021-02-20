@@ -14,6 +14,7 @@ export default (props) => {
         <Route exact path="/boards" component={GeneralBoardsPage} />
         <Route exact path="/boards/popular" component={HotBoardsPage} />
         <Route exact path="/board/:bid/articles" component={ArticlesPage} />
+        <Route exact path="/user/:userid/favorites" component={UserFavoritesPage} />
       </Switch>
     </Router>
   )
