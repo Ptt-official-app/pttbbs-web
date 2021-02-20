@@ -157,9 +157,9 @@ export default (props) => {
   }
 
   return (
-    <div className={pageStyles['root']}>
+    <div className={'vh-100 ' + pageStyles['root']}>
       <Header title={headerTitle} stateHeader={stateHeader} />
-      <div className='container vh-100 mt-4'>
+      <div className='container mt-4'>
         <div className="row">
           <div className="col-12 col-md-6 mx-auto">
 

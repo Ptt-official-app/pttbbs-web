@@ -4,8 +4,6 @@ import config from 'config'
 
 import * as errors from './errors'
 
-import { useWindowSize } from 'react-use'
-
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoLoginPage from '../reducers/loginPage'
@@ -34,12 +32,6 @@ export default (props) => {
   let loginPage = getRoot(stateLoginPage) || {}
   let myID = loginPage.id || ''
   let errmsg = loginPage.errmsg || ''
-
-  //render
-  const {height: innerHeight} = useWindowSize()
-  let style = {
-    height: innerHeight + 'px',
-  }
 
   let cleanErr = () => {
     setErrMsg('')
@@ -79,9 +71,9 @@ export default (props) => {
     return (<Empty />)
   }
   return (
-    <div className={pageStyles['root']} style={style}>
+    <div className={'vh-100 ' + pageStyles['root']}>
       <Header title={headerTitle} stateHeader={stateHeader} />
-      <div className={'container mt-5 '} style={style}>
+      <div className={'container mt-5 '}>
         <div className="row">
           <div className="col-12 col-md-6 mx-auto">
 

@@ -3,8 +3,6 @@ import pageStyles from './Page.module.css'
 
 import * as errors from './errors'
 
-import { useWindowSize } from 'react-use'
-
 import { useParams } from 'react-router-dom'
 
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
@@ -39,12 +37,7 @@ export default (props) => {
   let myID = userPage.id || ''
   let errmsg = userPage.errmsg || ''
 
-  //render
-  const {height: innerHeight} = useWindowSize()
-  let style = {
-    height: innerHeight + 'px',
-  }
-
+  //actions
   let changePassword = () => {
     window.location.href = "/user/"+userid+"/resetpassword"
   }
@@ -102,9 +95,9 @@ export default (props) => {
     return (<Empty />)
   }
   return (
-    <div className={pageStyles['root']} style={style}>
+    <div className={'vh-100 ' + pageStyles['root']}>
       <Header title={headerTitle} stateHeader={stateHeader} />
-      <div className={'container'} style={style}>
+      <div className={'container'}>
         <div className='row'>
           <div className='col'>
             <label>我是 {userPage.username}({userPage.nickname}) {userPage.realname}</label>
