@@ -55,7 +55,10 @@ export default (props) => {
       renderer = Category
       break
     case 'title':
+      renderer = PlainText
+      break
     case 'owner':
+      renderer = PlainText
       break
     default:
       return <Cell className={screenStyles['default']}></Cell>

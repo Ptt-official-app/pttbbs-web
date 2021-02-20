@@ -1,3 +1,4 @@
+import { Component } from 'react'
 import styles from './ContentRenderer.module.css'
 import moment from 'moment'
 
@@ -16,19 +17,28 @@ export const PostDate = (props) => {
   return (<div>{text}</div>)
 }
 
-export const Idx = (props) => {
-  const {data, rowIndex, columnKey, loadPre, loadNext} = props
-  let item = data[rowIndex]
-  let text = item[columnKey]
+export class Idx extends Component {
+  shouldComponentUpdate = (nextProps, nextState) => {
+    const {data, rowIndex, loadPre, loadNext} = nextProps
+    let item = data[rowIndex]
 
-  if(rowIndex === 0 && loadPre) {
-    loadPre(item)
-  }
-  if(rowIndex === data.length - 1 && loadNext) {
-    loadNext(item)
+    if(rowIndex === 0 && loadPre) {
+      loadPre(item)
+    }
+    if(rowIndex === data.length - 1 && loadNext) {
+      loadNext(item)
+    }
+
+    return true
   }
 
-  return (<div className={styles['idx']}>{text}</div>)
+  render = () => {
+    const {data, rowIndex, columnKey} = this.props
+    let item = data[rowIndex]
+    let text = item[columnKey]
+
+    return (<div className={styles['idx']}>{text}</div>)
+  }
 }
 
 export const State = (props) => {

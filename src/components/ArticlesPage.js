@@ -50,7 +50,8 @@ export default (props) => {
   let brdname = articlesPage.brdname || ''
   let title = articlesPage.title || ''
   let searchTitle = articlesPage.searchTitle || ''
-  let nextIdx = articlesPage.nextIdx || ''
+  let isNextEnd = articlesPage.isNextEnd || false
+  let isPreEnd = articlesPage.isPreEnd || false
   //let nextCreateTime = articlesPage.nextCreateTime || 0
   let scrollToRow = (typeof articlesPage.scrollToRow === 'undefined') ? null : articlesPage.scrollToRow
 
@@ -68,7 +69,7 @@ export default (props) => {
   let headerTitle = brdname + ' - ' + title
 
   let loadPre = (item) => {
-    if(item.numIdx === 1) {
+    if(item.numIdx === 1 || isPreEnd) {
       return
     }
 
@@ -76,14 +77,20 @@ export default (props) => {
     if(!idx) {
       return
     }
-    doArticlesPage.GetArticles(myID, bid, searchTitle, idx, true)
+    doArticlesPage.GetArticles(myID, bid, searchTitle, idx, true, true)
   }
 
   let loadNext = (item) => {
-    if(!nextIdx) {
+    if(isNextEnd) {
       return
     }
-    doArticlesPage.GetArticles(myID, bid, searchTitle, nextIdx, false)
+
+    let idx = item.idx || ''
+    if(!idx) {
+      return
+    }
+
+    doArticlesPage.GetArticles(myID, bid, searchTitle, idx, false, true)
   }
 
   let onVerticalScroll = (scrollTop) => {
