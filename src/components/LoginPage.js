@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import pageStyles from './Page.module.css'
+import config from 'config'
 
 import * as errors from './errors'
 
@@ -72,7 +73,7 @@ export default (props) => {
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
   // -------- Component Instance ----------
-  let headerTitle = "\\歡迎登入 PTT～/"
+  let headerTitle = `\\歡迎登入 ${config.BRAND}～/`
 
   if(!myID) {
     return (<Empty />)

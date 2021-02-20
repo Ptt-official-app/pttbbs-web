@@ -113,6 +113,17 @@ export const GetBoardSummary = (bid) => ({
   method: 'get',
 })
 
+export const LoadFavoriteBoards = (userID, level, startIdx, desc) => ({
+  endpoint: '/api/user/' + userID + '/favorites',
+  method: 'get',
+  query: {
+    level_idx: level || '',
+    start_idx: startIdx || '',
+    asc: !desc,
+    limit: LIST_LIMIT,
+  },
+})
+
 export const LoadPopularBoards = () => ({
   endpoint: '/api/boards/popular',
   method: 'get',

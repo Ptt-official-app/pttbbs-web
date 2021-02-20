@@ -1,3 +1,5 @@
+import { NBRD_LINE, NBRD_FAV, NBRD_BOARD, NBRD_FOLDER } from '../constants'
+
 export const GoUserHome = (userID) => {
   window.location.href = '/user/' + userID
 }
@@ -31,5 +33,46 @@ export const MergeList = (origList, newList, desc, startNumIdx, isExclude) => {
     }
 
     return origList.concat(newList)
+  }
+}
+
+export const SantizeBoard = (board) => {
+  if(!board) {
+    return {title: "<目前無法看到此板>"}
+  }
+
+  board.url = BoardURL(board)
+  switch(board.stat_attr) {
+  case NBRD_LINE:
+    board.brdname = '------------'
+    board.title = '--------------------------------------------------'
+    board.nuser = '-----'
+    board.moderators = ['-----------']
+    board.type = '--'
+    break
+  case NBRD_FOLDER:
+    board.type = '□'
+    board.brdname = 'MyFavFolder'
+    board.nuser = ' '
+    break
+  default:
+    break
+  }
+
+  return board
+}
+
+export const BoardURL = (board) => {
+  switch(board.stat_attr) {
+  case NBRD_LINE:
+    return ''
+  case NBRD_FAV:
+    return `/board/${board.bid}/articles`
+  case NBRD_BOARD:
+    return `/board/${board.bid}/articles`
+  case NBRD_FOLDER:
+    return window.location.pathname + `?level=${board.level_idx}`
+  default:
+    return ''
   }
 }

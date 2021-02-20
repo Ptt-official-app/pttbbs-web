@@ -7,12 +7,13 @@ import { useWindowSize } from 'react-use'
 
 import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
+import { PTT_GUEST } from '../constants'
+
 import * as DoHotBoardsPage from '../reducers/hotBoardsPage'
 import * as DoHeader from '../reducers/header'
 
 import Header from './Header'
 import BoardList from './BoardList'
-import EmptyBoardList from './EmptyBoardList'
 import FunctionBar from './FunctionBar'
 
 export default (props) => {
@@ -41,6 +42,9 @@ export default (props) => {
   let errmsg = hotBoardsPage.errmsg || ''
   let boards = hotBoardsPage.list || []
 
+  let header = getRoot(stateHeader) || {}
+  let myUserID = header.user_id || ''
+
   //render
   const [headerHeight, setHeaderHeight] = useState(0)
   const [funcbarHeight, setFuncbarHeight] = useState(0)
@@ -50,7 +54,7 @@ export default (props) => {
 
   let width = innerWidth
   //let boardListHeight = innerHeight * SCREEN_RATIO
-  let boardListHeight = innerHeight - headerHeight - funcbarHeight
+  let listHeight = innerHeight - headerHeight - funcbarHeight
 
   let headerTitle = '熱門看板'
 
@@ -59,21 +63,29 @@ export default (props) => {
 
   let renderBoardList = () => {
     if(boards.length === 0) {
-      //return (<BoardList boards={boards} width={width} height={boardListHeight}/>)
-      return (<EmptyBoardList width={width} height={boardListHeight} prompt={"還沒有熱門看板囉～"} />)
+      let style = {
+        height: listHeight
+      }
+      return(
+        <div className="container" style={style}>
+          <h3 className="mx-4">還沒有熱門看板喔～</h3>
+        </div>
+      )
     }
     else {
-      return (<BoardList boards={boards} width={width} height={boardListHeight}/>)
+      return (<BoardList boards={boards} width={width} height={listHeight}/>)
     }
   }
 
   let loptions = [
     {text: "搜尋看板", action: ()=>{}},
   ]
-  let roptions = [
-    {text: "我的最愛", action: ()=>{}},
-    {text: "全部看板", action: ()=>{window.location.href = '/boards'}},
-  ]
+  let roptions = []
+  if(myUserID && myUserID !== PTT_GUEST) {
+    roptions.push({text: "我的最愛", action: ()=>{window.location.href = '/user/' + myUserID + '/favorites'}})
+  }
+
+  roptions.push({text: "全部看板", action: ()=>{window.location.href = '/boards'}})
 
   // NOTE: ref can only be used directly on html tags to get element attributes
   // Will fail if used on React components. e.g. Header
