@@ -4,6 +4,7 @@ import HomePage from '../components/HomePage'
 import HotBoardsPage from '../components/HotBoardsPage'
 import ArticlesPage from '../components/ArticlesPage'
 import GeneralBoardsPage from '../components/GeneralBoardsPage'
+import UserFavoritesPage from '../components/UserFavoritesPage'
 
 export default (props) => {
   return (
