@@ -4,10 +4,14 @@ import config from 'config'
 
 import { PTT_GUEST, GITHUB_LINK } from '../constants'
 
-import { Empty } from 'react-reducer-utils'
+import { Empty, getRoot } from 'react-reducer-utils'
 
 export default (props) => {
-  const {title: paramsTitle, userID, renderHeader: paramsRenderHander} = props
+  const {title: paramsTitle, userID: paramsUserID, renderHeader: paramsRenderHander, stateHeader} = props
+
+  let me = getRoot(stateHeader)
+  let meUserID = me ? me.user_id : ''
+  let userID = paramsUserID || meUserID || ''
 
   // Links
   let goHome = () => {

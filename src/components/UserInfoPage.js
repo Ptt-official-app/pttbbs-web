@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom'
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import * as DoUserPage from '../reducers/userInfoPage'
+import * as DoHeader from '../reducers/header'
 
 import { TSToDateTimeStr } from './utils'
 
@@ -17,6 +18,7 @@ import Header from './Header'
 
 export default (props) => {
   const [stateUserPage, doUserPage] = useActionDispatchReducer(DoUserPage)
+  const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   // eslint-disable-next-line
   const [errMsg, setErrMsg] = useState('')
@@ -25,6 +27,9 @@ export default (props) => {
   let { userid } = useParams()
 
   useEffect(() => {
+    let headerID = genUUID()
+    doHeader.init(headerID, doHeader, null, null)
+
     let userPageID = genUUID()
     doUserPage.init(userPageID, doUserPage, null, null, userid)
   }, [])
@@ -98,7 +103,7 @@ export default (props) => {
   }
   return (
     <div className={pageStyles['root']} style={style}>
-      <Header title={headerTitle} userID={userid} />
+      <Header title={headerTitle} stateHeader={stateHeader} />
       <div className={'container'} style={style}>
         <div className='row'>
           <div className='col'>

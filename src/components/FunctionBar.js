@@ -4,10 +4,10 @@ import styles from './Header.module.css'
 export default (props) => {
   const {optionsLeft, optionsRight} = props
 
-  let mapOption = (val) => {
+  let mapOption = (val, idx) => {
     const {text, action} = val
     return (
-      <li className="nav-item">
+      <li key={'func-'+idx} className="nav-item">
         <button className={"nav-link " + styles['navbar-link'] } onClick={action}>{text}</button>
       </li>
     )
@@ -16,7 +16,7 @@ export default (props) => {
   let renderOptions = (options) => {
     return (
       <ul className="nav">
-        {options.map(mapOption)}
+        {options.map((each, idx) => mapOption(each, idx))}
       </ul>
     )
   }
