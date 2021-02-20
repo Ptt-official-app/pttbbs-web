@@ -36,7 +36,7 @@ export default (props) => {
 
   let renderCell = (column, data, fontSize) => {
 
-    let renderer = PlainText
+    let renderer = null
 
     switch(column.accessor) {
     case 'numIdx':

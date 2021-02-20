@@ -74,7 +74,7 @@ export default (props) => {
 
     return <RowHighlightedCell column={column} data={data} fontSize={fontSize}
       content={renderer} setRowNum={setSeletedRow}
-      highlightRow={selectedRow} highlightStyle={defaultHighlight} />
+      highlightRow={selectedRow} highlightStyle={defaultHighlight} loadPre={loadPre} loadNext={loadNext} />
 
   }
 

@@ -67,15 +67,12 @@ export default (props) => {
     }
   }
 
-  console.log('hotBoardsPage: to render: boards:', boards)
-
   let loptions = [
     {text: "搜尋看板", action: ()=>{}},
-    {text: "排序", action: ()=>{}},
   ]
   let roptions = [
     {text: "我的最愛", action: ()=>{}},
-    {text: "全部看板", action: ()=>{}},
+    {text: "全部看板", action: ()=>{window.location.href = '/boards'}},
   ]
 
   // NOTE: ref can only be used directly on html tags to get element attributes
