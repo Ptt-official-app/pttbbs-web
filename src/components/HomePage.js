@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import pageStyles from './Page.module.css'
 
-import { useWindowSize } from 'react-use'
-
 import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
 
 import { PTT_GUEST } from '../constants'
@@ -45,17 +43,11 @@ export default (props) => {
   let homePage = getRoot(stateHomePage) || {}
   let myID = homePage.id || ''
 
-  //render
-  const {height: innerHeight} = useWindowSize()
-  let style = {
-    height: innerHeight + 'px',
-  }
-
   if(!myID) {
     return (<Empty />)
   }
   return (
-    <div className={pageStyles['root']} style={style}>
+    <div className={'vh-100 ' + pageStyles['root']}>
       <Header title={''} stateHeader={stateHeader} />
     </div>
   )
