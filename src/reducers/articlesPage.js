@@ -43,28 +43,33 @@ const _getBottomArticles = (myID, bid) => {
     const {data, errmsg, status} = await api(ServerUtils.LoadBottomArticles(bid))
     if (status !== 200) {
       dispatch(_setData(myID, errmsg))
+      return
     }
 
     let bottomArticles = data.list
     bottomArticles.map( each => each.numIdx = '★' )
 
-    let toUpdate = {bottomArticles}
+    let state = getState()
+    let me = getMe(state, myID)
+    let regularArticles = me.list || []
+    let isNextEnd = me.isNextEnd || false
+
+    let allArticles = isNextEnd ? regularArticles.concat(bottomArticles) : regularArticles
+
+    let toUpdate = {bottomArticles, allArticles}
     // If regular article list is already loaded, add list length to scroll position
-    const state = getState()
-    const me = getMe(state, myID)
     if (me.scrollToRow) {
       toUpdate.scrollToRow = me.scrollToRow + bottomArticles.length
     }
 
-    console.log('doArticlesPage.getBottomArticles: to update:', toUpdate)
     dispatch(_setData(myID, toUpdate))
   })()
 }
 
 export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
   return (dispatch, getState) => (async() => {
-    const state = getState()
-    const me = getMe(state, myID)
+    let state = getState()
+    let me = getMe(state, myID)
     let myList = me.list || []
 
     //check busy
@@ -89,11 +94,15 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
     dispatch(_setData(myID, {isBusyLoading: true}))
 
     const {data, errmsg, status} = await api(ServerUtils.LoadArticles(bid, title, startIdx, desc))
-    console.log('doArticlesPage.GetArticles: after LoadArticles: data:', data)
     if (status !== 200) {
       dispatch(_setData(myID, {errmsg, isBusyLoading: false}))
       return
     }
+
+    state = getState()
+    me = getMe(state, myID)
+    let bottomArticles = me.bottomArticles || []
+    let isNextEnd = me.isNextEnd || false
 
     let dataList = data.list || []
     let startNumIdx = data.start_num_idx || 1
@@ -110,6 +119,10 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
       toUpdate.isBusyLoading = false
       if(!data.next_idx) {
         toUpdate.isNextEnd = true
+        isNextEnd = true
+      }
+      if(!startIdx) {
+        toUpdate.isPreEnd = true
       }
 
     } else {
@@ -119,9 +132,15 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
       if(!data.next_idx) {
         toUpdate.isPreEnd = true
       }
+      if(!startIdx) {
+        toUpdate.isNextEnd = true
+        isNextEnd = true
+      }
     }
 
-    console.log('doArticlesPage.GetArticles: to update:', toUpdate)
+    let allArticles = isNextEnd ? newList.concat(bottomArticles) : newList
+    toUpdate.allArticles = allArticles
+
     dispatch(_setData(myID, toUpdate))
   })()
 }

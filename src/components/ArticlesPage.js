@@ -46,8 +46,6 @@ export default (props) => {
   let articlesPage = getRoot(stateArticlesPage) || {}
   let myID = articlesPage.id || ''
   let errmsg = articlesPage.errmsg || ''
-  let regularArticles = articlesPage.list || []
-  let btnArticles = articlesPage.bottomArticles || []
   let brdname = articlesPage.brdname || ''
   let title = articlesPage.title || ''
   let searchTitle = articlesPage.searchTitle || ''
@@ -55,9 +53,7 @@ export default (props) => {
   let isPreEnd = articlesPage.isPreEnd || false
   //let nextCreateTime = articlesPage.nextCreateTime || 0
   let scrollToRow = (typeof articlesPage.scrollToRow === 'undefined') ? null : articlesPage.scrollToRow
-
-  // concat articles
-  let articles = regularArticles.concat(btnArticles)
+  let articles = articlesPage.allArticles || []
 
   //render
   const [headerHeight, setHeaderHeight] = useState(0)
