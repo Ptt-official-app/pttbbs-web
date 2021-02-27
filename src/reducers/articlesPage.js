@@ -90,12 +90,14 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
 
     const {data, errmsg, status} = await api(ServerUtils.LoadArticles(bid, title, startIdx, desc))
     console.log('doArticlesPage.GetArticles: after LoadArticles: data:', data)
+    dispatch(_setData(myID, {isBusyLoading: false}))
     if (status !== 200) {
-      dispatch(_setData(myID, {errmsg, isBusyLoading: false}))
+      dispatch(_setData(myID, {errmsg}))
       return
     }
 
     let dataList = data.list || []
+    dataList.map((each) => each.url = `/board/${bid}/article/${each.aid}`)
     let startNumIdx = data.start_num_idx || 1
 
     let newList = MergeList(myList, dataList, desc, startNumIdx, isExclude)

@@ -168,3 +168,25 @@ export const LoadBottomArticles = (bid) => ({
   endpoint: '/api/board/' + bid + '/articles/bottom',
   method: 'get',
 })
+
+export const GetArticle = (bid, aid) => {
+  return {
+    endpoint: '/api/board/' + bid + '/article/' + aid,
+    method: 'get',
+  }
+}
+
+export const GetComments = (bid, aid, startIdx, desc) => {
+  let query = {
+      start_idx: startIdx || '',
+      limit: LIST_LIMIT,
+  }
+  if(typeof desc !== 'undefined') {
+    query.desc = desc
+  }
+  return {
+    endpoint: '/api/board/' + bid + '/article/' + aid + '/comments',
+    method: 'get',
+    query: query,
+  }
+}
