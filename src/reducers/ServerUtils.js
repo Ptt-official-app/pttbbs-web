@@ -163,3 +163,8 @@ export const LoadArticles = (bid, title, startIdx, desc) => {
     query: query,
   }
 }
+
+export const LoadBottomArticles = (bid) => ({
+  endpoint: '/api/board/' + bid + '/articles/bottom',
+  method: 'get',
+})
