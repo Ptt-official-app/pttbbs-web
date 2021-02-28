@@ -9,7 +9,6 @@ import { PlainText, PostDate, Idx, State, CommNum, Category } from './cells/Cont
 
 import Screen from './Screen'
 
-
 import { CHAR_WIDTH } from './utils'
 
 const _COLUMNS = [

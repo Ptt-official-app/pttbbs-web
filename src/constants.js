@@ -17,3 +17,27 @@ export const NBRD_FOLDER = 8
 export const NBRD_TAG = 16
 export const NBRD_UNREAD = 32
 export const NBRD_SYMBOLIC = 64
+
+//https://github.com/Ptt-official-app/go-openbbsmiddleware/blob/main/types/color.go
+export const COLOR_FOREGROUND_BLACK   = 30
+export const COLOR_FOREGROUND_RED     = 31
+export const COLOR_FOREGROUND_GREEN   = 32
+export const COLOR_FOREGROUND_YELLOW  = 33
+export const COLOR_FOREGROUND_BLUE    = 34
+export const COLOR_FOREGROUND_MAGENTA = 35
+export const COLOR_FOREGROUND_CYAN    = 36
+export const COLOR_FOREGROUND_WHITE   = 37
+export const COLOR_BACKGROUND_BLACK   = 40
+export const COLOR_BACKGROUND_RED     = 41
+export const COLOR_BACKGROUND_GREEN   = 42
+export const COLOR_BACKGROUND_YELLOW  = 43
+export const COLOR_BACKGROUND_BLUE    = 44
+export const COLOR_BACKGROUND_MAGENTA = 45
+export const COLOR_BACKGROUND_CYAN    = 46
+export const COLOR_BACKGROUND_WHITE   = 47
+
+//https://github.com/Ptt-official-app/go-openbbsmiddleware/blob/main/types/comment_type.go
+export const COMMENT_TYPE_RECOMMEND = 1
+export const COMMENT_TYPE_BOO = 2
+export const COMMENT_TYPE_COMMENT = 3
+export const COMMENT_TYPE_REPLY = 4

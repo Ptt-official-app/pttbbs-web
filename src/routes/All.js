@@ -5,6 +5,7 @@ import HotBoardsPage from '../components/HotBoardsPage'
 import ArticlesPage from '../components/ArticlesPage'
 import GeneralBoardsPage from '../components/GeneralBoardsPage'
 import UserFavoritesPage from '../components/UserFavoritesPage'
+import ArticlePage from '../components/ArticlePage'
 
 export default (props) => {
   return (
@@ -16,6 +17,9 @@ export default (props) => {
         <Route exact path="/boards/popular" component={HotBoardsPage} />
         <Route exact path="/board/:bid/articles" component={ArticlesPage} />
         <Route exact path="/user/:userid/favorites" component={UserFavoritesPage} />
+
+        <Route exact path="/board/:bid/article/:aid" component={ArticlePage} />
+
       </Switch>
     </Router>
   )
