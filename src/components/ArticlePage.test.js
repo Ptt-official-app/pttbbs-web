@@ -14,6 +14,6 @@ test('rendering WhoAmI Article', async () => {
       <App />
     </Router>
   )
-  await waitFor(() => screen.getByText('DevPtt'));
-  await waitFor(() => screen.getByText(/作者/i), {timeout: 5000});
+  await screen.findByText('DevPtt');
+  await screen.findByText(/作者/i);
 })
