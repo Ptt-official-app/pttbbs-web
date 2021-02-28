@@ -105,6 +105,7 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
     let isNextEnd = me.isNextEnd || false
 
     let dataList = data.list || []
+    dataList.map((each) => each.url = `/board/${bid}/article/${each.aid}`)
     let startNumIdx = data.start_num_idx || 1
 
     let newList = MergeList(myList, dataList, desc, startNumIdx, isExclude)
@@ -112,11 +113,11 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
     let toUpdate = {
       list: newList,
       nextCreateTime: data.next_create_time,
+      isBusyLoading: false,
     }
     if(!desc) {
       toUpdate.nextIdx = data.next_idx
       toUpdate.lastNext = startIdx
-      toUpdate.isBusyLoading = false
       if(!data.next_idx) {
         toUpdate.isNextEnd = true
         isNextEnd = true

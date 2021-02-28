@@ -13,6 +13,7 @@ import ArticlesPage from '../components/ArticlesPage'
 import LoginPage from '../components/LoginPage'
 import GeneralBoardsPage from '../components/GeneralBoardsPage'
 import UserFavoritesPage from '../components/UserFavoritesPage'
+import ArticlePage from '../components/ArticlePage'
 
 export default (props) => {
   return (
@@ -32,6 +33,7 @@ export default (props) => {
         <Route exact path="/boards" component={GeneralBoardsPage} />
         <Route exact path="/boards/popular" component={HotBoardsPage} />
         <Route exact path="/board/:bid/articles" component={ArticlesPage} />
+        <Route exact path="/board/:bid/article/:aid" component={ArticlePage} />
 
       </Switch>
     </Router>

@@ -1,4 +1,5 @@
 import { NBRD_LINE, NBRD_FAV, NBRD_BOARD, NBRD_FOLDER } from '../constants'
+import moment from 'moment-timezone'
 
 export const GoUserHome = (userID) => {
   window.location.href = '/user/' + userID
@@ -75,4 +76,8 @@ export const BoardURL = (board) => {
   default:
     return ''
   }
+}
+
+export const CdateMdHM = (milliTS) => {
+  return moment(milliTS).tz('Asia/Taipei').format('MM/DD hh:mm')
 }

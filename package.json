@@ -10,6 +10,7 @@
     "fixed-data-table-2": "^1.1.2",
     "js-cookie": "^2.2.1",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "normalize.css": "^8.0.1",
     "query-string": "^6.13.8",
     "react": "^17.0.1",
@@ -26,37 +27,26 @@
     "start": "npm run dev:dev && react-scripts start",
     "start-no-dev": "react-scripts start",
     "dev:dev": "rm src/index.js; cd src && ln -s dev.js index.js && cd ..",
-
     "dev:all": "rm src/index.js; cd src && ln -s all.js index.js && cd ..",
     "build:all": "npm run dev:all && react-scripts build && cp build/index.html build/all.html",
-
     "dev:home": "rm src/index.js; cd src && ln -s home.js index.js && cd ..",
     "build:home": "npm run dev:home && react-scripts build && cp build/index.html build/home.html",
-
     "dev:login": "rm src/index.js; cd src && ln -s login.js index.js && cd ..",
     "build:login": "npm run dev:login && react-scripts build && cp build/index.html build/login.html",
-
     "dev:register": "rm src/index.js; cd src && ln -s register.js index.js && cd ..",
     "build:register": "npm run dev:register && react-scripts build && cp build/index.html build/register.html",
-
     "dev:user-info": "rm src/index.js; cd src && ln -s userInfo.js index.js && cd ..",
     "build:user-info": "npm run dev:user-info && react-scripts build && cp build/index.html build/user-info.html",
-
     "dev:change-passwd": "rm src/index.js; cd src && ln -s changePasswd.js index.js && cd ..",
     "build:change-passwd": "npm run dev:change-passwd && react-scripts build && cp build/index.html build/change-passwd.html",
-
     "dev:change-email": "rm src/index.js; cd src && ln -s changeEmail.js index.js && cd ..",
     "build:change-email": "npm run dev:change-email && react-scripts build && cp build/index.html build/change-email.html",
-
     "dev:set-id-email": "rm src/index.js; cd src && ln -s setIDEmail.js index.js && cd ..",
     "build:set-id-email": "npm run dev:set-id-email && react-scripts build && cp build/index.html build/set-id-email.html",
-
     "dev:attempt-change-email": "rm src/index.js; cd src && ln -s attemptChangeEmail.js index.js && cd ..",
     "build:attempt-change-email": "npm run dev:attempt-change-email && react-scripts build && cp build/index.html build/attempt-change-email.html",
-
     "dev:attempt-set-id-email": "rm src/index.js; cd src && ln -s attemptSetIDEmail.js index.js && cd ..",
     "build:attempt-set-id-email": "npm run dev:attempt-set-id-email && react-scripts build && cp build/index.html build/attempt-set-id-email.html",
-
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
