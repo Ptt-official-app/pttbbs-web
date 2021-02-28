@@ -13,6 +13,7 @@ export const init = (myID, doMe, parentID, doParent, bid, title, startIdx) => {
   return (dispatch, getState) => {
     dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, title, startIdx, scrollTo: null}))
     dispatch(_getBoardSummary(myID, bid))
+    dispatch(_getBottomArticles(myID, bid))
     let desc = startIdx ? false : true
     dispatch(GetArticles(myID, bid, title, startIdx, desc, false))
   }
@@ -35,6 +36,29 @@ export const SetData = (myID, data) => {
   return (dispatch, getState) => {
     dispatch(_setData(myID, data))
   }
+}
+
+const _getBottomArticles = (myID, bid) => {
+  return (dispatch, getState) => (async() => {
+    const {data, errmsg, status} = await api(ServerUtils.LoadBottomArticles(bid))
+    if (status !== 200) {
+      dispatch(_setData(myID, errmsg))
+    }
+
+    let bottomArticles = data.list
+    bottomArticles.map( each => each.numIdx = '★' )
+
+    let toUpdate = {bottomArticles}
+    // If regular article list is already loaded, add list length to scroll position
+    const state = getState()
+    const me = getMe(state, myID)
+    if (me.scrollToRow) {
+      toUpdate.scrollToRow = me.scrollToRow + bottomArticles.length
+    }
+
+    console.log('doArticlesPage.getBottomArticles: to update:', toUpdate)
+    dispatch(_setData(myID, toUpdate))
+  })()
 }
 
 export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {

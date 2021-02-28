@@ -42,7 +42,12 @@ export class Idx extends Component {
     let item = data[rowIndex]
     let text = item[columnKey]
 
-    return (<div className={styles['idx']}>{text}</div>)
+    let styleClasses = styles['idx']
+    if (text === '★') {
+      styleClasses += (' ' + styles['bottomArticle'])
+    }
+
+    return (<div className={styleClasses}>{text}</div>)
   }
 }
 
