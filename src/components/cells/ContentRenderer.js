@@ -2,11 +2,47 @@ import { Component } from 'react'
 import styles from './ContentRenderer.module.css'
 import moment from 'moment'
 
+import { COLOR_BACKGROUND_BLACK } from '../../constants'
+
 export const PlainText = (props) => {
   const {data, rowIndex, columnKey} = props
   let text = data[rowIndex][columnKey]
 
   return (<div>{text}</div>)
+}
+
+export const Runes = (props) => {
+  const {data, rowIndex, columnKey} = props
+  let runes = data[rowIndex][columnKey]
+  let background = data[rowIndex].background || COLOR_BACKGROUND_BLACK
+
+  return (
+    <div className={styles['c'+background]}>
+      {runes.map((each, idx) => _renderRune(each, idx))}
+    </div>
+  )
+}
+
+const _renderRune = (rune, idx) => {
+  let classNames0 = [styles['rune']]
+  if(rune.color0.foreground) {
+    if(rune.color0.highlight) {
+      classNames0.push(styles['h'+rune.color0.foreground])
+    } else {
+      classNames0.push(styles['c'+rune.color0.foreground])
+    }
+  }
+  if(rune.color0.background) {
+    classNames0.push(styles['c'+rune.color0.background])
+  }
+  if(rune.pullright){
+    classNames0.push(styles['pull-right'])
+  }
+
+  let className0 = classNames0.join(' ')
+  return (
+    <span key={'rune-'+idx} className={className0}>{rune.text}</span>
+  )
 }
 
 export const PostDate = (props) => {
