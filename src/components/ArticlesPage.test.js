@@ -26,7 +26,7 @@ test('rendering WhoAmI', async () => {
       <App />
     </Router>
   )
-  await waitFor(() => screen.getByText('DevPtt'));
-  await waitFor(() => screen.getByText(/還要多少費雯呢/i), {timeout: 5000});
-  await waitFor(() => screen.getByText(/還有呢？/i), {timeout: 5000});
+  await screen.findByText('DevPtt');
+  await screen.findByText(/還要多少費雯呢/i);
+  await screen.findByText(/還有呢？/i);
 })
