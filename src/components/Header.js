@@ -14,14 +14,6 @@ export default (props) => {
   let userID = meUserID || ''
 
   // Links
-  let goHome = () => {
-    window.location.href = '/'
-  }
-
-  let goTerm = () => {
-    window.location.href = config.TERM_URL
-  }
-
   let renderUserHome = () => {
     let text = userID
     let url = '/user/' + userID
@@ -40,7 +32,11 @@ export default (props) => {
     }
 
     let title = paramsTitle || ''
-    return <div className={'col ' + styles['title']}>{title}</div>
+    if(typeof title === 'function') {
+      return <div className={'col ' + styles['title']}>{title()}</div>
+    } else {
+      return <div className={'col ' + styles['title']}>{title}</div>
+    }
   }
 
   let renderTerm = () => {
@@ -48,13 +44,13 @@ export default (props) => {
       return (<Empty />)
     }
 
-    return (<button className={styles['navbar-link']} onClick={() => goTerm()}>Term</button>)
+    return (<a className={styles['navbar-link']} href={config.TERM_URL}>Term</a>)
 
   }
 
   return (
     <nav className={'navbar ' + styles['root']}>
-      <button className={'navbar-brand ' + styles['navbar-link']} onClick={() => goHome()}>{config.BRAND}</button>
+      <a className={'navbar-brand ' + styles['navbar-link']} href={'/'}>{config.BRAND}</a>
       {renderTerm()}
       {renderHeader()}
       {renderUserHome()}

@@ -11,27 +11,27 @@
 }
 
 .c31 { /* foreground-red */
-    color: #cc0000;
+    color: #aa0000;
 }
 
 .c32 { /* foreground-green */
-    color: #00cc00;
+    color: #00aa00;
 }
 
 .c33 { /* foreground-yellow */
-    color: #cccc00;
+    color: #aaaa00;
 }
 .c34 { /* foreground-blue */
-    color: #0000cc;
+    color: #0000aa;
 }
 .c35 { /* foreground-magenta */
-    color: #cc00cc;
+    color: #aa00aa;
 }
 .c36 { /* foreground-cyan */
-    color: #00cccc;
+    color: #00aaaa;
 }
 .c37 { /* foreground-white */
-    color: #cccccc;
+    color: #aaaaaa;
 }
 
 .h30 { /* foreground-black */
@@ -67,27 +67,27 @@
 }
 
 .c41 {
-    background-color: #cc0000;
+    background-color: #aa0000;
 }
 
 .c42 {
-    background-color: #00cc00;
+    background-color: #00aa00;
 }
 
 .c43 {
-    background-color: #cccc00;
+    background-color: #aaaa00;
 }
 .c44 {
-    background-color: #0000cc;
+    background-color: #0000aa;
 }
 .c45 {
-    background-color: #cc00cc;
+    background-color: #aa00aa;
 }
 .c46 {
-    background-color: #00cccc;
+    background-color: #00aaaa;
 }
 .c47 {
-    background-color: #cccccc;
+    background-color: #aaaaaa;
 }
 
 .rune {

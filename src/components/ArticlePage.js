@@ -98,7 +98,7 @@ export default (props) => {
     {text: "推/噓", action: ()=>{}},
   ]
   let roptions = [
-    {text: "離開", action: ()=>{}},
+    {text: "離開", url: `/board/${bid}/articles`},
   ]
 
   return (
