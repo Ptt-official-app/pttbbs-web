@@ -102,3 +102,37 @@
 .extend {
     width: 100%;
 }
+
+.calc {
+    color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+    z-index: -1;
+    position: fixed;
+    left: 0px;
+    overflow-y: 0px;
+    white-space: pre;
+}
+
+.input {
+    height: 100%;
+    padding: 0px 0px 0px 0px;
+    outline-color: rgba(0, 0, 0, 0);
+    border-width: 0px;
+    border-radius: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px;
+    border-bottom: 0px;
+}
+.input:focus {
+    outline: none;
+}
+
+.edit-span {
+    color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    outline-color: rgba(0, 0, 0, 0);
+}

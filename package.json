@@ -15,10 +15,12 @@
     "query-string": "^6.13.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-dropdown": "^1.9.2",
     "react-reducer-utils": "^1.0.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-use": "^15.3.4",
+    "react-widgets": "^4.6.1",
     "superagent": "^6.1.0",
     "superagent-bluebird-promise": "^4.2.0",
     "web-vitals": "^0.2.4"

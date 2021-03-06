@@ -5,17 +5,23 @@ export default (props) => {
   const {optionsLeft, optionsRight} = props
 
   let mapOption = (val, idx) => {
-    const {text, action, url} = val
-    if(url) {
+    let {text, action, url, className, render} = val
+    if(render) {
       return (
         <li key={'func-'+idx} className="nav-item">
-          <a className={"nav-link " + styles['navbar-link'] } href={url}>{text}</a>
+          {render()}
+        </li>
+      )
+    } else if(url) {
+      return (
+        <li key={'func-'+idx} className="nav-item">
+          <a className={'nav-link ' + styles['navbar-link']} href={url}>{text}</a>
         </li>
       )
     } else {
       return (
         <li key={'func-'+idx} className="nav-item">
-          <button className={"nav-link " + styles['navbar-link'] } onClick={action}>{text}</button>
+          <button className={'nav-link ' + styles['navbar-link']} onClick={action}>{text}</button>
         </li>
       )
     }
