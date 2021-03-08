@@ -119,7 +119,7 @@ export default (props) => {
   }
 
   let loptions = [
-    {text: "發表文章", action: ()=>{}},
+    {text: "發表文章", url: `/board/${bid}/post`},
   ]
   let roptions = [
     {text: "精華區", action: ()=>{}},

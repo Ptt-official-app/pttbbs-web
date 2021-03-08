@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import pageStyles from './Page.module.css'
 import styles from './NewArticlePage.module.css'
 
+// eslint-disable-next-line
 import * as errors from './errors'
 
 import { useWindowSize } from 'react-use'
@@ -206,13 +207,6 @@ export default (props) => {
 
   let onMouseDown = (e) => {
     setIsFocusTitle(true)
-  }
-
-  let onMouseMove = (e) => {
-  }
-
-  let renderClassText = (item) => {
-    return '[' + item.class + ']'
   }
 
   let classStyle = {

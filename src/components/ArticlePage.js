@@ -51,7 +51,9 @@ export default (props) => {
   let title = articlePage.title || ''
   let theClass = articlePage.class || ''
   let contentComments = articlePage.contentComments || []
+  // eslint-disable-next-line
   let isNextEnd = articlePage.isNextEnd || false
+  // eslint-disable-next-line
   let isPreEnd = articlePage.isPreEnd || false
   let scrollToRow = (typeof articlePage.scrollToRow === 'undefined') ? null : articlePage.scrollToRow
 
