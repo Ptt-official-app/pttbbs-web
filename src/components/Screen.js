@@ -46,7 +46,7 @@ export default (props) => {
         key={'column'+idx}
         columnKey={column.accessor}
         header={isHeader ? renderHeader(column, fontSize) : null}
-        cell={renderCell(column, data, fontSize)}
+        cell={renderCell(column, data, fontSize, lineHeight)}
         fixed={column.fixed || false}
         width={columnWidth} />
     )

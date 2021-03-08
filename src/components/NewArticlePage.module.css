@@ -1,0 +1,21 @@
+.title {
+    text-align: center;
+    font-size: x-large;
+}
+
+.title-class {
+}
+
+.title-input {
+    width: 600px;
+    height: 42px;
+    border-radius: 4px 4px 4px 4px;
+    border-width: 1px 1px 1px 1px;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.error {
+    color: #ff0000;
+}

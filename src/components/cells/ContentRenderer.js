@@ -2,7 +2,8 @@ import { Component } from 'react'
 import styles from './ContentRenderer.module.css'
 import moment from 'moment'
 
-import { COLOR_BACKGROUND_BLACK } from '../../constants'
+import { COLOR_FOREGROUND_WHITE, COLOR_BACKGROUND_BLACK } from '../../constants'
+import { EDIT_SCREEN_WIDTH } from '../utils'
 
 export const PlainText = (props) => {
   const {data, rowIndex, columnKey} = props
@@ -12,18 +13,19 @@ export const PlainText = (props) => {
 }
 
 export const Runes = (props) => {
-  const {data, rowIndex, columnKey} = props
+  const {data, rowIndex, columnKey, onMouseDown} = props
   let runes = data[rowIndex][columnKey]
   let background = data[rowIndex].background || COLOR_BACKGROUND_BLACK
 
   return (
     <div className={styles['c'+background]}>
-      {runes.map((each, idx) => _renderRune(each, idx))}
+      {runes.map((each, idx) => (<RuneCore key={'runes-'+idx} rune={each} rowIndex={rowIndex} idx={idx} onMouseDown={onMouseDown} />))}
     </div>
   )
 }
 
-const _renderRune = (rune, idx) => {
+export const RuneCore = (props) => {
+  const {rune, rowIndex, idx, onMouseDown} = props
   let classNames0 = [styles['rune']]
   if(rune.color0.foreground) {
     if(rune.color0.highlight) {
@@ -40,8 +42,16 @@ const _renderRune = (rune, idx) => {
   }
 
   let className0 = classNames0.join(' ')
+  let runeKey = 'rune-' + rowIndex + '-' + idx
+  let _onMouseDown = (e) => {
+    if(!onMouseDown) {
+      return
+    }
+    onMouseDown(e, rowIndex, idx)
+  }
+
   return (
-    <span key={'rune-'+idx} className={className0}>{rune.text}</span>
+    <span key={runeKey} className={className0} onMouseDown={_onMouseDown}>{rune.text}</span>
   )
 }
 

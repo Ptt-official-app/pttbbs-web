@@ -190,3 +190,15 @@ export const GetComments = (bid, aid, startIdx, desc) => {
     query: query,
   }
 }
+
+export const CreateArticle = (bid, theClass, title, content) => {
+  return {
+    endpoint: '/api/board/' + bid + '/article',
+    method: 'post',
+    json: {
+      class: theClass,
+      title,
+      content,
+    },
+  }
+}

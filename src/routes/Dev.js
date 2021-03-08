@@ -14,6 +14,7 @@ import LoginPage from '../components/LoginPage'
 import GeneralBoardsPage from '../components/GeneralBoardsPage'
 import UserFavoritesPage from '../components/UserFavoritesPage'
 import ArticlePage from '../components/ArticlePage'
+import NewArticlePage from '../components/NewArticlePage'
 
 export default (props) => {
   return (
@@ -34,6 +35,7 @@ export default (props) => {
         <Route exact path="/boards/popular" component={HotBoardsPage} />
         <Route exact path="/board/:bid/articles" component={ArticlesPage} />
         <Route exact path="/board/:bid/article/:aid" component={ArticlePage} />
+        <Route exact path="/board/:bid/post" component={NewArticlePage} />
 
       </Switch>
     </Router>

@@ -7,7 +7,10 @@ export const TSToDateTimeStr = (ts) => {
 //board-list: 特殊記號+已讀+看板+類別+種類+中文敘述+人氣+板主
 export const CHAR_WIDTH = 11
 
-export const BASE_COLUMN_WIDTH = CHAR_WIDTH*90
+export const SCREEN_WIDTH = 90
+export const EDIT_SCREEN_WIDTH = 80
+
+export const BASE_COLUMN_WIDTH = CHAR_WIDTH*SCREEN_WIDTH
 
 export const BASE_LINE_HEIGHT = 30
 
