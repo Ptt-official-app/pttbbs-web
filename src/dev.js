@@ -4,11 +4,7 @@ import reportWebVitals from './reportWebVitals';
 
 import Routes from './routes/Dev'
 
-import 'normalize.css/normalize.css'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'react-widgets/dist/css/react-widgets.css'
-import 'react-dropdown/style.css'
-import 'fixed-data-table-2/dist/fixed-data-table.css'
+import './vendors.js'
 
 import './index.css'
 
