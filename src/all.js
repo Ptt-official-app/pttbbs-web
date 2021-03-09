@@ -4,9 +4,7 @@ import reportWebVitals from './reportWebVitals';
 
 import Routes from './routes/All'
 
-import 'normalize.css/normalize.css'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'fixed-data-table-2/dist/fixed-data-table.css'
+import './vendors.js'
 
 import './index.css'
 

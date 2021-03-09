@@ -5,8 +5,9 @@ import reportWebVitals from './reportWebVitals';
 
 import Routes from './routes/Register'
 
-import 'normalize.css/normalize.css'
-import 'bootstrap/dist/css/bootstrap.css'
+import './vendors.js'
+
+import './index.css'
 
 ReactDOM.render(
   <React.StrictMode>
