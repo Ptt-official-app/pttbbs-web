@@ -1,7 +1,6 @@
 import { Component } from 'react'
 
 import styles from './ContentRenderer.module.css'
-import moment from 'moment'
 
 import { COLOR_FOREGROUND_WHITE, COLOR_BACKGROUND_BLACK } from '../../constants'
 import { EDIT_SCREEN_WIDTH } from '../utils'
@@ -52,7 +51,7 @@ const _calcEachRune = (text) => {
 
 export class EditCore extends Component {
   render = () => {
-    let {rune, idx, selectedRow, selectedColumn, focusRef, lengthRef, editWidth, updateText, newLine, onMouseDown, upLine, nextLine, setIsCtrl, isCtrl} = this.props
+    let {rune, idx, selectedRow, selectedColumn, focusRef, lengthRef, editWidth, updateText, newLine, onMouseDown, upLine, nextLine, setIsCtrl, isCtrl, submit} = this.props
 
     if(idx !== selectedColumn) {
         return (<RuneCore rune={rune} rowIndex={selectedRow} idx={idx} onMouseDown={onMouseDown} />)
@@ -100,6 +99,18 @@ export class EditCore extends Component {
         break
       case 'ArrowDown':
         nextLine()
+        break
+      case 'x': //Ctrl-x
+        if(isCtrl) {
+          submit()
+        }
+        break
+      case 'X': //Ctrl-x
+        if(isCtrl) {
+          submit()
+        }
+        break
+      default:
         break
       }
     }
@@ -151,10 +162,7 @@ export class EditCore extends Component {
     const { focusRef, lengthRef, lineHeight, setEditWidth } = this.props
     let current = lengthRef.current || {}
     let offsetWidth = current.offsetWidth || 0
-    let clientWidth = current.clientWidth || 0
     let editWidth = offsetWidth + lineHeight
-
-    let focusRefCurrent = focusRef.current || {}
 
     focusRef.current.focus()
     setEditWidth(editWidth)

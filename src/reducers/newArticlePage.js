@@ -1,4 +1,4 @@
-import {init as _init, setData as _setData, createReducer, getMe} from 'react-reducer-utils'
+import {init as _init, setData as _setData, createReducer} from 'react-reducer-utils'
 
 import * as ServerUtils from './ServerUtils'
 import api from './api'
@@ -43,13 +43,13 @@ export const setData = (myID, data) => {
 export const Submit = (myID, bid, theClass, title, content) => {
   return (dispatch, getState) => (async() => {
     let uploadContent = content.map((each) => each.runes)
-    const {data, errmsg, status} = await api(ServerUtils.CreateArticle(bid, theClass, title, uploadContent))
+    const {errmsg, status} = await api(ServerUtils.CreateArticle(bid, theClass, title, uploadContent))
     if (status !== 200) {
       dispatch(_setData(myID, {errmsg}))
       return
     }
 
-    window.location.href = '/bid/' + bid + '/articles'
+    window.location.href = '/board/' + bid + '/articles'
   })()
 }
 

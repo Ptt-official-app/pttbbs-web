@@ -5,7 +5,7 @@ export default (props) => {
   const {optionsLeft, optionsRight} = props
 
   let mapOption = (val, idx) => {
-    let {text, action, url, className, render} = val
+    let {text, action, url, render} = val
     if(render) {
       return (
         <li key={'func-'+idx} className="nav-item">

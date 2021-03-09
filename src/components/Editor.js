@@ -18,7 +18,7 @@ const _COLUMNS = [
 ]
 
 export default (props) => {
-  const {lines, width, height, update, selectedRow, setSelectedRow, selectedColumn, setSelectedColumn, focusRef, lengthRef, editWidth, setEditWidth, updateText, newLine, upLine, nextLine, isFocus, setIsFocus } = props
+  const {lines, width, height, selectedRow, setSelectedRow, selectedColumn, setSelectedColumn, focusRef, lengthRef, editWidth, setEditWidth, updateText, newLine, upLine, nextLine, isFocus, setIsFocus } = props
 
   const [isCtrl, setIsCtrl] = useState(false)
 

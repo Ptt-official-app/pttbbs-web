@@ -2,8 +2,7 @@ import { Component } from 'react'
 import styles from './ContentRenderer.module.css'
 import moment from 'moment'
 
-import { COLOR_FOREGROUND_WHITE, COLOR_BACKGROUND_BLACK } from '../../constants'
-import { EDIT_SCREEN_WIDTH } from '../utils'
+import { COLOR_BACKGROUND_BLACK } from '../../constants'
 
 export const PlainText = (props) => {
   const {data, rowIndex, columnKey} = props
