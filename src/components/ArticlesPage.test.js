@@ -15,6 +15,5 @@ test('rendering WhoAmI', async () => {
     </Router>
   )
   await screen.findByText('DevPtt');
-  await screen.findByText(/還要多少費雯呢/i);
-  await screen.findByText(/還有呢？/i);
+  await screen.findByText(/發表文章/i);
 })

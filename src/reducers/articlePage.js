@@ -233,8 +233,9 @@ const _parseLines = (lines) => {
 }
 
 const _parseBBSLines = (bbs, ip, host, bid, aid) => {
+  let location = ((window || {}).location) || {}
   let bbsLine = {'text': `※ 發信站: ${bbs}, 來自: ${ip} (${host})`, color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}}
-  let urlLine = {'text': `※ 文章網址: ${window.location.protocol}//${window.location.host}/board/${bid}/article/${aid}`, color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}}
+  let urlLine = {'text': `※ 文章網址: ${location.protocol}//${location.host}/board/${bid}/article/${aid}`, color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}}
 
   return [[bbsLine], [urlLine]]
 }
