@@ -26,15 +26,16 @@ export const Runes = (props) => {
 export const RuneCore = (props) => {
   const {rune, rowIndex, idx, onMouseDown} = props
   let classNames0 = [styles['rune']]
-  if(rune.color0.foreground) {
-    if(rune.color0.highlight) {
-      classNames0.push(styles['h'+rune.color0.foreground])
+  let color0 = rune.color0 || {}
+  if(color0.foreground) {
+    if(color0.highlight) {
+      classNames0.push(styles['h'+color0.foreground])
     } else {
-      classNames0.push(styles['c'+rune.color0.foreground])
+      classNames0.push(styles['c'+color0.foreground])
     }
   }
-  if(rune.color0.background) {
-    classNames0.push(styles['c'+rune.color0.background])
+  if(color0.background) {
+    classNames0.push(styles['c'+color0.background])
   }
   if(rune.pullright){
     classNames0.push(styles['pull-right'])
