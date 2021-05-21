@@ -248,20 +248,19 @@ const _parseComments = (comments) => {
   return comments.map((each) => {
     const {type: theType} = each
 
-    if(theType === COMMENT_TYPE_REPLY) {
-      return {runes: each.content}
-    }
-    else if(theType === COMMENT_TYPE_FORWARD) {
-      return _parseForwardComment(each)
-    }
-    else if(theType === COMMENT_TYPE_EDIT) {
-      return _parseEditedComment(each)
-    }
-    else if(theType === COMMENT_TYPE_DELETED) {
-      return _parseDeletedComment(each)
+    switch(theType) {
+      case COMMENT_TYPE_REPLY:
+        return _parseReply(each)
+      case COMMENT_TYPE_FORWARD:
+        return _parseForwardComment(each)
+      case COMMENT_TYPE_EDIT:
+        return _parseEditedComment(each)
+      case COMMENT_TYPE_DELETED:
+        return _parseDeletedComment(each)
+      default:
+        return _parseRegularComment(each)
     }
 
-    return _parseRegularComment(each)
   })
 }
 
@@ -300,8 +299,23 @@ const _parseRegularComment = (each) => {
   return {runes}
 }
 
+const _parseReply = (each) => {
+  // TODO: confirm format
+  let runes = []
+  let temp = each.content[0].map((ele) => ele.text )
+  let tempStr = temp.join(' ')
+  runes.push({
+    text: tempStr,
+    color0: {
+      foreground: COLOR_FOREGROUND_GREEN,
+      background: COLOR_BACKGROUND_BLACK
+    }
+  })
+   return {runes}
+}
+
 const _parseForwardComment = (each) => {
-  const {owner} = each
+  const {owner, create_time: createTime} = each
   let boardName = each.content[0][0].text || 'unknownBoard'
   let runes = []
 
@@ -317,12 +331,20 @@ const _parseForwardComment = (each) => {
     text: `: 轉錄至看版 ${boardName}`,
     color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}
   })
+  let datetimeStr = CdateMdHM(createTime)
+  let datetimeRune = {
+    text: datetimeStr,
+    pullright: true,
+    color0: {},
+  }
+  runes.push(datetimeRune)
 
   return {runes}
 }
 
 const _parseDeletedComment = (each) => {
   const {owner: deleter} = each
+  // TODO confirm format
   let runes = [{
     text: `${deleter} 刪除某人的貼文`,
     color0: {foreground: COLOR_FOREGROUND_BLACK, highlight: true, background: COLOR_BACKGROUND_BLACK}
@@ -332,6 +354,7 @@ const _parseDeletedComment = (each) => {
 
 const _parseEditedComment = (each) => {
   const {owner: editor = 'editor', ip, host = 'unknown', create_time: editTime} = each
+  // TODO confirm format
   let editTimeStr = CdateMdHM(editTime)
   let runes = [{
     text: `※ 編輯: ${editor}(${ip} ${host}), ${editTimeStr}`,
