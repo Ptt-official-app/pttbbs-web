@@ -4,7 +4,7 @@ import * as ServerUtils from './ServerUtils'
 import api from './api'
 //import * as errors from './errors'
 
-import { MergeList, CdateMdHM } from './utils'
+import { MergeList, CdateMdHM, CdateYYYYMdHMS } from './utils'
 
 import {
   COLOR_FOREGROUND_RED,
@@ -47,7 +47,6 @@ export const init = (myID, doMe, parentID, doParent, bid, aid, startIdx) => {
   let theDate = new Date()
   return (dispatch, getState) => {
     dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, startIdx, scrollTo: null}))
-    dispatch(GetComments(myID, bid, aid))
     dispatch(GetArticleContent(myID, bid, aid, startIdx, false, false))
   }
 }
@@ -167,6 +166,8 @@ export const GetArticleContent = (myID, bid, aid) => {
     let contentComments = isPreEnd ? lines.concat(comments) : comments
 
     dispatch(_setData(myID, {content: lines, contentComments}))
+
+    dispatch(GetComments(myID, bid, aid, undefined, false))
   })()
 }
 
@@ -289,7 +290,7 @@ const _parseRegularComment = (each) => {
   }
 
   //comment-datetime
-  let datetimeStr = CdateMdHM(createTime)
+  let datetimeStr = CdateMdHM(createTime * 1000) // createTime is TS
   let datetimeRune = {
     text: datetimeStr,
     pullright: true,
@@ -300,24 +301,16 @@ const _parseRegularComment = (each) => {
 }
 
 const _parseReply = (each) => {
-  // TODO: confirm format
-  let runes = []
-  let temp = each.content[0].map((ele) => ele.text )
-  let tempStr = temp.join(' ')
-  runes.push({
-    text: tempStr,
-    color0: {
-      foreground: COLOR_FOREGROUND_GREEN,
-      background: COLOR_BACKGROUND_BLACK
-    }
-  })
-   return {runes}
+  // Reply: directly return content.
+  return {runes: each.content}
 }
 
 const _parseForwardComment = (each) => {
   const {owner, create_time: createTime} = each
   let boardName = each.content[0][0].text || 'unknownBoard'
   let runes = []
+
+  let content = 'boardName' === '某隱形看板' ? ': 轉錄至某隱形看板' : `: 轉錄至看版 ${boardName}`
 
   runes.push({
     text: `※ `,
@@ -328,10 +321,10 @@ const _parseForwardComment = (each) => {
     color0: {foreground: COLOR_FOREGROUND_GREEN, highlight:true, background: COLOR_BACKGROUND_BLACK}
   })
   runes.push({
-    text: `: 轉錄至看版 ${boardName}`,
+    text: content,
     color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}
   })
-  let datetimeStr = CdateMdHM(createTime)
+  let datetimeStr = CdateMdHM(createTime * 1000) //createTime is TS
   let datetimeRune = {
     text: datetimeStr,
     pullright: true,
@@ -355,7 +348,7 @@ const _parseDeletedComment = (each) => {
 const _parseEditedComment = (each) => {
   const {owner: editor = 'editor', ip, host = 'unknown', create_time: editTime} = each
   // TODO confirm format
-  let editTimeStr = CdateMdHM(editTime)
+  let editTimeStr = CdateYYYYMdHMS(editTime * 1000) //editTime is TS
   let runes = [{
     text: `※ 編輯: ${editor}(${ip} ${host}), ${editTimeStr}`,
     color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}
