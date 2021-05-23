@@ -12,6 +12,7 @@ import {
   COLOR_FOREGROUND_GREEN,
   COLOR_FOREGROUND_BLUE,
   COLOR_FOREGROUND_YELLOW,
+  COLOR_FOREGROUND_BLACK,
 
   COLOR_BACKGROUND_BLACK,
   COLOR_BACKGROUND_BLUE,
@@ -20,6 +21,9 @@ import {
   COMMENT_TYPE_RECOMMEND,
   COMMENT_TYPE_BOO,
   COMMENT_TYPE_COMMENT,
+  COMMENT_TYPE_FORWARD,
+  COMMENT_TYPE_EDIT,
+  COMMENT_TYPE_DELETED,
   COMMENT_TYPE_REPLY } from '../constants'
 
 const myClass = 'demo-pttbbs/ArticlePage'
@@ -242,43 +246,121 @@ const _parseBBSLines = (bbs, ip, host, bid, aid) => {
 
 const _parseComments = (comments) => {
   return comments.map((each) => {
-    const {type: theType, owner, create_time: createTime} = each
-    let runes = []
-    if(theType === COMMENT_TYPE_REPLY) {
-      return {runes: each.content}
+    const {type: theType} = each
+
+    switch(theType) {
+      case COMMENT_TYPE_REPLY:
+        return _parseReply(each)
+      case COMMENT_TYPE_FORWARD:
+        return _parseForwardComment(each)
+      case COMMENT_TYPE_EDIT:
+        return _parseEditedComment(each)
+      case COMMENT_TYPE_DELETED:
+        return _parseDeletedComment(each)
+      default:
+        return _parseRegularComment(each)
     }
 
-    //comment-type
-    let typeRune = _TYPE_RUNE_MAP[theType]
-    if(typeRune) {
-      runes.push(typeRune)
-    }
-
-    //comment-owner
-    let ownerRune = {text: ' ' + owner, color0: {foreground: COLOR_FOREGROUND_YELLOW, highlight: true}}
-    runes.push(ownerRune)
-
-    //comment-colon
-    let colonRune = {text: ': ', color0: {foreground: COLOR_FOREGROUND_YELLOW}}
-    runes.push(colonRune)
-
-    //comment-content
-    let contentRunes = (each.content && each.content.length > 0) ? each.content[0] : []
-    if(contentRunes.length > 0) {
-      contentRunes[0].color0.foreground = COLOR_FOREGROUND_YELLOW
-      runes = runes.concat(contentRunes)
-    }
-
-    //comment-datetime
-    let datetimeStr = CdateMdHM(createTime)
-    let datetimeRune = {
-      text: datetimeStr,
-      pullright: true,
-      color0: {},
-    }
-    runes.push(datetimeRune)
-    return {runes}
   })
+}
+
+const _parseRegularComment = (each) => {
+  const {type: theType, owner, create_time: createTime} = each
+  let runes = []
+  //comment-type
+  let typeRune = _TYPE_RUNE_MAP[theType]
+  if(typeRune) {
+    runes.push(typeRune)
+  }
+
+  //comment-owner
+  let ownerRune = {text: ' ' + owner, color0: {foreground: COLOR_FOREGROUND_YELLOW, highlight: true}}
+  runes.push(ownerRune)
+
+  //comment-colon
+  let colonRune = {text: ': ', color0: {foreground: COLOR_FOREGROUND_YELLOW}}
+  runes.push(colonRune)
+
+  //comment-content
+  let contentRunes = (each.content && each.content.length > 0) ? each.content[0] : []
+  if(contentRunes.length > 0) {
+    contentRunes[0].color0.foreground = COLOR_FOREGROUND_YELLOW
+    runes = runes.concat(contentRunes)
+  }
+
+  //comment-datetime
+  let datetimeStr = CdateMdHM(createTime)
+  let datetimeRune = {
+    text: datetimeStr,
+    pullright: true,
+    color0: {},
+  }
+  runes.push(datetimeRune)
+  return {runes}
+}
+
+const _parseReply = (each) => {
+  // TODO: confirm format
+  let runes = []
+  let temp = each.content[0].map((ele) => ele.text )
+  let tempStr = temp.join(' ')
+  runes.push({
+    text: tempStr,
+    color0: {
+      foreground: COLOR_FOREGROUND_GREEN,
+      background: COLOR_BACKGROUND_BLACK
+    }
+  })
+   return {runes}
+}
+
+const _parseForwardComment = (each) => {
+  const {owner, create_time: createTime} = each
+  let boardName = each.content[0][0].text || 'unknownBoard'
+  let runes = []
+
+  runes.push({
+    text: `※ `,
+    color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}
+  })
+  runes.push({
+    text: `${owner}`,
+    color0: {foreground: COLOR_FOREGROUND_GREEN, highlight:true, background: COLOR_BACKGROUND_BLACK}
+  })
+  runes.push({
+    text: `: 轉錄至看版 ${boardName}`,
+    color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}
+  })
+  let datetimeStr = CdateMdHM(createTime)
+  let datetimeRune = {
+    text: datetimeStr,
+    pullright: true,
+    color0: {},
+  }
+  runes.push(datetimeRune)
+
+  return {runes}
+}
+
+const _parseDeletedComment = (each) => {
+  const {owner: deleter} = each
+  // TODO confirm format
+  let runes = [{
+    text: `${deleter} 刪除某人的貼文`,
+    color0: {foreground: COLOR_FOREGROUND_BLACK, highlight: true, background: COLOR_BACKGROUND_BLACK}
+  }]
+  return {runes}
+}
+
+const _parseEditedComment = (each) => {
+  const {owner: editor = 'editor', ip, host = 'unknown', create_time: editTime} = each
+  // TODO confirm format
+  let editTimeStr = CdateMdHM(editTime)
+  let runes = [{
+    text: `※ 編輯: ${editor}(${ip} ${host}), ${editTimeStr}`,
+    color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}
+  }]
+  return {runes}
 }
 
 export default createReducer()
