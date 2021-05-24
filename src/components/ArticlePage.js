@@ -11,6 +11,7 @@ import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 import * as DoArticlePage from '../reducers/articlePage'
 import * as DoHeader from '../reducers/header'
 
+import HotKeys from './HotKeys'
 import Header from './Header'
 import FunctionBar from './FunctionBar'
 
@@ -105,6 +106,7 @@ export default (props) => {
 
   return (
     <div className={pageStyles['root']}>
+      <HotKeys parentPage={`/board/${bid}/articles`}>
       <div ref={headerRef}>
         <Header title={headerTitle} stateHeader={stateHeader} />
       </div>
@@ -112,6 +114,7 @@ export default (props) => {
       <div ref={funcbarRef}>
         <FunctionBar optionsLeft={loptions} optionsRight={roptions}/>
       </div>
+      </HotKeys>
     </div>
   )
 }

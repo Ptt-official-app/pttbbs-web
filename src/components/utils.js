@@ -28,3 +28,10 @@ export const CalcScreenScale = (width) => {
 
   return [scale, lineHeight, fontSize]
 }
+
+export const GetBoardParent = () => {
+  //TODO: imagine that there should be a session data remembering the last board list visited
+  // If the board is visited directly by url there will be no record => return ""
+  console.log("GetBoardParent:")
+  return ""
+}
