@@ -46,7 +46,7 @@ const _TYPE_RUNE_MAP = {
 export const init = (myID, doMe, parentID, doParent, bid, aid, startIdx) => {
   let theDate = new Date()
   return (dispatch, getState) => {
-    dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, startIdx, scrollTo: null}))
+    dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, startIdx, scrollTo: null, isPreEnd: true}))
     dispatch(GetArticleContent(myID, bid, aid, startIdx, false, false))
   }
 }
@@ -61,6 +61,7 @@ export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
     let lastPre = me.lastPre || ''
     let lastNext = me.lastNext || ''
     let isBusyLoading = me.isBusyLoading || false
+
     if(isBusyLoading) {
       return
     }
@@ -70,10 +71,9 @@ export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
       }
 
     } else {
-      if(lastNext === startIdx) {
+      if(lastNext !== '' && lastNext === startIdx) {
         return
       }
-
     }
 
     dispatch(_setData(myID, {isBusyLoading: true}))
@@ -131,10 +131,7 @@ export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
 
 export const GetArticleContent = (myID, bid, aid) => {
   return (dispatch, getState) => (async() => {
-    dispatch(_setData(myID, {isBusyLoading: true}))
-
     const {data, errmsg, status} = await api(ServerUtils.GetArticle(bid, aid))
-    dispatch(myID, {isBusyLoading: false})
 
     if (status !== 200) {
       dispatch(_setData(myID, {errmsg}))
@@ -224,10 +221,14 @@ const _parseContentWithHeader = (content) => {
   let datetimePromptRune = {text: ' 時間 ', color0: {foreground: COLOR_FOREGROUND_BLUE, background: COLOR_BACKGROUND_WHITE}}
   let datetimeRune = {text: ' ' + theDateTime[0].text.slice(4), color0: {foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLUE}}
 
+  //emptyLine
+  let emptyLine = {'text': '', color0: {foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK}}
+
   content = [
     [authorPromptRune, authorRune, boardRune, boardPromptRune],
     [titlePromptRune, titleRune],
     [datetimePromptRune, datetimeRune],
+    [emptyLine],
   ].concat(theRest)
 
   return content
@@ -239,10 +240,12 @@ const _parseLines = (lines) => {
 
 const _parseBBSLines = (bbs, ip, host, bid, aid) => {
   let location = ((window || {}).location) || {}
+  let emptyLine = {'text': '', color0: {foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK}}
+  let hrLine = {'text': '--', color0: {foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK}}
   let bbsLine = {'text': `※ 發信站: ${bbs}, 來自: ${ip} (${host})`, color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}}
   let urlLine = {'text': `※ 文章網址: ${location.protocol}//${location.host}/board/${bid}/article/${aid}`, color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}}
 
-  return [[bbsLine], [urlLine]]
+  return [[emptyLine], [hrLine], [bbsLine], [urlLine]]
 }
 
 const _parseComments = (comments) => {
