@@ -249,7 +249,7 @@ const _parseBBSLines = (bbs, ip, host, bid, aid) => {
 }
 
 const _parseComments = (comments) => {
-  return comments.map((each) => {
+  let commentList = comments.map((each) => {
     const {type: theType} = each
 
     switch(theType) {
@@ -264,8 +264,12 @@ const _parseComments = (comments) => {
       default:
         return _parseRegularComment(each)
     }
-
   })
+
+  return commentList.reduce((r, x, i) => {
+    r = r.concat(x)
+    return r
+  }, [])
 }
 
 const _parseRegularComment = (each) => {
@@ -300,12 +304,16 @@ const _parseRegularComment = (each) => {
     color0: {},
   }
   runes.push(datetimeRune)
-  return {runes}
+  return [{runes}]
 }
 
 const _parseReply = (each) => {
   // Reply: directly return content.
-  return {runes: each.content}
+  let emptyLine = [{runes: [{'text': '', color0: {foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK}}]}]
+
+  return emptyLine.concat(each.content.map((eachContent) => {
+    return {runes: eachContent}
+  }))
 }
 
 const _parseForwardComment = (each) => {
@@ -335,7 +343,7 @@ const _parseForwardComment = (each) => {
   }
   runes.push(datetimeRune)
 
-  return {runes}
+  return [{runes}]
 }
 
 const _parseDeletedComment = (each) => {
@@ -345,7 +353,7 @@ const _parseDeletedComment = (each) => {
     text: `${deleter} 刪除某人的貼文`,
     color0: {foreground: COLOR_FOREGROUND_BLACK, highlight: true, background: COLOR_BACKGROUND_BLACK}
   }]
-  return {runes}
+  return [{runes}]
 }
 
 const _parseEditedComment = (each) => {
@@ -356,7 +364,7 @@ const _parseEditedComment = (each) => {
     text: `※ 編輯: ${editor}(${ip} ${host}), ${editTimeStr}`,
     color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}
   }]
-  return {runes}
+  return [{runes}]
 }
 
 export default createReducer()
