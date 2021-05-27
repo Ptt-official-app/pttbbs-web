@@ -81,3 +81,7 @@ export const BoardURL = (board) => {
 export const CdateMdHM = (milliTS) => {
   return moment(milliTS).tz('Asia/Taipei').format('MM/DD hh:mm')
 }
+
+export const CdateYYYYMdHMS = (milliTS) => {
+  return moment(milliTS).tz('Asia/Taipei').format('YYYY/MM/DD hh:mm:ss')
+}
