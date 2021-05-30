@@ -101,7 +101,7 @@ export default (props) => {
     {text: "推/噓", action: ()=>{}},
   ]
   let roptions = [
-    {text: "離開", url: `/board/${bid}/articles`},
+    {text: "離開", url: `/board/${bid}/articles`, hotkey: "左方向鍵"},
   ]
 
   return (
