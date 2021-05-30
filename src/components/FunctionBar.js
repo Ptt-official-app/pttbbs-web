@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './Header.module.css'
 
-import "bootstrap/dist/css/bootstrap.css";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 export default (props) => {
