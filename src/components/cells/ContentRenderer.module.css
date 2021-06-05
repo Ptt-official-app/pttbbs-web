@@ -136,3 +136,21 @@
     border-radius: 0px;
     outline-color: rgba(0, 0, 0, 0);
 }
+
+.recommend {
+    font-size: x-large;
+}
+
+.recommend-input {
+    width: 800px;
+    height: 38px;
+    border-radius: 4px 4px 4px 4px;
+    border-width: 1px 1px 1px 1px;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.recommend-offset {
+    margin-left: 2px;
+}

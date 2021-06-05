@@ -51,6 +51,39 @@ export const init = (myID, doMe, parentID, doParent, bid, aid, startIdx) => {
   }
 }
 
+export const SetData = (myID, data) => {
+  return (dispatch, getState) => {
+    dispatch(_setData(myID, data))
+  }
+}
+
+export const AddRecommend = (myID, bid, aid, recommendType, recommend) => {
+  return (dispatch, getState) => (async() => {
+    const {data, errmsg, status} = await api(ServerUtils.AddRecommend(bid, aid, recommendType, recommend))
+
+    console.log('articlePage.AddRecommend: after ServerUtils: bid:', bid, 'aid:', aid, 'recommendType:', recommendType, 'recommend:', recommend, 'data:', data, 'errmsg:', errmsg, 'status:', status)
+    if(status !== 200) {
+      dispatch(_setData(myID, {errmsg}))
+      return
+    }
+
+    dispatch(GetComments(myID, bid, aid, '', true, false))
+  })()
+}
+
+export const Rank = (myID, bid, aid, rank) => {
+  return (dispatch, getState) => (async() => {
+    const {data, errmsg, status} = await api(ServerUtils.Rank(bid, aid, rank))
+    console.log('articlePage.Rank: afterServerUtils: bid:', bid, 'aid:', aid, 'rank:', rank, 'data:', data, 'errmsg:', errmsg, 'status:', status)
+    if(status !== 200) {
+      dispatch(_setData(myID, {errmsg}))
+      return
+    }
+
+    dispatch(_setData(myID, data))
+  })()
+}
+
 export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
   return (dispatch, getState) => (async() => {
     let state = getState()
@@ -66,7 +99,7 @@ export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
       return
     }
     if(desc) {
-      if(lastPre === startIdx) {
+      if(lastPre !== '' && lastPre === startIdx) {
         return
       }
 
