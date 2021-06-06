@@ -6,7 +6,7 @@ import * as errors from './errors'
 import { useWindowSize, useKey } from 'react-use'
 import { useParams } from 'react-router-dom'
 
-import { useActionDispatchReducer, getRoot, genUUID, Empty } from 'react-reducer-utils'
+import { useActionDispatchReducer, getRoot, genUUID, } from 'react-reducer-utils'
 
 import * as DoArticlePage from '../reducers/articlePage'
 import * as DoHeader from '../reducers/header'

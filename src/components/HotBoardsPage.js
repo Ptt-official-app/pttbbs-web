@@ -12,7 +12,6 @@ import { PTT_GUEST } from '../constants'
 import * as DoHotBoardsPage from '../reducers/hotBoardsPage'
 import * as DoHeader from '../reducers/header'
 
-import HotKeys from './HotKeys'
 import Header from './Header'
 import BoardList from './BoardList'
 import FunctionBar from './FunctionBar'
@@ -92,7 +91,6 @@ export default (props) => {
   // Will fail if used on React components. e.g. Header
   return (
     <div className={pageStyles['root']}>
-      <HotKeys>
       <div ref={headerRef}>
         <Header title={headerTitle} stateHeader={stateHeader} />
       </div>
@@ -100,7 +98,6 @@ export default (props) => {
       <div ref={funcbarRef}>
         <FunctionBar optionsLeft={loptions} optionsRight={roptions}/>
       </div>
-      </HotKeys>
     </div>
   )
 }
