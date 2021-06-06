@@ -80,11 +80,3 @@ a, a:hover {
   -webkit-mask: url(./assets/img/github.svg) no-repeat center;
   mask: url(./assets/img/github.svg) no-repeat center;
 }
-
-.rw-widget-picker {
-  position: relative;
-  overflow: hidden;
-  border-collapse: separate;
-  display: inline-table;
-  height: 40px;
-}

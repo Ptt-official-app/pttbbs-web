@@ -1,5 +1,5 @@
 import 'normalize.css/normalize.css'
 import 'bootstrap/dist/css/bootstrap.css'
-import 'react-widgets/dist/css/react-widgets.css'
+import 'react-widgets/styles.css'
 import 'react-dropdown/style.css'
 import 'fixed-data-table-2/dist/fixed-data-table.css'

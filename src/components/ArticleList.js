@@ -15,7 +15,7 @@ const _COLUMNS = [
   {Header: '', accessor: '', width: 0, fixed: true, type: 'rest'},
   {Header: '編號', accessor: 'numIdx', width: CHAR_WIDTH*6, fixed: true},
   {Header: '', accessor: 'read', width: CHAR_WIDTH*2, fixed: true},
-  {Header: '', accessor: 'n_comments', width: CHAR_WIDTH*2, fixed: true},
+  {Header: '', accessor: 'recommend', width: CHAR_WIDTH*2, fixed: true},
   {Header: '日期', accessor: 'create_time', width: CHAR_WIDTH*5, fixed: true},
   {Header: '作者', accessor: 'owner', width: CHAR_WIDTH*14, fixed: true},
   {Header: '類別', accessor: 'class', width: CHAR_WIDTH*6, fixed: true},
@@ -44,7 +44,7 @@ export default (props) => {
     case 'read':
       renderer = State
       break
-    case 'n_comments':
+    case 'recommend':
       renderer = CommNum
       break
     case 'create_time':

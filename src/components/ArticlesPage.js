@@ -3,7 +3,7 @@ import pageStyles from './Page.module.css'
 
 import * as errors from './errors'
 
-import { useWindowSize } from 'react-use'
+import { useWindowSize, useKey } from 'react-use'
 import { useParams } from 'react-router-dom'
 
 import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
@@ -11,7 +11,6 @@ import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 import * as DoArticlesPage from '../reducers/articlesPage'
 import * as DoHeader from '../reducers/header'
 
-import HotKeys from './HotKeys'
 import Header from './Header'
 import ArticleList from './ArticleList'
 import FunctionBar from './FunctionBar'
@@ -58,7 +57,11 @@ export default (props) => {
   let scrollToRow = (typeof articlesPage.scrollToRow === 'undefined') ? null : articlesPage.scrollToRow
   let articles = articlesPage.allArticles || []
 
+  //keys
   let parentPage = GetBoardParent() || '/boards/popular'
+  useKey('ArrowLeft', (e) => {
+    window.location.href = parentPage
+  })
 
   //render
   const [headerHeight, setHeaderHeight] = useState(0)
@@ -135,7 +138,6 @@ export default (props) => {
   // Will fail if used on React components.
   return (
     <div className={pageStyles['root']}>
-      <HotKeys parentPage={parentPage}>
       <div ref={headerRef}>
         <Header title={headerTitle} stateHeader={stateHeader} />
       </div>
@@ -143,7 +145,6 @@ export default (props) => {
       <div ref={funcbarRef}>
         <FunctionBar optionsLeft={loptions} optionsRight={roptions}/>
       </div>
-      </HotKeys>
     </div>
   )
 }

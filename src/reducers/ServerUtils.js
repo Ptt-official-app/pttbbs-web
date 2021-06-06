@@ -202,3 +202,24 @@ export const CreateArticle = (bid, theClass, title, content) => {
     },
   }
 }
+
+export const AddRecommend = (bid, aid, recommendType, recommend) => {
+  return {
+    endpoint: `/api/board/${bid}/article/${aid}/comment`,
+    method: 'post',
+    json: {
+      type: recommendType,
+      content: recommend,
+    },
+  }
+}
+
+export const Rank = (bid, aid, rank) => {
+  return {
+    endpoint: `/api/board/${bid}/article/${aid}/rank`,
+    method: 'post',
+    json: {
+      rank: rank,
+    },
+  }
+}

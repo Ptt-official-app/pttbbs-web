@@ -210,7 +210,7 @@ export default (props) => {
   }
 
   let classStyle = {
-    width: '150px',
+    width: '170px',
     display: 'inline-block',
   }
 
@@ -218,7 +218,7 @@ export default (props) => {
     return (
       <div className={'col ' + styles['title']}>
         <span>{brdname} - </span>
-        <DropdownList style={classStyle} containerClassName={styles['title-class']}  data={_DEFAULT_CLASSES} value={theClass} valueField='value' textField='label' onChange={(item) => {setTheClass(item.value)}} />
+        <DropdownList style={classStyle} containerClassName={styles['title-class']}  data={_DEFAULT_CLASSES} value={theClass} dataKey='value' textField='label' onChange={(item) => {setTheClass(item.value)}} />
         <input className={styles['title-input']} onChange={(e) => setTitle(e.target.value)} value={title} onMouseDown={onMouseDown} placeholder={'標題:'} />
       </div>
     )

@@ -21,7 +21,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-use": "^15.3.4",
-    "react-widgets": "^4.6.1",
+    "react-widgets": "^5.1.1",
     "superagent": "^6.1.0",
     "superagent-bluebird-promise": "^4.2.0",
     "web-vitals": "^0.2.4"

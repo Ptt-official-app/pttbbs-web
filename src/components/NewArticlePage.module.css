@@ -1,6 +1,7 @@
 .title {
-    text-align: center;
+    width: 800px;
     font-size: x-large;
+    text-align: center;
 }
 
 .title-class {
