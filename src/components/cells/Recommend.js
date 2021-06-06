@@ -45,13 +45,15 @@ export default (props) => {
         return
       }
 
-      console.log('Recommend.onKeyDown: key:', e.key)
-
       switch(e.key) {
       case 'Enter':
         submit(recommendType, recommend)
+        break
       case 'Escape':
         cancel()
+        break
+      default:
+        break
       }
   }
 
@@ -83,6 +85,8 @@ export default (props) => {
       break
     case 'X':
       item = ''
+      break
+    default:
       break
     }
 
