@@ -47,7 +47,7 @@ export const init = (myID, doMe, parentID, doParent, bid, aid, startIdx) => {
   let theDate = new Date()
   return (dispatch, getState) => {
     dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, startIdx, scrollTo: null, isPreEnd: true}))
-    dispatch(GetArticleContent(myID, bid, aid, startIdx, false, false))
+    dispatch(GetArticleContent(myID, bid, aid, startIdx))
   }
 }
 
@@ -84,6 +84,13 @@ export const Rank = (myID, bid, aid, rank) => {
   })()
 }
 
+//GetComments
+//
+//1. 檢查 busy
+//2. 拿到 comments
+//3. parse comments.
+//4. merge list
+//5. 整合 to-update
 export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
   return (dispatch, getState) => (async() => {
     let state = getState()
@@ -91,20 +98,20 @@ export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
     let myComments = me.comments || []
 
     //check busy
-    let lastPre = me.lastPre || ''
-    let lastNext = me.lastNext || ''
+    let lastPre = me.lastPre
+    let lastNext = me.lastNext
     let isBusyLoading = me.isBusyLoading || false
 
     if(isBusyLoading) {
       return
     }
     if(desc) {
-      if(lastPre !== '' && lastPre === startIdx) {
+      if(lastPre === startIdx) {
         return
       }
-
     } else {
-      if(lastNext !== '' && lastNext === startIdx) {
+      if(lastNext === startIdx) {
+        console.log('articlePage.GetComments: lastNext == startIdx: lastNext:', lastNext, 'startIdx:', startIdx)
         return
       }
     }
@@ -121,8 +128,15 @@ export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
     }
 
     let dataComments = _parseComments(data.list || [])
-    let newComments = MergeList(myComments, dataComments, desc, null, isExclude)
 
+    let newComments = []
+    if(isExclude) {
+      newComments = MergeList(myComments, dataComments, desc, null, isExclude)
+    } else {
+      newComments = desc ? dataComments.reverse() : dataComments
+    }
+
+    //5. 整合 toUpdate
     state = getState()
     me = getMe(state, myID)
     let isPreEnd = me.isPreEnd || false
@@ -137,23 +151,38 @@ export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
       toUpdate.isBusyLoading = false
       if(!data.next_idx) {
         toUpdate.isNextEnd = true
+      } else {
+        toUpdate.isNextEnd = false
       }
+
       if(!startIdx) {
+        toUpdate.lastPre = null
         toUpdate.isPreEnd = true
         isPreEnd = true
       }
     } else {
-      toUpdate.scrollToRow = dataComments.length - 1
       toUpdate.lastPre = startIdx
       toUpdate.isBusyLoading = false
       if(!data.next_idx) {
         toUpdate.isPreEnd = true
         isPreEnd = true
+      } else {
+        toUpdate.isPreEnd = false
+        isPreEnd = false
       }
+
       if(!startIdx) {
+        toUpdate.lastNext = null
         toUpdate.isNextEnd = true
       }
+
+      if(!isPreEnd) {
+        toUpdate.scrollToRow = dataComments.length - 1
+      } else if(lastPre) {
+        toUpdate.scrollToRow = content.length + dataComments.length - 1
+      }
     }
+    console.log('articlePage.GetComments: startIdx:', startIdx, 'desc:', desc, 'nextIdx:', data.next_idx, 'isPreEnd:', isPreEnd)
     let contentComments = isPreEnd ? content.concat(newComments) : newComments
     toUpdate.contentComments = contentComments
 
@@ -162,7 +191,12 @@ export const GetComments = (myID, bid, aid, startIdx, desc, isExclude) => {
   })()
 }
 
-export const GetArticleContent = (myID, bid, aid) => {
+//GetArticleContent
+//
+//1. 拿到 content.
+//2. parse content.
+//3. contentComments.
+export const GetArticleContent = (myID, bid, aid, startIdx) => {
   return (dispatch, getState) => (async() => {
     const {data, errmsg, status} = await api(ServerUtils.GetArticle(bid, aid))
 
@@ -197,7 +231,7 @@ export const GetArticleContent = (myID, bid, aid) => {
 
     dispatch(_setData(myID, {content: lines, contentComments}))
 
-    dispatch(GetComments(myID, bid, aid, undefined, false))
+    dispatch(GetComments(myID, bid, aid, startIdx, false, false))
   })()
 }
 
@@ -337,7 +371,7 @@ const _parseRegularComment = (each) => {
     color0: {},
   }
   runes.push(datetimeRune)
-  return [{runes}]
+  return [{runes, idx: each.idx}]
 }
 
 const _parseReply = (each) => {
@@ -345,7 +379,7 @@ const _parseReply = (each) => {
   let emptyLine = [{runes: [{'text': '', color0: {foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK}}]}]
 
   return emptyLine.concat(each.content.map((eachContent) => {
-    return {runes: eachContent}
+    return {runes: eachContent, idx: each.idx}
   }))
 }
 
@@ -376,7 +410,7 @@ const _parseForwardComment = (each) => {
   }
   runes.push(datetimeRune)
 
-  return [{runes}]
+  return [{runes, idx: each.idx}]
 }
 
 const _parseDeletedComment = (each) => {
@@ -386,7 +420,7 @@ const _parseDeletedComment = (each) => {
     text: `${deleter} 刪除某人的貼文`,
     color0: {foreground: COLOR_FOREGROUND_BLACK, highlight: true, background: COLOR_BACKGROUND_BLACK}
   }]
-  return [{runes}]
+  return [{runes, idx: each.idx}]
 }
 
 const _parseEditedComment = (each) => {
@@ -397,7 +431,7 @@ const _parseEditedComment = (each) => {
     text: `※ 編輯: ${editor}(${ip} ${host}), ${editTimeStr}`,
     color0: {foreground: COLOR_FOREGROUND_GREEN, background: COLOR_BACKGROUND_BLACK}
   }]
-  return [{runes}]
+  return [{runes, idx: each.idx}]
 }
 
 export default createReducer()

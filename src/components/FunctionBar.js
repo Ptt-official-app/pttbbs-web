@@ -31,7 +31,7 @@ export default (props) => {
     if (hotkey) {
       return (
         <li key={'func-'+idx} className="nav-item">
-          <OverlayTrigger placement='top' trigger='hover' overlay={renderTooltip}>
+          <OverlayTrigger placement='top' trigger={['hover', 'hover']} overlay={renderTooltip}>
             {renderInner()}
           </OverlayTrigger>
         </li>

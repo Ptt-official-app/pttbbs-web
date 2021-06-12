@@ -18,8 +18,6 @@ const MAX_RECOMMEND_LENGTH = EDIT_SCREEN_WIDTH - 2 - 11 - 15
 export default (props) => {
   const { recommendType, setRecommendStyle, recommend, setRecommend, isRecommend, recommendTypeRef, submit, cancel } = props
 
-  console.log('Recommend: recommendType:', recommendType)
-
   const [searchTerm, setSearchTerm] = useState('')
 
   let classStyle = {
@@ -117,10 +115,10 @@ export default (props) => {
     <div className={styles['recommend']} style={style}>
       <DropdownList ref={recommendTypeRef} style={classStyle} data={_RECOMMEND_TYPES} value={recommendType} dataKey='value' textField='label' onChange={onChange} dropUp={true} onSearch={onSearch} searchTerm={searchTerm} filter={'contains'} onSelect={onSelect} />
       <input className={styles['recommend-input'] + ' ' + styles['recommend-offset']} onChange={(e) => theSetRecommend(e.target.value)} value={recommend} onKeyDown={(e) => onKeyDown(e)} />
-      <OverlayTrigger placement='top' trigger='hover' overlay={renderCancelTooltip}>
+      <OverlayTrigger placement='top' trigger={['hover', 'hover']} overlay={renderCancelTooltip}>
         <button className={'btn btn-secondary ' + styles['recommend-offset']}>取消</button>
       </OverlayTrigger>
-      <OverlayTrigger placement='top' trigger='hover' overlay={renderSubmitTooltip}>
+      <OverlayTrigger placement='top' trigger={['hover', 'hover']} overlay={renderSubmitTooltip}>
       <button className={'btn btn-primary ' + styles['recommend-offset']}>送出</button>
       </OverlayTrigger>
     </div>

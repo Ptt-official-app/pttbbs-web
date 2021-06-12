@@ -9,7 +9,12 @@ import './vendors.js'
 
 import './index.css'
 
+import config from 'config'
 
+//title
+document.getElementsByTagName('title')[0].innerHTML = config.BRAND
+
+//react
 ReactDOM.render(
   <React.StrictMode>
     <Routes />

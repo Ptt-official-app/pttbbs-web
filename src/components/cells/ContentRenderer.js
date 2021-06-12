@@ -11,16 +11,37 @@ export const PlainText = (props) => {
   return (<div>{text}</div>)
 }
 
-export const Runes = (props) => {
-  const {data, rowIndex, columnKey, onMouseDown} = props
-  let runes = data[rowIndex][columnKey]
-  let background = data[rowIndex].background || COLOR_BACKGROUND_BLACK
+export class Runes extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
 
-  return (
-    <div className={styles['c'+background]}>
-      {runes.map((each, idx) => (<RuneCore key={'runes-'+idx} rune={each} rowIndex={rowIndex} idx={idx} onMouseDown={onMouseDown} />))}
-    </div>
-  )
+
+  static getDerivedStateFromProps = (props, state) => {
+    const {data, rowIndex, loadPre, loadNext} = props
+    let item = data[rowIndex]
+
+    if(rowIndex === 0 && loadPre) {
+      loadPre(item)
+    }
+    if(rowIndex === data.length - 1 && loadNext) {
+      loadNext(item)
+    }
+    return true
+  }
+
+  render = () => {
+    const {data, rowIndex, columnKey, onMouseDown} = this.props
+    let runes = data[rowIndex][columnKey]
+    let background = data[rowIndex].background || COLOR_BACKGROUND_BLACK
+
+    return (
+      <div className={styles['c'+background]}>
+        {runes.map((each, idx) => (<RuneCore key={'runes-'+idx} rune={each} rowIndex={rowIndex} idx={idx} onMouseDown={onMouseDown} />))}
+      </div>
+    )
+  }
 }
 
 export const RuneCore = (props) => {
