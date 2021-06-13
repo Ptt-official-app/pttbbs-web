@@ -1,6 +1,6 @@
 import config from 'config'
 
-const LIST_LIMIT = config.LIST_LIMIT || 10
+const LIST_LIMIT = config.LIST_LIMIT || 50
 
 export const Login = (username, password) => ({
   endpoint: '/api/account/login',

@@ -35,7 +35,7 @@ export default (props) => {
 
     let articlePageID = genUUID()
     const query = QueryString.parse(window.location.search)
-    const {start_idx: startIdx} = query
+    let startIdx = query.start_idx || ''
 
     doArticlePage.init(articlePageID, doArticlePage, null, null, bid, aid, startIdx)
 
@@ -61,18 +61,17 @@ export default (props) => {
   let rank = articlePage.rank || 0
   let nRecommend = articlePage.recommend || 0
   let nComments = articlePage.n_comments || 0
+  let comments = articlePage.comments || []
 
   //keys
-  useKey('ArrowLeft', (e) => {
-    window.location.href = `/board/${bid}/articles`
-  })
-
   useKey('X', (e) => {
-    setIsRecommend(true)
+    isRecommend.isRecommend = true
+    setIsRecommend({isRecommend: true})
   })
 
   useKey('Escape', (e) => {
-    setIsRecommend(false)
+    isRecommend.isRecommend = false
+    setIsRecommend({isRecommend: false})
   })
 
   //render
@@ -82,13 +81,20 @@ export default (props) => {
   const funcbarRef = useRef(null)
   const {width: innerWidth, height: innerHeight} = useWindowSize()
   const [scrollTop, setScrollTop] = useState(0)
-  const [isRecommend, setIsRecommend] = useState(false)
+  const [isRecommend, setIsRecommend] = useState({isRecommend: false})
   const [recommendType, setRecommendStyle] = useState(1)
   const recommendTypeRef = useRef(null)
   const [recommend, setRecommend] = useState('')
 
+  useKey('ArrowLeft', (e) => {
+    if(isRecommend.isRecommend) {
+      return
+    }
+    window.location.href = `/board/${bid}/articles`
+  })
+
   useEffect(() => {
-    if(isRecommend) {
+    if(isRecommend.isRecommend) {
       setRecommendStyle(1)
       setRecommend('')
 
@@ -101,12 +107,7 @@ export default (props) => {
       setRecommend('')
       console.log('ArticlePage.useEffect(isRecommend): reset')
     }
-  }, [isRecommend])
-
-  useEffect(() => {
-
-  }, [recommendType])
-
+  }, [isRecommend.isRecommend])
 
   let width = innerWidth
   let listHeight = innerHeight - headerHeight - funcbarHeight
@@ -114,12 +115,29 @@ export default (props) => {
   let fullTitle = theClass ? `[${theClass}] ` : ''
   fullTitle += title
   let headerTitle = `${brdname} - ${fullTitle}  (${rank}/${nRecommend}/${nComments})`
-  let loadPre = (item) => {
 
+  let loadPre = (item) => {
+    if(!comments.length) {
+      return
+    }
+    if(isPreEnd) {
+      return
+    }
+    console.log('ArticlePage.loadPre: item:', item, 'comment:', comments[0])
+    let startIdx = comments[0].idx
+    doArticlePage.GetComments(myID, bid, aid, startIdx, true, true)
   }
 
   let loadNext = (item) => {
-
+    if(!comments.length) {
+      return
+    }
+    if(isNextEnd) {
+      return
+    }
+    let startIdx = comments[comments.length-1].idx
+    console.log('ArticlePage.loadNext: item:', item, 'comment:', comments[comments.length-1])
+    doArticlePage.GetComments(myID, bid, aid, startIdx, false, true)
   }
 
   let onVerticalScroll = (scrollTop) => {
@@ -155,7 +173,7 @@ export default (props) => {
     }
 
     return (
-      <Recommend recommendTypeRef={recommendTypeRef} isRecommend={isRecommend} recommendType={recommendType} setRecommendStyle={setRecommendStyle} recommend={recommend} setRecommend={setRecommend} submit={submit} cancel={cancel} />
+      <Recommend recommendTypeRef={recommendTypeRef} isRecommend={isRecommend.isRecommend} recommendType={recommendType} setRecommendStyle={setRecommendStyle} recommend={recommend} setRecommend={setRecommend} submit={submit} cancel={cancel} />
     )
   }
 
