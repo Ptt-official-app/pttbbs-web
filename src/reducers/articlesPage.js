@@ -46,8 +46,9 @@ const _getBottomArticles = (myID, bid) => {
       return
     }
 
-    let bottomArticles = data.list
+    let bottomArticles = data.list || []
     bottomArticles.map( each => each.numIdx = '★' )
+    bottomArticles.map((each) => each.url = `/board/${bid}/article/${each.aid}`)
 
     let state = getState()
     let me = getMe(state, myID)
