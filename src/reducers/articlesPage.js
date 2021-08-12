@@ -12,16 +12,13 @@ export const init = (myID, doMe, parentID, doParent, bid, title, startIdx) => {
   let theDate = new Date()
   return (dispatch, getState) => {
     dispatch(_init({myID, myClass, doMe, parentID, doParent, theDate, title, startIdx, scrollTo: null}))
-    dispatch(_getBoardSummary(myID, bid))
-    dispatch(_getBottomArticles(myID, bid))
     let desc = startIdx ? false : true
-    dispatch(GetArticles(myID, bid, title, startIdx, desc, false))
+    dispatch(_getBoardSummary(myID, bid, desc, title, startIdx))
   }
 }
 
-const _getBoardSummary = (myID, bid) => {
+const _getBoardSummary = (myID, bid, desc, title, startIdx) => {
   return (dispatch, getState) => (async() => {
-
     // Get board information
     const {data, errmsg, status} = await api(ServerUtils.GetBoardSummary(bid))
     if (status !== 200) {
@@ -29,6 +26,8 @@ const _getBoardSummary = (myID, bid) => {
       return
     }
     dispatch(_setData(myID, data))
+    dispatch(_getBottomArticles(myID, bid))
+    dispatch(GetArticles(myID, bid, title, startIdx, desc, false))
   })()
 }
 
@@ -107,7 +106,9 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
 
     let dataList = data.list || []
     dataList.map((each) => each.url = `/board/${bid}/article/${each.aid}`)
-    let startNumIdx = data.start_num_idx || 1
+
+    let defaultStartNum = desc ? me.total : 1
+    let startNumIdx = data.start_num_idx || defaultStartNum
 
     let newList = MergeList(myList, dataList, desc, startNumIdx, isExclude)
 
