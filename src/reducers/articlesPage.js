@@ -37,6 +37,14 @@ export const SetData = (myID, data) => {
   }
 }
 
+export const ReloadAllArticles = (myID, bid, title, startIdx) => {
+  return (dispatch, getState) => {
+    let desc = startIdx ? false : true
+    dispatch(_getBottomArticles(myID, bid))
+    dispatch(GetArticles(myID, bid, title, startIdx, desc, false))
+  }
+}
+
 const _getBottomArticles = (myID, bid) => {
   return (dispatch, getState) => (async() => {
     const {data, errmsg, status} = await api(ServerUtils.LoadBottomArticles(bid))
