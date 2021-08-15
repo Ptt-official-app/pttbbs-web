@@ -71,7 +71,6 @@ export default (props) => {
   const funcbarRef = useRef(null)
   const {width: innerWidth, height: innerHeight} = useWindowSize()
   const [scrollTop, setScrollTop] = useState(0)
-  const [searchText, setSearchText] = useState('')
   const [searching, setSearching] = useState(false)
 
   let width = innerWidth
@@ -116,18 +115,25 @@ export default (props) => {
   const onSearchSubmit = () => {
     setSearching(true)
     // clear articles
-    doArticlesPage.SetData(myID, { list: [], allArticles: [], bottomArticles: [] })
+    doArticlesPage.SetData(myID, {
+      list: [],
+      allArticles: [],
+      bottomArticles: []
+    })
     // load more
-    doArticlesPage.GetArticles(myID, bid, searchText, null, true, false)
+    doArticlesPage.GetArticles(myID, bid, searchTitle, null, true, false)
   }
 
   const onSearchClear = () => {
     setSearching(false)
-    setSearchText("")
     // clear articles
-    doArticlesPage.SetData(myID, { list: [], allArticles: [] })
+    doArticlesPage.SetData(myID, {
+      searchTitle: "",
+      list: [],
+      allArticles: []
+    })
     // re-load
-    doArticlesPage.ReloadAllArticles(myID, bid, searchTitle, null)
+    doArticlesPage.ReloadAllArticles(myID, bid, "", null)
   }
 
   // eslint-disable-next-line
@@ -161,8 +167,10 @@ export default (props) => {
         <span className="p-0" style={{fontSize: "x-large"}}>{title}</span>
         <div className="w-25">
           <SearchBar
-            text={searchText}
-            setText={setSearchText}
+            text={searchTitle}
+            setText={(text) => {
+              doArticlesPage.SetData(myID, {searchTitle: text})
+            }}
             onSearch={onSearchSubmit}
             searching={searching}
             onClear={onSearchClear}
