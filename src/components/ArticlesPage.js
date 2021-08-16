@@ -14,6 +14,7 @@ import * as DoHeader from '../reducers/header'
 import Header from './Header'
 import ArticleList from './ArticleList'
 import FunctionBar from './FunctionBar'
+import SearchBar from './SearchBar'
 
 import QueryString from 'query-string'
 
@@ -70,6 +71,7 @@ export default (props) => {
   const funcbarRef = useRef(null)
   const {width: innerWidth, height: innerHeight} = useWindowSize()
   const [scrollTop, setScrollTop] = useState(0)
+  const [searching, setSearching] = useState(false)
 
   let width = innerWidth
   let listHeight = innerHeight - headerHeight - funcbarHeight
@@ -110,6 +112,30 @@ export default (props) => {
     doArticlesPage.SetData(myID, {scrollToRow: null})
   }
 
+  const onSearchSubmit = () => {
+    setSearching(true)
+    // clear articles
+    doArticlesPage.SetData(myID, {
+      list: [],
+      allArticles: [],
+      bottomArticles: []
+    })
+    // load more
+    doArticlesPage.GetArticles(myID, bid, searchTitle, null, true, false)
+  }
+
+  const onSearchClear = () => {
+    setSearching(false)
+    // clear articles
+    doArticlesPage.SetData(myID, {
+      searchTitle: "",
+      list: [],
+      allArticles: []
+    })
+    // re-load
+    doArticlesPage.ReloadAllArticles(myID, bid, "", null)
+  }
+
   // eslint-disable-next-line
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
   let renderArticles = () => {
@@ -134,12 +160,36 @@ export default (props) => {
     {text: "看板設定/說明", action: ()=>{}},
   ]
 
+  const renderHeader = (params) => {
+    return (
+      <div className={'col d-flex justify-content-between align-items-center px-4'}>
+        <div className="w-25 "></div>
+        <span className="p-0" style={{fontSize: "x-large"}}>{title}</span>
+        <div className="w-25">
+          <SearchBar
+            text={searchTitle}
+            setText={(text) => {
+              doArticlesPage.SetData(myID, {searchTitle: text})
+            }}
+            onSearch={onSearchSubmit}
+            searching={searching}
+            onClear={onSearchClear}
+          />
+        </div>
+      </div>
+    )
+  }
+
   // NOTE: ref can only be used directly on html tags to get element attributes
   // Will fail if used on React components.
   return (
     <div className={pageStyles['root']}>
       <div ref={headerRef}>
-        <Header title={headerTitle} stateHeader={stateHeader} />
+        <Header
+          title={headerTitle}
+          stateHeader={stateHeader}
+          renderHeader={renderHeader}
+        />
       </div>
       {renderArticles()}
       <div ref={funcbarRef}>

@@ -1,0 +1,15 @@
+.wrapper {
+  display: flex;
+  padding: .2rem 1.2rem;
+  border: 2px solid white;
+}
+
+.searchText {
+  display: block;
+  flex: 1 1 auto;
+
+  padding: 0 0;
+  background: none;
+  border: none;
+  color: white;
+}
