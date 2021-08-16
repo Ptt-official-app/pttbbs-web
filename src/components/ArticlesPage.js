@@ -115,25 +115,15 @@ export default (props) => {
   const onSearchSubmit = () => {
     setSearching(true)
     // clear articles
-    doArticlesPage.SetData(myID, {
-      list: [],
-      allArticles: [],
-      bottomArticles: []
-    })
     // load more
     doArticlesPage.GetArticles(myID, bid, searchTitle, null, true, false)
   }
 
   const onSearchClear = () => {
     setSearching(false)
-    // clear articles
-    doArticlesPage.SetData(myID, {
-      searchTitle: "",
-      list: [],
-      allArticles: []
-    })
-    // re-load
-    doArticlesPage.ReloadAllArticles(myID, bid, "", null)
+    searchTitle = ''
+    doArticlesPage.SetData(myID, {searchTitle: searchTitle})
+    doArticlesPage.GetArticles(myID, bid, searchTitle, null, true, false)
   }
 
   // eslint-disable-next-line

@@ -37,14 +37,6 @@ export const SetData = (myID, data) => {
   }
 }
 
-export const ReloadAllArticles = (myID, bid, title, startIdx) => {
-  return (dispatch, getState) => {
-    let desc = startIdx ? false : true
-    dispatch(_getBottomArticles(myID, bid))
-    dispatch(GetArticles(myID, bid, title, startIdx, desc, false))
-  }
-}
-
 const _getBottomArticles = (myID, bid) => {
   return (dispatch, getState) => (async() => {
     const {data, errmsg, status} = await api(ServerUtils.LoadBottomArticles(bid))
@@ -61,8 +53,9 @@ const _getBottomArticles = (myID, bid) => {
     let me = getMe(state, myID)
     let regularArticles = me.list || []
     let isNextEnd = me.isNextEnd || false
+    let lastSearchTitle = me.lastSearchTitle || ''
 
-    let allArticles = isNextEnd ? regularArticles.concat(bottomArticles) : regularArticles
+    let allArticles = (isNextEnd && !lastSearchTitle) ? regularArticles.concat(bottomArticles) : regularArticles
 
     let toUpdate = {bottomArticles, allArticles}
     // If regular article list is already loaded, add list length to scroll position
@@ -74,7 +67,7 @@ const _getBottomArticles = (myID, bid) => {
   })()
 }
 
-export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
+export const GetArticles = (myID, bid, searchTitle, startIdx, desc, isExclude) => {
   return (dispatch, getState) => (async() => {
     let state = getState()
     let me = getMe(state, myID)
@@ -84,6 +77,19 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
     let lastPre = me.lastPre || ''
     let lastNext = me.lastNext || ''
     let isBusyLoading = me.isBusyLoading || false
+    let isPreEnd = me.isPreEnd || false
+    let isNextEnd = me.isNextEnd || false
+
+    searchTitle = searchTitle || ''
+    let myLastSearchTitle = me.lastSearchTitle || ''
+    if (searchTitle !== myLastSearchTitle) {
+      myList = []
+      lastPre = ''
+      lastNext = ''
+      isPreEnd = false
+      isNextEnd = false
+    }
+
     if(isBusyLoading) {
       return
     }
@@ -96,12 +102,11 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
       if(lastNext === startIdx) {
         return
       }
-
     }
 
     dispatch(_setData(myID, {isBusyLoading: true}))
 
-    const {data, errmsg, status} = await api(ServerUtils.LoadArticles(bid, title, startIdx, desc))
+    const {data, errmsg, status} = await api(ServerUtils.LoadArticles(bid, searchTitle, startIdx, desc))
     if (status !== 200) {
       dispatch(_setData(myID, {errmsg, isBusyLoading: false}))
       return
@@ -110,7 +115,6 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
     state = getState()
     me = getMe(state, myID)
     let bottomArticles = me.bottomArticles || []
-    let isNextEnd = me.isNextEnd || false
 
     let dataList = data.list || []
     dataList.map((each) => each.url = `/board/${bid}/article/${each.aid}`)
@@ -121,9 +125,14 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
     let newList = MergeList(myList, dataList, desc, startNumIdx, isExclude)
 
     let toUpdate = {
+      lastSearchTitle: searchTitle,
       list: newList,
       nextCreateTime: data.next_create_time,
       isBusyLoading: false,
+      lastPre: lastPre,
+      lastNext: lastNext,
+      isPreEnd: isPreEnd,
+      isNextEnd: isNextEnd,
     }
     if(!desc) {
       toUpdate.nextIdx = data.next_idx
@@ -134,6 +143,7 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
       }
       if(!startIdx) {
         toUpdate.isPreEnd = true
+        isPreEnd = true
       }
 
     } else {
@@ -142,6 +152,7 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
       toUpdate.isBusyLoading = false
       if(!data.next_idx) {
         toUpdate.isPreEnd = true
+        isPreEnd = true
       }
       if(!startIdx) {
         toUpdate.isNextEnd = true
@@ -149,7 +160,7 @@ export const GetArticles = (myID, bid, title, startIdx, desc, isExclude) => {
       }
     }
 
-    let allArticles = isNextEnd ? newList.concat(bottomArticles) : newList
+    let allArticles = (isNextEnd && !searchTitle) ? newList.concat(bottomArticles) : newList
     toUpdate.allArticles = allArticles
 
     dispatch(_setData(myID, toUpdate))
