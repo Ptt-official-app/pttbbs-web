@@ -57,21 +57,10 @@ export class EditCore extends Component {
         return (<RuneCore rune={rune} rowIndex={selectedRow} idx={idx} onMouseDown={onMouseDown} />)
     }
 
-    let classNames0 = [styles['rune']]
-    if(rune.color0.foreground) {
-      if(rune.color0.highlight) {
-        classNames0.push(styles['h'+rune.color0.foreground])
-      } else {
-        classNames0.push(styles['c'+rune.color0.foreground])
-      }
-    }
-    if(rune.color0.background) {
-      classNames0.push(styles['c'+rune.color0.background])
-    }
+    let classNames0 = RuneCore.getClassNamesFromRune(rune)
     if(rune.pullright){
       classNames0.push(styles['pull-right'])
     }
-
     classNames0.push(styles['input'])
 
     let theStyles={

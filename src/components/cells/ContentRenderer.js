@@ -44,36 +44,42 @@ export class Runes extends Component {
   }
 }
 
-export const RuneCore = (props) => {
-  const {rune, rowIndex, idx, onMouseDown} = props
-  let classNames0 = [styles['rune']]
-  let color0 = rune.color0 || {}
-  if(color0.foreground) {
-    if(color0.highlight) {
-      classNames0.push(styles['h'+color0.foreground])
-    } else {
-      classNames0.push(styles['c'+color0.foreground])
+export class RuneCore extends Component {
+  static getClassNamesFromRune = (rune) => {
+    let classNames0 = [styles['rune']]
+    let color0 = rune.color0 || {}
+    if(color0.foreground) {
+      if(color0.highlight) {
+        classNames0.push(styles['h'+color0.foreground])
+      } else {
+        classNames0.push(styles['c'+color0.foreground])
+      }
     }
-  }
-  if(color0.background) {
-    classNames0.push(styles['c'+color0.background])
-  }
-  if(rune.pullright){
-    classNames0.push(styles['pull-right'])
+    if(color0.background) {
+      classNames0.push(styles['c'+color0.background])
+    }
+    return classNames0
   }
 
-  let className0 = classNames0.join(' ')
-  let runeKey = 'rune-' + rowIndex + '-' + idx
-  let _onMouseDown = (e) => {
-    if(!onMouseDown) {
-      return
+  render = () => {
+    const {rune, rowIndex, idx, onMouseDown} = this.props
+    let classNames0 = RuneCore.getClassNamesFromRune(rune)
+    if(rune.pullright){
+      classNames0.push(styles['pull-right'])
     }
-    onMouseDown(e, rowIndex, idx)
-  }
+    let className0 = classNames0.join(' ')
+    let runeKey = 'rune-' + rowIndex + '-' + idx
+    let _onMouseDown = (e) => {
+      if(!onMouseDown) {
+        return
+      }
+      onMouseDown(e, rowIndex, idx)
+    }
 
-  return (
-    <span key={runeKey} className={className0} onMouseDown={_onMouseDown}>{rune.text}</span>
-  )
+    return (
+      <span key={runeKey} className={className0} onMouseDown={_onMouseDown}>{rune.text}</span>
+    )
+  }
 }
 
 export const PostDate = (props) => {
