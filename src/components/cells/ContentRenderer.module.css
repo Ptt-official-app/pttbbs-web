@@ -6,88 +6,106 @@
     color: #ffff00
 }
 
-.c30 { /* foreground-black */
+.c30, .c30:before, .rc30:after { /* foreground-black */
     color: #000000;
 }
 
-.c31 { /* foreground-red */
+.c31, .c31:before, .rc31:after { /* foreground-red */
     color: #cc0000;
 }
 
-.c32 { /* foreground-green */
+.c32, .c32:before, .rc32:after { /* foreground-green */
     color: #00cc00;
 }
 
-.c33 { /* foreground-yellow */
+.c33, .c33:before, .rc33:after { /* foreground-yellow */
     color: #cccc00;
 }
-.c34 { /* foreground-blue */
+.c34, .c34:before, .rc34:after { /* foreground-blue */
     color: #0000cc;
 }
-.c35 { /* foreground-magenta */
+.c35, .c35:before, .rc35:after { /* foreground-magenta */
     color: #cc00cc;
 }
-.c36 { /* foreground-cyan */
+.c36, .c36:before, .rc36:after { /* foreground-cyan */
     color: #00cccc;
 }
-.c37 { /* foreground-white */
+.c37, .c37:before, .rc37:after { /* foreground-white */
     color: #cccccc;
 }
 
-.h30 { /* foreground-black */
+.h30, .h30:before, .rh30:after { /* foreground-black */
     color: #888888;
 }
 
-.h31 { /* foreground-red */
+.h31, .h31:before, .rh31:after { /* foreground-red */
     color: #ff0000;
 }
 
-.h32 { /* foreground-green */
+.h32, .h32:before, .rh32:after { /* foreground-green */
     color: #00ff00;
 }
 
-.h33 { /* foreground-yellow */
+.h33, .h33:before, .rh33:after { /* foreground-yellow */
     color: #ffff00;
 }
-.h34 { /* foreground-blue */
+.h34, .h34:before, .rh34:after { /* foreground-blue */
     color: #0000ff;
 }
-.h35 { /* foreground-magenta */
+.h35, .h35:before, .rh35:after { /* foreground-magenta */
     color: #ff00ff;
 }
-.h36 { /* foreground-cyan */
+.h36, .h36:before, .rh36:after { /* foreground-cyan */
     color: #00ffff;
 }
-.h37 { /* foreground-white */
+.h37, .h37:before, .rh37:after { /* foreground-white */
     color: #ffffff;
 }
 
-.c40 {
+.c40, .c40:before, .rc40:after {
     background-color: #000000;
 }
 
-.c41 {
+.c41, .c41:before, .rc41:after {
     background-color: #cc0000;
 }
 
-.c42 {
+.c42, .c42:before, .rc42:after {
     background-color: #00cc00;
 }
 
-.c43 {
+.c43, .c43:before, .rc43:after {
     background-color: #cccc00;
 }
-.c44 {
+.c44, .c44:before, .rc44:after {
     background-color: #0000cc;
 }
-.c45 {
+.c45, .c45:before, .rc45:after {
     background-color: #cc00cc;
 }
-.c46 {
+.c46, .c46:before, .rc46:after {
     background-color: #00cccc;
 }
-.c47 {
+.c47, .c47:before, .rc47:after {
     background-color: #cccccc;
+}
+
+.halves-group > .halves { /* Container for the two halves of a character; selectable */
+    color: transparent;
+    background: transparent;
+}
+.halves-group > .halves:before { /* The left half of a character; not selectable */
+    content: attr(data-text);
+    position: absolute;
+    width: 1ch;
+    clip-path: inset(-0.5px); /* 0px causes wierd border line on Chrome and Edge */
+}
+.halves-group > .halves:after { /* The right half of a character; not selectable */
+    content: attr(data-text);
+    position: absolute;
+    margin-left: -1ch;
+    text-indent: -1ch;
+    clip-path: inset(-0.5px); /* 0px causes wierd border line on Chrome and Edge */
 }
 
 .rune {
