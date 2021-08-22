@@ -59,6 +59,9 @@ export class RuneCore extends Component {
     if(color.background) {
       classNames.push(styles[part+'c'+color.background])
     }
+    if(color.blink) {
+      classNames.push(styles[part+'c5'])
+    }
     return classNames
   }
 

@@ -90,6 +90,10 @@
     background-color: #cccccc;
 }
 
+.hide-blink .c5, .hide-blink .c5:before, .hide-blink .rc5:after { /* blink */
+    color: transparent;
+}
+
 .halves-group > .halves { /* Container for the two halves of a character; selectable */
     color: transparent;
     background: transparent;
