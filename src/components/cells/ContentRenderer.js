@@ -44,6 +44,8 @@ export class Runes extends Component {
   }
 }
 
+const _runeAttrs = ['foreground', 'background', 'blink', 'highlight']
+
 export class RuneCore extends Component {
   static getClassNamesFromRune = (rune) => {
     let classNames0 = [styles['rune']]
@@ -58,12 +60,13 @@ export class RuneCore extends Component {
     if(color0.background) {
       classNames0.push(styles['c'+color0.background])
     }
-    return classNames0
+    const twoColors = rune.color1 && _runeAttrs.some((attr) => color0[attr] !== rune.color1[attr])
+    return [classNames0, twoColors]
   }
 
   render = () => {
     const {rune, rowIndex, idx, onMouseDown} = this.props
-    let classNames0 = RuneCore.getClassNamesFromRune(rune)
+    let [classNames0] = RuneCore.getClassNamesFromRune(rune)
     if(rune.pullright){
       classNames0.push(styles['pull-right'])
     }

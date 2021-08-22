@@ -57,7 +57,7 @@ export class EditCore extends Component {
         return (<RuneCore rune={rune} rowIndex={selectedRow} idx={idx} onMouseDown={onMouseDown} />)
     }
 
-    let classNames0 = RuneCore.getClassNamesFromRune(rune)
+    let [classNames0] = RuneCore.getClassNamesFromRune(rune)
     if(rune.pullright){
       classNames0.push(styles['pull-right'])
     }
