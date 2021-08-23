@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Table, Column, Cell } from 'fixed-data-table-2'
 
 import styles from './Screen.module.css'
+import runeStyles from './cells/ContentRenderer.module.css'
 
 import { CalcScreenScale, BASE_COLUMN_WIDTH } from './utils'
 
@@ -14,8 +15,20 @@ const _DEFAULT_COLUMNS = [
   {Header: '', accessor: '', width: 0, fixed: true, 'type': 'rest'},
 ]
 
+const _initBlink = () => {
+  // The <body> blinking trick, inspired by PttChrome:
+  // https://github.com/robertabcd/PttChrome/blob/dev/src/js/term_buf.js TermBuf.prototype.notify()
+  const interval = setInterval(() => document.body.classList.toggle(runeStyles['hide-blink']), 1000)
+  return () => {
+    clearInterval(interval)
+    document.body.classList.remove(runeStyles['hide-blink'])
+  }
+}
+
 export default (props) => {
   const {width, height, columns: propsColumns, data, renderCell: propsRenderCell, renderHeader, scrollTop, onVerticalScroll, scrollToRow} = props
+
+  useEffect(_initBlink, [])
 
   let columns = propsColumns || _DEFAULT_COLUMNS
 

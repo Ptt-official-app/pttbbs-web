@@ -360,6 +360,7 @@ const _parseRegularComment = (each) => {
   let contentRunes = (each.content && each.content.length > 0) ? each.content[0] : []
   if(contentRunes.length > 0) {
     contentRunes[0].color0.foreground = COLOR_FOREGROUND_YELLOW
+    delete contentRunes[0].color1
     runes = runes.concat(contentRunes)
   }
 

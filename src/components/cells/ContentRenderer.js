@@ -44,36 +44,72 @@ export class Runes extends Component {
   }
 }
 
-export const RuneCore = (props) => {
-  const {rune, rowIndex, idx, onMouseDown} = props
-  let classNames0 = [styles['rune']]
-  let color0 = rune.color0 || {}
-  if(color0.foreground) {
-    if(color0.highlight) {
-      classNames0.push(styles['h'+color0.foreground])
-    } else {
-      classNames0.push(styles['c'+color0.foreground])
+const _runeAttrs = ['foreground', 'background', 'blink', 'highlight']
+
+export class RuneCore extends Component {
+  static getClassNamesFromColor = (color, part = '') => {
+    let classNames = []
+    if(color.foreground) {
+      if(color.highlight) {
+        classNames.push(styles[part+'h'+color.foreground])
+      } else {
+        classNames.push(styles[part+'c'+color.foreground])
+      }
     }
-  }
-  if(color0.background) {
-    classNames0.push(styles['c'+color0.background])
-  }
-  if(rune.pullright){
-    classNames0.push(styles['pull-right'])
+    if(color.background) {
+      classNames.push(styles[part+'c'+color.background])
+    }
+    if(color.blink) {
+      classNames.push(styles[part+'c5'])
+    }
+    return classNames
   }
 
-  let className0 = classNames0.join(' ')
-  let runeKey = 'rune-' + rowIndex + '-' + idx
-  let _onMouseDown = (e) => {
-    if(!onMouseDown) {
-      return
+  static getClassNamesFromRune = (rune) => {
+    let classNames0 = [styles['rune']]
+    let color0 = rune.color0 || {}
+    classNames0.push(...RuneCore.getClassNamesFromColor(color0))
+    const twoColors = rune.color1 && _runeAttrs.some((attr) => color0[attr] !== rune.color1[attr])
+    if(twoColors) {
+      // Treat the two halves of a character with two colors separately
+      const color1 = rune.color1 || color0
+      classNames0.push(styles['halves'])
+      classNames0.push(...RuneCore.getClassNamesFromColor(color1, 'r'))
     }
-    onMouseDown(e, rowIndex, idx)
+    return [classNames0, twoColors]
   }
 
-  return (
-    <span key={runeKey} className={className0} onMouseDown={_onMouseDown}>{rune.text}</span>
-  )
+  render = () => {
+    const {rune, rowIndex, idx, onMouseDown} = this.props
+    let [classNames0, twoColors] = RuneCore.getClassNamesFromRune(rune)
+    let classNamesGroup = rune.pullright ? [styles['pull-right']] : []
+    let runeKey = 'rune-' + rowIndex + '-' + idx
+    let _onMouseDown = (e) => {
+      if(!onMouseDown) {
+        return
+      }
+      onMouseDown(e, rowIndex, idx)
+    }
+
+    if (twoColors) {
+      // Render a string where each character having two colors into an array of characters
+      classNamesGroup.push(styles['halves-group'])
+      const classNameGroup = classNamesGroup.join(' ')
+      const className0 = classNames0.join(' ')
+      return (
+        <span className={classNameGroup}>
+          {[...rune.text].map((ch, idx) => (
+            <span key={`${runeKey}-${idx}`} className={className0} onMouseDown={_onMouseDown} data-text={ch}>{ch}</span>
+          ))}
+        </span>
+      )
+    }
+    classNames0.push(...classNamesGroup)
+    const className0 = classNames0.join(' ')
+    return (
+      <span key={runeKey} className={className0} onMouseDown={_onMouseDown}>{rune.text}</span>
+    )
+  }
 }
 
 export const PostDate = (props) => {
