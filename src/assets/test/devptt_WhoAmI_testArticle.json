@@ -1,0 +1,116 @@
+{
+  "bid": "WhoAmI",
+  "aid": "M.1622146491.A.A0F",
+  "deleted": false,
+  "create_time": 1622146491,
+  "modified": 1623479440,
+  "recommend": -9,
+  "n_comments": 14,
+  "owner": "test5",
+  "title": "測試推文",
+  "money": 0,
+  "class": "討論",
+  "mode": 0,
+  "url": "https://www.devptt.site/bbs/board/WhoAmI/article/M.1622146491.A.A0F",
+  "read": true,
+  "brdname": "WhoAmI",
+  "content": [
+    [
+      {
+        "text": "作者: test5 () 看板: WhoAmI",
+        "color0": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        },
+        "color1": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        }
+      }
+    ],
+    [
+      {
+        "text": "標題: [討論] 測試推文",
+        "color0": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        },
+        "color1": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        }
+      }
+    ],
+    [
+      {
+        "text": "時間: Fri May 28 04:14:50 2021",
+        "color0": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        },
+        "color1": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        }
+      }
+    ],
+    [
+      {
+        "text": "這篇文章用來測試推文",
+        "color0": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        },
+        "color1": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        }
+      },
+      {
+        "text": "～",
+        "color0": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        },
+        "color1": {
+          "foreground": 37,
+          "background": 40,
+          "blink": false,
+          "highlight": false,
+          "reset": false
+        }
+      }
+    ]
+  ],
+  "ip": "172.18.0.1",
+  "host": "",
+  "bbs": "新批踢踢(ptt2.cc)",
+  "rank": 0
+}
