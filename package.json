@@ -9,6 +9,7 @@
     "bootstrap": "^4.5.3",
     "fixed-data-table-2": "^1.1.2",
     "js-cookie": "^2.2.1",
+    "miragejs": "^0.1.41",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "normalize.css": "^8.0.1",

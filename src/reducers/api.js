@@ -1,4 +1,4 @@
-import * as superagent from 'superagent-bluebird-promise'
+import * as superagent from 'superagent/dist/superagent'
 import config from 'config'
 
 const serialize = (data) => {
