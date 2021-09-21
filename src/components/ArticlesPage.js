@@ -113,7 +113,7 @@ export default (props) => {
   }
 
   const onSearchSubmit = () => {
-    setSearching(true)
+    searchTitle === '' ? setSearching(false) : setSearching(true)
     // clear articles
     // load more
     doArticlesPage.GetArticles(myID, bid, searchTitle, null, true, false)
