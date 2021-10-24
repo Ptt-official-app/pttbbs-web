@@ -209,14 +209,12 @@ export const GetArticleContent = (myID, bid, aid, startIdx) => {
 
     let bbsLines = _parseBBSLines(data.bbs, data.ip, data.host, bid, aid)
     let content = data.content || []
-    let isValidContentWithHeader = _isValidContentWithHeader(content)
-    if(isValidContentWithHeader) {
-      content = _parseContentWithHeader(content)
-    }
+    let prefix = data.prefix || []
+    prefix = _parseHeader(prefix)
+    content = prefix.concat(content)
     content = content.concat(bbsLines)
-
     let lines = _parseLines(content || [])
-    if(isValidContentWithHeader) {
+    if(prefix.length >= 3) { // valid prefix
       lines[0].background = COLOR_BACKGROUND_BLUE
       lines[1].background = COLOR_BACKGROUND_BLUE
       lines[2].background = COLOR_BACKGROUND_BLUE
@@ -235,40 +233,12 @@ export const GetArticleContent = (myID, bid, aid, startIdx) => {
   })()
 }
 
-const _isValidContentWithHeader = (content) => {
-  if(content.length < 3) {
-    return false
+const _parseHeader = (header) => {
+  if(header.length < 3) {
+    return header
   }
 
-  let authorBoard = content[0]
-  if(authorBoard.length !== 1) {
-    return false
-  }
-  if(!authorBoard[0].text.startsWith('作者:')) {
-    return false
-  }
-
-  let title = content[1]
-  if(title.length !== 1) {
-    return false
-  }
-  if(!title[0].text.startsWith('標題:')) {
-    return false
-  }
-
-  let datetimeStr = content[2]
-  if(datetimeStr.length !== 1) {
-    return false
-  }
-  if(!datetimeStr[0].text.startsWith('時間:')) {
-    return false
-  }
-
-  return true
-}
-
-const _parseContentWithHeader = (content) => {
-  let [authorBoard, title, theDateTime, theRest] = [content[0], content[1], content[2], content.slice(3)]
+  let [authorBoard, title, theDateTime] = [header[0], header[1], header[2]]
 
   let [author, board] = authorBoard[0].text.split(' 看板: ')
 
@@ -291,14 +261,14 @@ const _parseContentWithHeader = (content) => {
   //emptyLine
   let emptyLine = {'text': '', color0: {foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK}}
 
-  content = [
+  header = [
     [authorPromptRune, authorRune, boardRune, boardPromptRune],
     [titlePromptRune, titleRune],
     [datetimePromptRune, datetimeRune],
     [emptyLine],
-  ].concat(theRest)
+  ]
 
-  return content
+  return header
 }
 
 const _parseLines = (lines) => {
