@@ -15,14 +15,14 @@ export default (props) => {
 
   // Links
   let renderUserHome = () => {
-    let text = userID
+    let text = 'hi~ ' + userID
     let url = '/user/' + userID
     if(!userID || userID === PTT_GUEST) {
-      text = "guest"
+      text = "登入/註冊"
       url = '/login'
     }
     return (
-      <a className={'pull-right ' + styles['navbar-link']} href={url}>hi~{text}</a>
+      <a className={'pull-right ' + styles['navbar-link']} href={url}>{text}</a>
     )
   }
 
