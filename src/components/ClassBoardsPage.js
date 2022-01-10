@@ -4,12 +4,13 @@ import pageStyles from './Page.module.css'
 import * as errors from './errors'
 
 import { useWindowSize } from 'react-use'
+import { useParams } from 'react-router-dom'
 
 import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
 import { PTT_GUEST } from '../constants'
 
-import * as DoGeneralBoardsPage from '../reducers/generalBoardsPage'
+import * as DoClassBoardsPage from '../reducers/classBoardsPage'
 import * as DoHeader from '../reducers/header'
 
 import Header from './Header'
@@ -19,33 +20,31 @@ import FunctionBar from './FunctionBar'
 import QueryString from 'query-string'
 
 export default (props) => {
-  const [stateGeneralBoardsPage, doGeneralBoardsPage] = useActionDispatchReducer(DoGeneralBoardsPage)
+  const [stateClassBoardsPage, doClassBoardsPage] = useActionDispatchReducer(DoClassBoardsPage)
+
   const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   // eslint-disable-next-line
   const [errMsg, setErrMsg] = useState('')
 
-  // eslint-disable-next-line
-  const [isByClass, setIsByClass] = useState(true)
-
   //init
+  let { clsID } = useParams()
   useEffect(() => {
     let headerID = genUUID()
     doHeader.init(headerID, doHeader, null, null)
 
-    let generalBoardsPageID = genUUID()
+    let classBoardsPageID = genUUID()
     const query = QueryString.parse(window.location.search)
-    const {start_idx: startIdx, title: queryTitle} = query
-    let searchTitle = queryTitle || ''
+    const {start_idx: startIdx} = query
 
-    doGeneralBoardsPage.init(generalBoardsPageID, doGeneralBoardsPage, null, null, searchTitle, startIdx, isByClass)
+    doClassBoardsPage.init(classBoardsPageID, doClassBoardsPage, null, null, clsID, startIdx)
 
     if(headerRef.current !== null) setHeaderHeight(headerRef.current.clientHeight)
     if(funcbarRef.current !== null) setFuncbarHeight(funcbarRef.current.clientHeight)
   }, [])
 
   //get data
-  let boardsPage = getRoot(stateGeneralBoardsPage) || {}
+  let boardsPage = getRoot(stateClassBoardsPage) || {}
   let myID = boardsPage.id || ''
   let errmsg = boardsPage.errmsg || ''
   let boards = boardsPage.list || []
@@ -68,7 +67,8 @@ export default (props) => {
   let width = innerWidth
   let listHeight = innerHeight - headerHeight - funcbarHeight
 
-  let headerTitle = '所有看板'
+  let headerTitle = '分類看板'
+
 
   let loadPre = (item) => {
     if(item.numIdx === 1 || isPreEnd) {
@@ -79,7 +79,7 @@ export default (props) => {
     if(!idx) {
       return
     }
-    doGeneralBoardsPage.GetBoards(myID, searchTitle, idx, true, true, isByClass)
+    doClassBoardsPage.GetBoards(myID, clsID, idx, true, true)
   }
 
   let loadNext = (item) => {
@@ -92,7 +92,7 @@ export default (props) => {
       return
     }
 
-    doGeneralBoardsPage.GetBoards(myID, searchTitle, idx, false, true, isByClass)
+    doClassBoardsPage.GetBoards(myID, clsID, idx, false, true)
   }
 
   let onVerticalScroll = (scrollTop) => {
@@ -101,7 +101,7 @@ export default (props) => {
       return
     }
 
-    doGeneralBoardsPage.SetData(myID, {scrollToRow: null})
+    doClassBoardsPage.SetData(myID, {scrollToRow: null})
   }
 
   // eslint-disable-next-line
@@ -132,7 +132,7 @@ export default (props) => {
     roptions.push({text: "我的最愛", action: ()=>{window.location.href = '/user/' + myUserID + '/favorites'}})
   }
   roptions.push({text: "熱門看板", action: ()=>{window.location.href = '/boards/popular'}})
-  roptions.push({text: "分類看板", action: ()=>{window.location.href = '/cls/1'}})
+  roptions.push({text: "所有看板", action: ()=>{window.location.href = '/boards'}})
 
   return (
     <div className={pageStyles['root']}>

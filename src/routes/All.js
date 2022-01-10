@@ -7,12 +7,15 @@ import GeneralBoardsPage from '../components/GeneralBoardsPage'
 import UserFavoritesPage from '../components/UserFavoritesPage'
 import ArticlePage from '../components/ArticlePage'
 import NewArticlePage from '../components/NewArticlePage'
+import ClassBoardsPage from '../components/ClassBoardsPage'
 
 export default (props) => {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={HomePage} />
+
+        <Route exact path="/cls/:clsID" component={ClassBoardsPage} />
 
         <Route exact path="/boards" component={GeneralBoardsPage} />
         <Route exact path="/boards/popular" component={HotBoardsPage} />

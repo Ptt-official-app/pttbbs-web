@@ -86,6 +86,7 @@ export default (props) => {
   }
 
   roptions.push({text: "全部看板", action: ()=>{window.location.href = '/boards'}})
+  roptions.push({text: "分類看板", action: ()=>{window.location.href = '/cls/1'}})
 
   // NOTE: ref can only be used directly on html tags to get element attributes
   // Will fail if used on React components. e.g. Header

@@ -149,6 +149,15 @@ export const LoadGeneralBoards = (title, startIdx, desc) => ({
   },
 })
 
+export const LoadClassBoards = (clsID, startIdx, desc) => ({
+  endpoint: '/api/cls/' + clsID,
+  query: {
+    start_idx: startIdx || '',
+    asc: !desc,
+    limit: LIST_LIMIT,
+  },
+})
+
 export const LoadArticles = (bid, title, startIdx, desc) => {
   let query = {
     title: title || '',
