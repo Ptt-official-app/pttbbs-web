@@ -43,6 +43,16 @@ export const SantizeBoard = (board) => {
   }
 
   board.url = BoardURL(board)
+
+  if(board.type === 'Σ')  {
+    if(board.gid === 1) {
+      board.brdname = ''
+      board.class = ''
+    }
+    board.nuser = ' '
+    return board
+  }
+
   switch(board.stat_attr) {
   case NBRD_LINE:
     board.brdname = '------------'
@@ -64,6 +74,10 @@ export const SantizeBoard = (board) => {
 }
 
 export const BoardURL = (board) => {
+  if(board.type === 'Σ') {
+    return `/cls/${board.pttbid}`
+  }
+
   switch(board.stat_attr) {
   case NBRD_LINE:
     return ''

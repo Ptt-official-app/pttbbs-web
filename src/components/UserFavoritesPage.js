@@ -125,6 +125,7 @@ export default (props) => {
   let roptions = [
     {text: "熱門看板", action: ()=>{window.location.href = '/boards/popular'}},
     {text: "所有看板", action: ()=>{window.location.href = '/boards'}},
+    {text: "分類看板", action: ()=>{window.location.href = '/cls/1'}},
   ]
 
   return (
