@@ -8,14 +8,15 @@ import { useParams } from 'react-router-dom'
 
 import { useActionDispatchReducer, getRoot, genUUID } from 'react-reducer-utils'
 
-import * as DoArticlesPage from '../reducers/articlesPage'
+import * as DoManualsPage from '../reducers/manualsPage'
 import * as DoHeader from '../reducers/header'
 
+import ManualPage from './ManualPage'
+
 import Header from './Header'
-import ArticleList from './ArticleList'
+import ManualList from './ManualList'
 import FunctionBar from './FunctionBar'
 import SearchBar from './SearchBar'
-
 import EmptyList from './EmptyList'
 
 import QueryString from 'query-string'
@@ -23,47 +24,58 @@ import QueryString from 'query-string'
 import { GetBoardParent } from './utils'
 
 export default (props) => {
-  const [stateArticlesPage, doArticlesPage] = useActionDispatchReducer(DoArticlesPage)
+  //init
+  let { bid, path: _path } = useParams()
+  let path = _path || ''
+  let pathList = path.split('/')
+  let dirname = pathList.slice(0, pathList.length-1).join('/')
+  let parentUrl = `/board/${bid}/manual`
+  console.log('ManualsPage: path:', path, 'dirname:', dirname)
+  if(dirname !== '') {
+    parentUrl += '/' + dirname
+  }
+
+  let basename = pathList[pathList.length-1]
+  if(basename[0] === 'M') {
+    return <ManualPage {...props} />
+  }
+
+  const [stateManualsPage, doManualsPage] = useActionDispatchReducer(DoManualsPage)
   const [stateHeader, doHeader] = useActionDispatchReducer(DoHeader)
 
   // eslint-disable-next-line
   const [errMsg, setErrMsg] = useState('')
 
-  //init
-  let { bid } = useParams()
   useEffect(() => {
     let headerID = genUUID()
     doHeader.init(headerID, doHeader, null, null)
 
-    let articlesPageID = genUUID()
+    let manualsPageID = genUUID()
     const query = QueryString.parse(window.location.search)
     const {start_idx: startIdx, title: queryTitle} = query
     let searchTitle = queryTitle || ''
 
-    doArticlesPage.init(articlesPageID, doArticlesPage, null, null, bid, searchTitle, startIdx)
+    doManualsPage.init(manualsPageID, doManualsPage, null, null, bid, path, searchTitle, startIdx)
 
     if(headerRef.current !== null) setHeaderHeight(headerRef.current.clientHeight)
     if(funcbarRef.current !== null) setFuncbarHeight(funcbarRef.current.clientHeight)
   }, [])
 
-
   //get data
-  let articlesPage = getRoot(stateArticlesPage) || {}
-  let myID = articlesPage.id || ''
-  let errmsg = articlesPage.errmsg || ''
-  let brdname = articlesPage.brdname || ''
-  let title = articlesPage.title || ''
-  let searchTitle = articlesPage.searchTitle || ''
-  let isNextEnd = articlesPage.isNextEnd || false
-  let isPreEnd = articlesPage.isPreEnd || false
-  //let nextCreateTime = articlesPage.nextCreateTime || 0
-  let scrollToRow = (typeof articlesPage.scrollToRow === 'undefined') ? null : articlesPage.scrollToRow
-  let articles = articlesPage.allArticles || []
+  let manualsPage = getRoot(stateManualsPage) || {}
+  let myID = manualsPage.id || ''
+  let errmsg = manualsPage.errmsg || ''
+  let brdname = manualsPage.brdname || ''
+  let title = manualsPage.title || ''
+  let isNextEnd = manualsPage.isNextEnd || false
+  let isPreEnd = manualsPage.isPreEnd || false
+  //let nextCreateTime = manualsPage.nextCreateTime || 0
+  let scrollToRow = (typeof manualsPage.scrollToRow === 'undefined') ? null : manualsPage.scrollToRow
+  let manuals = manualsPage.allManuals || []
 
   //keys
-  let parentPage = GetBoardParent() || '/boards/popular'
   useKey('ArrowLeft', (e) => {
-    window.location.href = parentPage
+    window.location.href = parentUrl
   })
 
   //render
@@ -78,31 +90,14 @@ export default (props) => {
   let width = innerWidth
   let listHeight = innerHeight - headerHeight - funcbarHeight
 
-  let headerTitle = brdname + ' - ' + title
+  let headerTitle = '(精華區) ' + brdname + ' - ' + title
+
+  console.log('ManualsPage: manualsPage:', manualsPage, 'brdname:', brdname, 'headerTitle:', headerTitle)
 
   let loadPre = (item) => {
-    if(item.numIdx === 1 || isPreEnd) {
-      return
-    }
-
-    let idx = item.idx || ''
-    if(!idx) {
-      return
-    }
-    doArticlesPage.GetArticles(myID, bid, searchTitle, idx, true, true)
   }
 
   let loadNext = (item) => {
-    if(isNextEnd) {
-      return
-    }
-
-    let idx = item.idx || ''
-    if(!idx) {
-      return
-    }
-
-    doArticlesPage.GetArticles(myID, bid, searchTitle, idx, false, true)
   }
 
   let onVerticalScroll = (scrollTop) => {
@@ -111,61 +106,39 @@ export default (props) => {
       return
     }
 
-    doArticlesPage.SetData(myID, {scrollToRow: null})
-  }
-
-  const onSearchSubmit = () => {
-    searchTitle === '' ? setSearching(false) : setSearching(true)
-    // clear articles
-    // load more
-    doArticlesPage.GetArticles(myID, bid, searchTitle, null, true, false)
-  }
-
-  const onSearchClear = () => {
-    setSearching(false)
-    searchTitle = ''
-    doArticlesPage.SetData(myID, {searchTitle: searchTitle})
-    doArticlesPage.GetArticles(myID, bid, searchTitle, null, true, false)
+    doManualsPage.SetData(myID, {scrollToRow: null})
   }
 
   // eslint-disable-next-line
   let allErrMsg = errors.mergeErr(errMsg, errmsg)
-  let renderArticles = () => {
-    if (articles.length === 0) {
+  let renderManuals = () => {
+    if (manuals.length === 0) {
       return(
-        <EmptyList prompt="這個看板目前沒有文章喔～" width={width} height={listHeight} />
+        <EmptyList prompt="這個精華區目前沒有文章喔～" width={width} height={listHeight} />
       )
     } else {
       return (
-        <ArticleList articles={articles} width={width} height={listHeight} loadPre={loadPre} loadNext={loadNext} scrollToRow={scrollToRow} onVerticalScroll={onVerticalScroll} scrollTop={scrollTop} />
+        <ManualList manuals={manuals} width={width} height={listHeight} loadPre={loadPre} loadNext={loadNext} scrollToRow={scrollToRow} onVerticalScroll={onVerticalScroll} scrollTop={scrollTop} />
       )
     }
   }
 
   let loptions = [
-    {text: "發表文章", url: `/board/${bid}/post`},
   ]
   let roptions = [
-    {text: "精華區", url: `/board/${bid}/manual`},
+    {text: "看板", url: `/board/${bid}/articles`},
     {text: "看板設定/說明", action: ()=>{}},
   ]
+  if(path !== '') {
+    roptions = [{text: '離開', url: parentUrl, hotkey: "←"}].concat(roptions)
+  }
 
   const renderHeader = (params) => {
     return (
       <div className={'col d-flex justify-content-between align-items-center px-4'}>
         <div className="w-25 "></div>
         <span className="p-0" style={{fontSize: "x-large"}}>{headerTitle}</span>
-        <div className="w-25">
-          <SearchBar
-            text={searchTitle}
-            setText={(text) => {
-              doArticlesPage.SetData(myID, {searchTitle: text})
-            }}
-            onSearch={onSearchSubmit}
-            searching={searching}
-            onClear={onSearchClear}
-          />
-        </div>
+        <div className="w-25"></div>
       </div>
     )
   }
@@ -181,7 +154,7 @@ export default (props) => {
           renderHeader={renderHeader}
         />
       </div>
-      {renderArticles()}
+      {renderManuals()}
       <div ref={funcbarRef}>
         <FunctionBar optionsLeft={loptions} optionsRight={roptions}/>
       </div>
