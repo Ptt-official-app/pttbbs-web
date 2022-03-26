@@ -16,6 +16,7 @@ import UserFavoritesPage from '../components/UserFavoritesPage'
 import ArticlePage from '../components/ArticlePage'
 import NewArticlePage from '../components/NewArticlePage'
 import ClassBoardsPage from '../components/ClassBoardsPage'
+import ManualsPage from '../components/ManualsPage'
 
 export default (props) => {
   return (
@@ -41,6 +42,8 @@ export default (props) => {
         <Route exact path="/board/:bid/article/:aid" component={ArticlePage} />
         <Route exact path="/board/:bid/post" component={NewArticlePage} />
 
+        <Route exact path="/board/:bid/manual" component={ManualsPage} />
+        <Route path="/board/:bid/manual/:path*" component={ManualsPage} />
 
       </Switch>
     </Router>

@@ -33,8 +33,10 @@ export class Runes extends Component {
 
   render = () => {
     const {data, rowIndex, columnKey, onMouseDown} = this.props
-    let runes = data[rowIndex][columnKey]
+    let runes = data[rowIndex][columnKey] || []
     let background = data[rowIndex].background || COLOR_BACKGROUND_BLACK
+
+    console.log('ContentRenderer.Runes.render: background:', background, 'runes:', runes, 'styles:', styles, 'rowIndex:', rowIndex, 'columnKey:', columnKey, 'data:', data)
 
     return (
       <div className={styles['c'+background]}>

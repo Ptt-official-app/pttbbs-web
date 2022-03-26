@@ -232,3 +232,24 @@ export const Rank = (bid, aid, rank) => {
     },
   }
 }
+
+export const LoadManuals = (bid, path, desc) => {
+  let query = {
+    level_idx: path,
+  }
+  if(typeof desc !== 'undefined') {
+    query.desc = desc
+  }
+  return {
+    endpoint: `/api/board/${bid}/manuals`,
+    method: 'get',
+    query: query,
+  }
+}
+
+export const GetManual = (bid, path) => {
+  return {
+    endpoint: `/api/board/${bid}/manual/${path}`,
+    method: 'get',
+  }
+}
