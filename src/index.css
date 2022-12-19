@@ -1,82 +1,81 @@
 @import url(//fonts.googleapis.com/css?family=Inconsolata);
 
 body {
-  margin: 0;
-  font-family: "細明體", "AR PL UMing TW", "Inconsolata", "LiSongPro", monospace;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: "細明體", "AR PL UMing TW", "Inconsolata", "LiSongPro", monospace;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }
 
 a, a:hover {
-  color: #fff;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 
 .public_fixedDataTable_main {
-  border-color: #000;
+    border-color: #000;
 }
 
 .public_fixedDataTable_header,
 .public_fixedDataTable_hasBottomBorder {
-  border-color: #000;
+    border-color: #000;
 }
 
 .public_fixedDataTableRow_main {
-  background-color: #000;
+    background-color: #000;
 }
 
 .public_fixedDataTableRow_highlighted,
 .public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {
-  background-color: #000;
+    background-color: #000;
 }
 
 .public_fixedDataTable_header,
 .public_fixedDataTable_scrollbarSpacer,
 .public_fixedDataTable_header .public_fixedDataTableCell_main {
-  background-color: #eee;
-  background-image: linear-gradient(#eee, #eee);
-  border-color: #eee;
+    background-color: #eee;
+    background-image: linear-gradient(#eee, #eee);
+    border-color: #eee;
 }
 
 .public_fixedDataTableCell_main {
-  background-color: #000;
-  border-color: #000;
+    background-color: #000;
+    border-color: #000;
 }
 
 .fixedDataTableCellLayout_main {
-  border-width: 0px;
+    border-width: 0px;
 }
 
 .fixedDataTableLayout_header,
 .fixedDataTableLayout_hasBottomBorder {
-  border-bottom-style: solid;
-  border-bottom-width: 0px;
+    border-bottom-style: solid;
+    border-bottom-width: 0px;
 }
 
 .fixedDataTableLayout_footer .public_fixedDataTableCell_main {
-  border-top-style: solid;
-  border-top-width: 0px;
+    border-top-style: solid;
+    border-top-width: 0px;
 }
 
 .public_fixedDataTableCell_cellContent {
-  padding: 0px;
+    padding: 0px;
 }
 
 .fixedDataTableCellLayout_wrap2 {
-  display: block;
+    display: block;
 }
 
 .fixedDataTableCellLayout_wrap3 {
-  display: block;
-  vertical-align: middle;
+    display: block;
 }
 
 .logo-github {
-  -webkit-mask: url(./assets/img/github.svg) no-repeat center;
-  mask: url(./assets/img/github.svg) no-repeat center;
+    -webkit-mask: url(./assets/img/github.svg) no-repeat center;
+    mask: url(./assets/img/github.svg) no-repeat center;
 }
