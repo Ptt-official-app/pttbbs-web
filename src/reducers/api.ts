@@ -95,6 +95,7 @@ const callApi = <T>(endpoint: string, { query, method = 'get', params, files, js
         method,
         headers,
         body,
+        credentials: 'include',
     }
 
     return fetch(endpoint, options)

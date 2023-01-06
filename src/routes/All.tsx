@@ -18,40 +18,16 @@ export default (props: Props) => {
     return (
         <Router>
             <Routes>
-                <Route path="/">
-                    <HomePage />
-                </Route>
-
-                <Route path="/cls/:clsID">
-                    <ClassBoardsPage />
-                </Route>
-                <Route path="/boards">
-                    <GeneralBoardsPage />
-                </Route>
-                <Route path="/boards/popular">
-                    <HotBoardsPage />
-                </Route>
-                <Route path="/board/:bid/articles">
-                    <ArticlesPage />
-                </Route>
-                <Route path="/user/:userid/favorites">
-                    <UserFavoritesPage />
-                </Route>
-                <Route path="/board/:bid/article/:aid">
-                    <ArticlePage />
-                </Route>
-                <Route path="/board/:bid/post">
-                    <NewArticlePage />
-                </Route>
-
-                <Route path="/board/:bid/manual">
-                    <ManualsPage />
-                </Route>
-
-                <Route path="/board/:bid/manual/:path*">
-                    <ManualsPage />
-                </Route>
-
+                <Route path="/" element={<HomePage />} />
+                <Route path="/cls/:clsID" element={<ClassBoardsPage />} />
+                <Route path="/boards" element={<GeneralBoardsPage />} />
+                <Route path="/boards/popular" element={<HotBoardsPage />} />
+                <Route path="/board/:bid/articles" element={<ArticlesPage />} />
+                <Route path="/user/:userid/favorites" element={<UserFavoritesPage />} />
+                <Route path="/board/:bid/article/:aid" element={<ArticlePage />} />
+                <Route path="/board/:bid/post" element={<NewArticlePage />} />
+                <Route path="/board/:bid/manual" element={<ManualsPage />} />
+                <Route path="/board/:bid/manual/:path/*" element={<ManualsPage />} />
             </Routes>
         </Router>
     )

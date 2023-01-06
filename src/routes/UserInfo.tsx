@@ -10,9 +10,7 @@ export default (props: Props) => {
     return (
         <Router>
             <Routes>
-                <Route path="/user/:userid">
-                    <UserInfoPage />
-                </Route>
+                <Route path="/user/:userid" element={<UserInfoPage />} />
             </Routes>
         </Router>
     )

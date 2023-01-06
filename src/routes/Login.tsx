@@ -10,9 +10,7 @@ export default (props: Props) => {
     return (
         <Router>
             <Routes>
-                <Route path="/login">
-                    <LoginPage />
-                </Route>
+                <Route path="/login" element={<LoginPage />} />
             </Routes>
         </Router>
     )
