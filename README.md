@@ -5,7 +5,7 @@ This is the demo of web-based pttbbs using openbbs-middleware.
 
 You can get started by visiting the following website:
 
-[https://www.devptt.site](https://www.devptt.site)
+[https://www.devptt.dev](https://www.devptt.dev)
 
 The corresponding backend repository of this website is:
 * [go-openbbsmiddleware](https://github.com/Ptt-official-app/go-openbbsmiddleware)

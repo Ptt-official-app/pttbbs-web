@@ -2,8 +2,26 @@
     background-color: navy;
 }
 
+.navbar {
+    color: #ffff00;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    position: relative;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    margin: 10px;
+    font-size: large;
+}
+
 .navbar-link {
-    color: #ff8800;
+    color: #ffff00;
     background: none;
     border: none;
 }

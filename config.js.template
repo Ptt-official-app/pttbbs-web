@@ -5,4 +5,5 @@ module.exports = {
   CLIENT_SECRET: 'test_client_secret',
   TERM_URL: 'https://bbsdocker.github.io/PttChrome-static',
   LIST_LIMIT: 10,
+  PTT_GUEST: 'guest',
 }
