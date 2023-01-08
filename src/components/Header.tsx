@@ -8,12 +8,12 @@ import { getRoot, ClassState } from 'react-reducer-utils'
 
 import Empty from './Empty'
 
-import { State as HeaderS } from '../reducers/header'
+import { State } from '../reducers/header'
 
 type Props = {
     title: string
     renderHeader?: any
-    stateHeader: ClassState<HeaderS>
+    stateHeader: ClassState<State>
 }
 
 export default (props: Props) => {

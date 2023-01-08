@@ -20,7 +20,12 @@ export interface State_m extends Maybe<State> { }
 export const init = (myID: string): Thunk<State> => {
     let theDate = new Date()
     return async (dispatch, _) => {
-        dispatch(_init({ myID, state: { theDate } }))
+        let state: State = {
+            theDate,
+            list: [],
+            isBusyLoading: false,
+        }
+        dispatch(_init({ myID, state }))
         dispatch(_getData(myID))
     }
 }
