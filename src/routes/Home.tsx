@@ -11,9 +11,7 @@ export default (props: Props) => {
     return (
         <Router>
             <Routes>
-                <Route path="/">
-                    <HomePage />
-                </Route>
+                <Route path="/" element={<HomePage />} />
             </Routes>
         </Router>
     )

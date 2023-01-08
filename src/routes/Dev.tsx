@@ -43,6 +43,6 @@ export default (props: Props) => {
                 <Route path="/board/:bid/manual" element={<ManualsPage />} />
                 <Route path="/board/:bid/manual/:path/*" element={<ManualsPage />} />
             </Routes>
-        </Router >
+        </Router>
     )
 }

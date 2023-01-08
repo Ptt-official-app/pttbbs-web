@@ -10,7 +10,7 @@ export default (props: Props) => {
     return (
         <Router>
             <Routes>
-                <Route path="/user/:userid/changeemail"><ChangeEmailPage /></Route>
+                <Route path="/user/:userid/changeemail" element={<ChangeEmailPage />} />
             </Routes>
         </Router>
     )
