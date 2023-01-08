@@ -50,10 +50,21 @@ export default (props: Props) => {
         const { start_idx: startIdx, level } = query
 
         doUserFavoritesPage.init(userFavoritesPageID, userid, level, startIdx)
-
-        if (headerRef.current !== null) setHeaderHeight(headerRef.current.clientHeight)
-        if (funcbarRef.current !== null) setFuncbarHeight(funcbarRef.current.clientHeight)
     }, [])
+
+    useEffect(() => {
+        if (headerRef.current === null) {
+            return
+        }
+        setHeaderHeight(headerRef.current.clientHeight)
+    }, [headerRef.current])
+
+    useEffect(() => {
+        if (funcbarRef.current === null) {
+            return
+        }
+        setFuncbarHeight(funcbarRef.current.clientHeight)
+    }, [funcbarRef.current])
 
     //get data
     let boardsPage = getRoot(stateUserFavoritesPage)

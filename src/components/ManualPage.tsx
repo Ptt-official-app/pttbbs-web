@@ -42,6 +42,13 @@ export default (props: Props) => {
         parentUrl += '/' + dirname
     }
 
+    const [headerHeight, setHeaderHeight] = useState(0)
+    const [funcbarHeight, setFuncbarHeight] = useState(0)
+    const headerRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
+    const funcbarRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
+    const { width: innerWidth, height: innerHeight } = useWindowSize()
+    const [scrollTop, setScrollTop] = useState(0)
+
     useEffect(() => {
         let headerID = genUUID()
         doHeader.init(headerID)
@@ -51,19 +58,23 @@ export default (props: Props) => {
         let startIdx = query.start_idx || ''
 
         doManualPage.init(manualPageID, bid, path, startIdx)
-
-        if (headerRef.current !== null) setHeaderHeight(headerRef.current.clientHeight)
-        if (funcbarRef.current !== null) setFuncbarHeight(funcbarRef.current.clientHeight)
-
     }, [])
 
+    useEffect(() => {
+        if (headerRef.current === null) {
+            return
+        }
+        setHeaderHeight(headerRef.current.clientHeight)
+    }, [headerRef.current])
+
+    useEffect(() => {
+        if (funcbarRef.current === null) {
+            return
+        }
+        setFuncbarHeight(funcbarRef.current.clientHeight)
+    }, [funcbarRef.current])
+
     //render
-    const [headerHeight, setHeaderHeight] = useState(0)
-    const [funcbarHeight, setFuncbarHeight] = useState(0)
-    const headerRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
-    const funcbarRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
-    const { width: innerWidth, height: innerHeight } = useWindowSize()
-    const [scrollTop, setScrollTop] = useState(0)
 
     useKey('ArrowLeft', (e) => {
         window.location.href = parentUrl

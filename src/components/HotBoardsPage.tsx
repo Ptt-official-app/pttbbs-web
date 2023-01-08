@@ -18,6 +18,7 @@ import * as DoHeader from '../reducers/header'
 import Header from './Header'
 import BoardList from './BoardList'
 import FunctionBar from './FunctionBar'
+import Empty from './Empty'
 
 type Props = {
 
@@ -45,16 +46,29 @@ export default (props: Props) => {
 
         let hotBoardsPageID = genUUID()
         doHotBoardsPage.init(hotBoardsPageID)
-
-        if (headerRef.current !== null) setHeaderHeight(headerRef.current.clientHeight)
-        if (funcbarRef.current !== null) setFuncbarHeight(funcbarRef.current.clientHeight)
     }, [])
 
+    useEffect(() => {
+        if (headerRef.current === null) {
+            return
+        }
+        setHeaderHeight(headerRef.current.clientHeight)
+    }, [headerRef.current])
+
+    useEffect(() => {
+        if (funcbarRef.current === null) {
+            return
+        }
+        setFuncbarHeight(funcbarRef.current.clientHeight)
+    }, [funcbarRef.current])
+
     //get data
-    // @ts-ignore
-    let hotBoardsPage: HotBoardsPage_s = getRoot(stateHotBoardsPage) || {}
+    let hotBoardsPage = getRoot(stateHotBoardsPage)
+    if (!hotBoardsPage) {
+        return (<Empty />)
+    }
     let errmsg = hotBoardsPage.errmsg || ''
-    let boards = hotBoardsPage.list || []
+    let boards = hotBoardsPage.list
 
     let header = getRoot(stateHeader) || { user_id: '' }
     let myUserID = header.user_id

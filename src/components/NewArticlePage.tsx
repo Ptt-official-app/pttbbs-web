@@ -101,7 +101,7 @@ export default (props: Props) => {
     }, [])
 
     useEffect(() => {
-        if (headerRef === null || headerRef.current === null) {
+        if (headerRef.current === null) {
             return
         }
         setHeaderHeight(headerRef.current.clientHeight)
@@ -109,10 +109,9 @@ export default (props: Props) => {
     }, [headerRef])
 
     useEffect(() => {
-        if (funcbarRef === null || funcbarRef.current === null) {
+        if (funcbarRef.current === null) {
             return
         }
-
         setFuncbarHeight(funcbarRef.current.clientHeight)
     }, [funcbarRef])
 

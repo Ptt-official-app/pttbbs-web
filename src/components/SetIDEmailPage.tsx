@@ -38,7 +38,7 @@ export default (props: Props) => {
     //get data
     let setIDEmailPage = getRoot(stateSetIDEmailPage)
     if (!setIDEmailPage) {
-        setIDEmailPage = {theDate: new Date(0), userID: '', token: '', isDone: false}
+        setIDEmailPage = { theDate: new Date(0), userID: '', token: '', isDone: false }
     }
     let myID = getRootID(stateSetIDEmailPage)
     let errmsg = setIDEmailPage.errmsg || ''
