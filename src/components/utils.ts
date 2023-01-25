@@ -5,28 +5,97 @@ export const TSToDateTimeStr = (ts: number) => {
 }
 
 //board-list: 特殊記號+已讀+看板+類別+種類+中文敘述+人氣+板主
-export const CHAR_WIDTH = 11
+export const CHAR_WIDTH = 10
 
 export const SCREEN_WIDTH = 90
 export const EDIT_SCREEN_WIDTH = 80
 
 export const BASE_COLUMN_WIDTH = CHAR_WIDTH * SCREEN_WIDTH
 
-export const BASE_LINE_HEIGHT = 30
+export const BASE_LINE_HEIGHT = 25
 
 const MAX_SCALE = 1.2
 
 const FONT_SIZE_SCALE = 0.70
 
+const DEFAULT_CHAR_WIDTH = 10
+const DEFAULT_SCREEN_WIDTH = 90
+
+export const CONSTS = {
+    FONT_SIZE: 20,
+    SCALE: 1,
+    WINDOW_WIDTH: 3840,
+    SCREEN_WIDTH: 90,
+    CHAR_WIDTH: 10,
+    EDIT_SCREEN_WIDTH: 80,
+    LINE_HEIGHT: 25,
+    IS_MOBILE: false,
+    IS_INIT: false,
+}
+
+const calcScreenWidth = (windowWidth: number, isMobile: boolean) => {
+    if (!isMobile) {
+        if (windowWidth > DEFAULT_SCREEN_WIDTH * DEFAULT_CHAR_WIDTH) {
+            return DEFAULT_SCREEN_WIDTH
+        } else {
+            return Math.floor(windowWidth / DEFAULT_CHAR_WIDTH)
+        }
+    } else {
+        return 15
+    }
+}
+
+const calcScale = (windowWidth: number, isMobile: boolean, screenWidth: number) => {
+    if (CONSTS.IS_INIT) {
+        return CONSTS.SCALE
+    }
+    if (!isMobile) {
+        let scale = windowWidth / (DEFAULT_CHAR_WIDTH * screenWidth)
+        return scale < MAX_SCALE ? scale : MAX_SCALE
+    } else {
+        return 1
+    }
+}
+
+export const CalcFontSizeScaleScreenWidth = (windowWidth: number, isMobile: boolean) => {
+    if (CONSTS.IS_INIT) {
+        return { fontSize: CONSTS.FONT_SIZE, scale: CONSTS.SCALE, screenWidth: CONSTS.SCREEN_WIDTH }
+    }
+    if (!isMobile) {
+        let screenWidth = calcScreenWidth(windowWidth, isMobile)
+        let scale = calcScale(windowWidth, isMobile, screenWidth)
+        let fontSize = Math.floor(scale * DEFAULT_CHAR_WIDTH * 2)
+        return { fontSize, scale, screenWidth }
+    } else {
+        return { fontSize: 15, scale: 1, screenWidth: 20 }
+    }
+}
+
+export const InitCONSTS = (windowWidth: number, lineHeight: number, isMobile: boolean, fontSize: number, scale: number, screenWidth: number) => {
+    let toUpdate = {
+        WINDOW_WIDTH: windowWidth,
+        IS_MOBILE: isMobile,
+
+        FONT_SIZE: fontSize,
+        SCALE: scale,
+        SCREEN_WIDTH: screenWidth,
+
+        LINE_HEIGHT: lineHeight,
+
+        IS_INIT: true,
+    }
+    Object.assign(CONSTS, toUpdate)
+
+    console.log('utils.InitCONSTS: CONSTS:', CONSTS)
+}
+
 export const CalcScreenScale = (width: number) => {
-    let scale = width / BASE_COLUMN_WIDTH
+    let scale = width / (DEFAULT_CHAR_WIDTH * CONSTS.SCREEN_WIDTH)
     scale = scale < MAX_SCALE ? scale : MAX_SCALE
+    let lineHeight = CONSTS.LINE_HEIGHT
+    let fontSize = CONSTS.FONT_SIZE
 
-    let lineHeight = Math.floor(BASE_LINE_HEIGHT * scale)
-
-    let fontSize = Math.floor(lineHeight * FONT_SIZE_SCALE)
-
-    return [scale, lineHeight, fontSize]
+    return { scale, lineHeight, fontSize }
 }
 
 export const GetBoardParent = () => {

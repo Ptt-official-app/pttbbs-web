@@ -24,3 +24,4 @@ yarn-error.log*
 /src/index.js
 /.eslintcache
 /build-home
+/config

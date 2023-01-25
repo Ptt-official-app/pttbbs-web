@@ -45,7 +45,9 @@ export default (props: Props) => {
 
     let columns = propsColumns || _DEFAULT_COLUMNS
 
-    let [scale, lineHeight, fontSize] = CalcScreenScale(width)
+    let { scale, lineHeight, fontSize } = CalcScreenScale(width)
+
+    console.log('Screen: scale:', scale, 'lineHeight:', lineHeight, 'fontSize:', fontSize)
     let headerHeight = (typeof renderHeader !== 'undefined') ? lineHeight : 0
     let rowHeight = lineHeight
     let scaleWidth = columns.reduce((r, x, i) => r + Math.floor(x.width * scale), 0)
