@@ -11,8 +11,6 @@ import { PTT_GUEST } from 'config'
 
 import * as DoHotBoardsPage from '../reducers/hotBoardsPage'
 
-import { State as HotBoardsPage_s } from '../reducers/hotBoardsPage'
-
 import * as DoHeader from '../reducers/header'
 
 import Header from './Header'
@@ -83,7 +81,7 @@ export default (props: Props) => {
     let allErrMsg = errors.mergeErr(errMsg, errmsg)
 
     let renderBoardList = () => {
-        if (boards.length === 0) {
+        if (!hotBoardsPage?.isBusyLoading && boards.length === 0) {
             let style = {
                 height: listHeight
             }

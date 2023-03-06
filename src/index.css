@@ -2,13 +2,14 @@
 
 body {
     margin: 0;
-    font-family: "細明體", "AR PL UMing TW", "Inconsolata", "LiSongPro", monospace;
+    font-family: "細明體", "AR PL UMing TW", "Inconsolata", "LiSongPro", Menlo, Monaco, Cnosolas, "Inconsolata", monospace;
+    line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Inconsolata", 'Courier New',
         monospace;
 }
 

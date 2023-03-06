@@ -19,7 +19,9 @@ import Recommend from './cells/Recommend'
 
 import QueryString from 'query-string'
 import Empty from './Empty'
-import { Content, Line } from '../types'
+import { CharMap, Content, Line } from '../types'
+import { CHAR_WIDTH, CalcScreenScale } from './utils'
+import InitConsts from './InitConsts'
 
 type Props = {
 
@@ -31,6 +33,8 @@ export default (props: Props) => {
 
     const [stateHeader, doHeader] = useReducer(DoHeader)
     const [headerID] = useState(genUUID())
+
+    const [isInitConsts, setIsInitConsts] = useState(false)
 
     //init
     let { bid, aid } = useParams()
@@ -44,11 +48,16 @@ export default (props: Props) => {
     const headerRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
     const funcbarRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
     const { width: innerWidth, height: innerHeight } = useWindowSize()
+    const [charMap, setCharMap] = useState<CharMap>({ width: innerWidth, height: innerHeight, charMap: {} })
+
     const [scrollTop, setScrollTop] = useState(0)
     const [isRecommend, setIsRecommend] = useState(false)
     const [recommendType, setRecommendStyle] = useState(1)
     const recommendTypeRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
     const [recommend, setRecommend] = useState('')
+
+    let charWidth = CHAR_WIDTH * 2
+    let { lineHeight, fontSize } = CalcScreenScale(innerWidth)
 
     //keys
     useKey('X', (e) => {
@@ -83,13 +92,16 @@ export default (props: Props) => {
     }, [isRecommend])
 
     useEffect(() => {
+        if (!isInitConsts) {
+            return
+        }
         doHeader.init(headerID)
 
         let query = QueryString.parse(window.location.search)
         let startIdx = query.start_idx || ''
 
         doArticlePage.init(articlePageID, bid, aid, startIdx)
-    }, [])
+    }, [isInitConsts])
 
     useEffect(() => {
         if (headerRef.current === null) {
@@ -108,7 +120,11 @@ export default (props: Props) => {
     //get data
     let articlePage = getRoot(stateArticlePage)
     if (!articlePage) {
-        return (<Empty />)
+        return (
+            <div className={pageStyles['root']}>
+                <InitConsts windowWidth={innerWidth} isMobile={false} isInitConsts={isInitConsts} setIsInitConsts={setIsInitConsts} />
+            </div>
+        )
     }
     let myID = getRootID(stateArticlePage)
     let errmsg = articlePage.errmsg || ''
@@ -171,7 +187,7 @@ export default (props: Props) => {
     let allErrMsg = errors.mergeErr(errMsg, errmsg)
     let renderArticle = () => {
         return (
-            <Article lines={contentComments} width={width} height={listHeight} loadPre={loadPre} loadNext={loadNext} scrollToRow={scrollToRow} onVerticalScroll={onVerticalScroll} scrollTop={scrollTop} />
+            <Article lines={contentComments} width={width} height={listHeight} loadPre={loadPre} loadNext={loadNext} scrollToRow={scrollToRow} onVerticalScroll={undefined} scrollTop={scrollTop} />
         )
     }
 
@@ -222,6 +238,7 @@ export default (props: Props) => {
             <div ref={funcbarRef}>
                 <FunctionBar optionsLeft={loptions} optionsRight={roptions} />
             </div>
+            <InitConsts windowWidth={innerWidth} isMobile={false} isInitConsts={isInitConsts} setIsInitConsts={setIsInitConsts} />
         </div>
     )
 }

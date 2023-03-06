@@ -506,3 +506,31 @@ export type RecommendType = {
 }
 
 export type TableProps_m = Maybe<TableProps>
+
+export type CharProp = {
+    char: string
+    codePoint: number
+    scaleWidth: number
+    scaleHeight: number
+    width: number
+    height: number
+}
+
+export type CharPropMap = {
+    [key: string]: CharProp
+}
+
+export type CharMap = {
+    width: number
+    height: number
+    charMap: CharPropMap
+}
+
+export type Consts = {
+    CHAR_WIDTH: number
+    SCREEN_WIDTH: number
+    EDIT_SCREEN_WIDTH: number
+    BASE_COLUMN_WIDTH: number
+    LINE_HEIGHT: number
+    IS_INIT: boolean
+}

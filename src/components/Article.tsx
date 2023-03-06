@@ -25,7 +25,7 @@ type Props = {
     loadPre: Function
     loadNext: Function
     scrollToRow?: number
-    onVerticalScroll: (scrollPos: number) => boolean
+    onVerticalScroll?: (scrollPos: number) => boolean
     scrollTop: number
 }
 
