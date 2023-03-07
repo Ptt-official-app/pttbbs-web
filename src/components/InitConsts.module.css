@@ -1,3 +1,5 @@
 .root {
-    display: block
+    display: block;
+    color: rgba(0, 0, 0, 0);
+    z-index: -99;
 }

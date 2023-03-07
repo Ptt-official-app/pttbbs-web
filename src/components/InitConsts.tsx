@@ -40,5 +40,5 @@ export default (props: Props) => {
         fontSize: `${fontSize}px`,
     }
 
-    return (<span ref={ref} className={styles['root']} style={style}>用</span>)
+    return (<span ref={ref} className={styles['root']} style={style}>█</span>)
 }
