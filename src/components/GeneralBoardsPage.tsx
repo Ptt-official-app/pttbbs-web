@@ -15,6 +15,7 @@ import * as DoHeader from '../reducers/header'
 import Header from './Header'
 import BoardList from './BoardList'
 import FunctionBar from './FunctionBar'
+import SearchBar from './SearchBar'
 
 import QueryString from 'query-string'
 import Empty from './Empty'
@@ -41,6 +42,7 @@ export default (props: Props) => {
     const funcbarRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
     const { width: innerWidth, height: innerHeight } = useWindowSize()
     const [scrollTop, setScrollTop] = useState(0)
+    const [searching, setSearching] = useState(false)
 
     //init
     useEffect(() => {
@@ -50,9 +52,9 @@ export default (props: Props) => {
         let generalBoardsPageID = genUUID()
         const query = QueryString.parse(window.location.search)
         const { start_idx: startIdx, title: queryTitle } = query
-        let searchTitle = queryTitle || ''
+        let searchKeyword = queryTitle || ''
 
-        doGeneralBoardsPage.init(generalBoardsPageID, searchTitle, startIdx, isByClass)
+        doGeneralBoardsPage.init(generalBoardsPageID, searchKeyword, startIdx, isByClass)
     }, [])
 
     useEffect(() => {
@@ -77,7 +79,7 @@ export default (props: Props) => {
     let myID = getRootID(stateGeneralBoardsPage)
     let errmsg = boardsPage.errmsg || ''
     let boards = boardsPage.list
-    let searchTitle = boardsPage.searchTitle
+    let searchKeyword = boardsPage.searchKeyword
     let isNextEnd = boardsPage.isNextEnd
     let isPreEnd = boardsPage.isPreEnd
     let scrollToRow = boardsPage.scrollToRow
@@ -102,7 +104,7 @@ export default (props: Props) => {
         if (!idx) {
             return
         }
-        doGeneralBoardsPage.GetBoards(myID, searchTitle, idx, true, true, isByClass)
+        doGeneralBoardsPage.GetBoards(myID, searchKeyword, idx, true, true, isByClass)
     }
 
     let loadNext = (item: BoardSummary_i) => {
@@ -115,7 +117,7 @@ export default (props: Props) => {
             return
         }
 
-        doGeneralBoardsPage.GetBoards(myID, searchTitle, idx, false, true, isByClass)
+        doGeneralBoardsPage.GetBoards(myID, searchKeyword, idx, false, true, isByClass)
     }
 
     let onVerticalScroll = (scrollTop: number): boolean => {
@@ -158,10 +160,46 @@ export default (props: Props) => {
     roptions.push({ text: "熱門看板", action: () => { window.location.href = '/boards/popular' } })
     roptions.push({ text: "分類看板", action: () => { window.location.href = '/cls/1' } })
 
+    const onSearchSubmit = () => {
+        searchKeyword === '' ? setSearching(false) : setSearching(true)
+        // clear articles
+        // load more
+        doGeneralBoardsPage.GetBoards(myID, searchKeyword, null, false, false)
+    }
+
+
+    const onSearchClear = () => {
+        setSearching(false)
+        searchKeyword = ''
+        doGeneralBoardsPage.SetData(myID, { searchKeyword })
+        doGeneralBoardsPage.GetBoards(myID, searchKeyword, null, false, false)
+    }
+
+    const renderHeader = () => {
+        return (
+            <div className={'col d-flex justify-content-between align-items-center px-4'}>
+                <div className="w-25 "></div>
+                <span className="p-0" style={{ fontSize: "x-large" }}>{headerTitle}</span>
+                <div className="w-25">
+                    <SearchBar
+                        text={searchKeyword}
+                        setText={(text: string) => {
+                            doGeneralBoardsPage.SetData(myID, { searchKeyword: text })
+                        }}
+                        onSearch={onSearchSubmit}
+                        searching={searching}
+                        onClear={onSearchClear}
+                        prompt={'搜尋板名...'}
+                    />
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className={pageStyles['root']}>
             <div ref={headerRef}>
-                <Header title={headerTitle} stateHeader={stateHeader} />
+                <Header title={headerTitle} stateHeader={stateHeader} renderHeader={renderHeader} />
             </div>
             {renderBoards()}
             <div ref={funcbarRef}>

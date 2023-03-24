@@ -130,20 +130,20 @@ export const LoadPopularBoards = (): CallAPI<BoardList> => ({
     endpoint: '/api/boards/popular',
 })
 
-export const LoadGeneralBoardsByClass = (title: string, startIdx: string, desc: boolean): CallAPI<BoardList> => ({
+export const LoadGeneralBoardsByClass = (keyword: string, startIdx: string, desc: boolean): CallAPI<BoardList> => ({
     endpoint: '/api/boards/byclass',
     query: {
-        title: title || '',
+        keyword: keyword || '',
         start_idx: startIdx || '',
         asc: !desc,
         limit: LIST_LIMIT,
     },
 })
 
-export const LoadGeneralBoards = (title: string, startIdx: string, desc: boolean): CallAPI<BoardList> => ({
+export const LoadGeneralBoards = (keyword: string, startIdx: string, desc: boolean): CallAPI<BoardList> => ({
     endpoint: '/api/boards',
     query: {
-        title: title || '',
+        keyword: keyword || '',
         start_idx: startIdx || '',
         asc: !desc,
         limit: LIST_LIMIT,

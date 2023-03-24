@@ -10,11 +10,12 @@ type Props = {
     searching: boolean
     onSearch: Function
     onClear: MouseEventHandler<HTMLButtonElement>
+    prompt: string
     className?: string
 }
 
-function SearchBar(props: Props) {
-    const { text, setText, searching, onSearch, onClear } = props
+export default (props: Props) => {
+    const { text, setText, searching, onSearch, onClear, prompt } = props
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault()
@@ -30,7 +31,7 @@ function SearchBar(props: Props) {
                 <input
                     type="search"
                     className={styles.searchText}
-                    placeholder="搜尋文章..."
+                    placeholder={prompt}
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     style={{ outlineOffset: 0 }}
@@ -41,8 +42,8 @@ function SearchBar(props: Props) {
                 >
                     <img src={searchIcon} alt="search icon" />
                 </button>
-                {searching &&
-                    <button
+                {
+                    searching && <button
                         className="btn d-flex align-items-center p-0"
                         type="submit"
                         aria-label="clear"
@@ -55,5 +56,3 @@ function SearchBar(props: Props) {
         </form>
     )
 }
-
-export default SearchBar
