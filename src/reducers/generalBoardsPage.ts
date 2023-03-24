@@ -10,7 +10,6 @@ export const myClass = 'demo-pttbbs/GeneralBoardsPage'
 
 export interface State extends State_t {
     theDate: Date
-    title: string
     startIdx: string
     scrollTo: any
     list: BoardSummary_i[]
@@ -21,16 +20,17 @@ export interface State extends State_t {
     scrollToRow: number
     isNextEnd: boolean
     isPreEnd: boolean
+    searchKeyword: string
+    lastSearchKeyword: string
 }
 
 export interface State_m extends Maybe<State> { }
 
-export const init = (myID: string, title: string, startIdx: string, isByClass: boolean): Thunk<State> => {
+export const init = (myID: string, searchKeyword: string, startIdx: string, isByClass: boolean): Thunk<State> => {
     let theDate = new Date()
     return async (dispatch, _) => {
         let state: State = {
             theDate,
-            title,
             startIdx,
             scrollTo: null,
             list: [],
@@ -41,9 +41,11 @@ export const init = (myID: string, title: string, startIdx: string, isByClass: b
             scrollToRow: 0,
             isNextEnd: false,
             isPreEnd: false,
+            searchKeyword,
+            lastSearchKeyword: '',
         }
         dispatch(_init({ myID, state }))
-        dispatch(GetBoards(myID, title, startIdx, false, false, isByClass))
+        dispatch(GetBoards(myID, searchKeyword, startIdx, false, false, isByClass))
     }
 }
 
@@ -53,7 +55,7 @@ export const SetData = (myID: string, data: State_m): Thunk<State> => {
     }
 }
 
-export const GetBoards = (myID: string, title: string, startIdx: string, desc: boolean, isExclude: boolean, isByClass: boolean): Thunk<State> => {
+export const GetBoards = (myID: string, searchKeyword: string, startIdx: string, desc: boolean, isExclude: boolean, isByClass: boolean): Thunk<State> => {
     return async (dispatch, getClassState) => {
         const state = getClassState()
         const me = getState(state, myID)
@@ -66,6 +68,15 @@ export const GetBoards = (myID: string, title: string, startIdx: string, desc: b
         let lastPre = me.lastPre
         let lastNext = me.lastNext
         let isBusyLoading = me.isBusyLoading
+
+
+        let myLastSearchKeyword = me.lastSearchKeyword
+        if (searchKeyword !== myLastSearchKeyword) {
+            myList = []
+            lastPre = ''
+            lastNext = ''
+        }
+
         if (isBusyLoading) {
             return
         }
@@ -86,7 +97,7 @@ export const GetBoards = (myID: string, title: string, startIdx: string, desc: b
 
         let loadBoards = isByClass ? ServerUtils.LoadGeneralBoardsByClass : ServerUtils.LoadGeneralBoards
 
-        const { data, errmsg, status } = await api(loadBoards(title, startIdx, desc))
+        const { data, errmsg, status } = await api(loadBoards(searchKeyword, startIdx, desc))
         if (status !== 200) {
             dispatch(_setData(myID, { errmsg, isBusyLoading: false }))
             return
@@ -102,6 +113,7 @@ export const GetBoards = (myID: string, title: string, startIdx: string, desc: b
         let newList = MergeList(myList, dataList, desc, isExclude)
 
         let toUpdate: State_m = {
+            lastSearchKeyword: searchKeyword,
             list: newList,
         }
         if (!desc) {

@@ -190,6 +190,7 @@ export default (props: Props) => {
                         onSearch={onSearchSubmit}
                         searching={searching}
                         onClear={onSearchClear}
+                        prompt={'搜尋文章...'}
                     />
                 </div>
             </div>

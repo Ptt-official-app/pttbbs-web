@@ -25,3 +25,4 @@ yarn-error.log*
 /.eslintcache
 /build-home
 /config
+/config.prod
