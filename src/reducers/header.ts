@@ -3,7 +3,7 @@ import { init as _init, setData as _setData, createReducer, DispatchedAction, Th
 import * as ServerUtils from './ServerUtils'
 import api from './api'
 import * as errors from './errors'
-import { State_t } from '../types'
+import { State_t, Maybe } from '../types'
 
 export const myClass = 'demo-pttbbs/Header'
 
@@ -12,9 +12,15 @@ export interface State extends State_t {
     user_id: string
 }
 
+
+interface State_m extends Maybe<State> { }
+
 export const init = (myID: string, parentID?: string, doParent?: DispatchedAction<State>): Thunk<State> => {
     return async (dispatch, _) => {
-        dispatch(_init({ myID, parentID, doParent }))
+        let state: State_m = {
+            user_id: '',
+        }
+        dispatch(_init({ myID, parentID, doParent, state }))
         dispatch(getData(myID))
     }
 }

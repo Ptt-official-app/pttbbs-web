@@ -3,7 +3,7 @@ import pageStyles from './Page.module.css'
 
 import * as errors from './errors'
 
-import { useWindowSize, useKey } from 'react-use'
+import { useWindowSize, useKey, useStartTyping } from 'react-use'
 import { useParams } from 'react-router-dom'
 
 import { useReducer, getRoot, getRootID, genUUID } from 'react-reducer-utils'
@@ -22,6 +22,7 @@ import Empty from './Empty'
 import { CharMap, Content, Line } from '../types'
 import { CHAR_WIDTH, CalcScreenScale } from './utils'
 import InitConsts from './InitConsts'
+import { prefix } from 'react-bootstrap/lib/utils/bootstrapUtils'
 
 type Props = {
 
@@ -55,21 +56,33 @@ export default (props: Props) => {
     const [recommendType, setRecommendStyle] = useState(1)
     const recommendTypeRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
     const [recommend, setRecommend] = useState('')
+    const [isRecommending, setIsRecommending] = useState(false)
+
+    // the states that needs to be updated with some lazy-eval functions.
+    const [stateDict, setStateDict] = useState({ isEditing: false })
 
     let charWidth = CHAR_WIDTH * 2
     let { lineHeight, fontSize } = CalcScreenScale(innerWidth)
 
+    stateDict.isEditing = isRecommending
+
     //keys
     useKey('X', (e) => {
+        if (stateDict.isEditing) {
+            return
+        }
         setIsRecommend(true)
     })
 
     useKey('Escape', (e) => {
+        if (stateDict.isEditing) {
+            return
+        }
         setIsRecommend(false)
     })
 
     useKey('ArrowLeft', (e) => {
-        if (isRecommend) {
+        if (stateDict.isEditing) {
             return
         }
         window.location.href = `/board/${bid}/articles`
@@ -80,14 +93,12 @@ export default (props: Props) => {
             setRecommendStyle(1)
             setRecommend('')
 
-            console.log('ArticlePage.useEffect(isRecommend): recommendTypeRef:', recommendTypeRef)
             if (recommendTypeRef.current) {
                 recommendTypeRef.current.focus()
             }
         } else {
             setRecommendStyle(1)
             setRecommend('')
-            console.log('ArticlePage.useEffect(isRecommend): reset')
         }
     }, [isRecommend])
 
@@ -155,7 +166,6 @@ export default (props: Props) => {
         if (isPreEnd) {
             return
         }
-        console.log('ArticlePage.loadPre: item:', item, 'comment:', comments[0])
         let startIdx = comments[0].idx
         doArticlePage.GetComments(myID, bid, aid, startIdx, true, true)
     }
@@ -168,7 +178,6 @@ export default (props: Props) => {
             return
         }
         let startIdx = comments[comments.length - 1].idx
-        console.log('ArticlePage.loadNext: item:', item, 'comment:', comments[comments.length - 1])
         doArticlePage.GetComments(myID, bid, aid, startIdx, false, true)
     }
 
@@ -195,6 +204,10 @@ export default (props: Props) => {
         setIsRecommend(true)
     }
 
+    let header = getRoot(stateHeader)
+    let userID = header ? header.user_id : ''
+    let prefixLength = userID.length
+
     let renderRecommend = () => {
         let submit = (recommendType: string, recommend: Content) => {
             if (recommend) {
@@ -207,7 +220,7 @@ export default (props: Props) => {
         }
 
         return (
-            <Recommend recommendTypeRef={recommendTypeRef} isRecommend={isRecommend} recommendType={recommendType} setRecommendStyle={setRecommendStyle} recommend={recommend} setRecommend={setRecommend} submit={submit} cancel={cancel} />
+            <Recommend recommendTypeRef={recommendTypeRef} isRecommend={isRecommend} recommendType={recommendType} setRecommendStyle={setRecommendStyle} recommend={recommend} setRecommend={setRecommend} submit={submit} cancel={cancel} prefixLength={prefixLength} setIsRecommending={setIsRecommending} />
         )
     }
 
