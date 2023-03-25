@@ -70,11 +70,11 @@ export default (props: Props) => {
     }
 
     let renderSubmitTooltip = (props: TooltipProps) => (
-        <Tooltip {...props}>快捷鍵：⏎</Tooltip>
+        <Tooltip {...props}>快速鍵：⏎</Tooltip>
     )
 
     let renderCancelTooltip = (props: TooltipProps) => (
-        <Tooltip {...props}>快捷鍵：ESC</Tooltip>
+        <Tooltip {...props}>快速鍵：ESC</Tooltip>
     )
 
     let onSearch = (item: string) => {
@@ -125,15 +125,23 @@ export default (props: Props) => {
         setRecommendTyle(value)
     }
 
+    let onClickCancel = () => {
+        cancel()
+    }
+
+    let onClickSubmit = () => {
+        submit(recommendType, recommend)
+    }
+
     return (
         <div className={styles['recommend']} style={style}>
             <DropdownList ref={recommendTypeRef} style={classStyle} data={_RECOMMEND_TYPES} value={recommendType} dataKey='value' textField='label' onChange={onChange} dropUp={true} onSearch={onSearch} searchTerm={searchTerm} filter={'contains'} onSelect={onSelect} />
             <input className={styles['recommend-input'] + ' ' + styles['recommend-offset']} onChange={(e) => theSetRecommend(e.target.value)} value={recommend} onKeyDown={(e) => onKeyDown(e)} />
             <OverlayTrigger placement='top' trigger={['hover', 'hover']} overlay={renderCancelTooltip}>
-                <button className={'btn btn-secondary ' + styles['recommend-offset']}>取消</button>
+                <button className={'btn btn-secondary ' + styles['recommend-offset']} onClick={onClickCancel}>取消</button>
             </OverlayTrigger>
             <OverlayTrigger placement='top' trigger={['hover', 'hover']} overlay={renderSubmitTooltip}>
-                <button className={'btn btn-primary ' + styles['recommend-offset']}>送出</button>
+                <button className={'btn btn-primary ' + styles['recommend-offset']} onClick={onClickSubmit}>送出</button>
             </OverlayTrigger>
         </div>
     )

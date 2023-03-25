@@ -146,7 +146,7 @@ export default (props: Props) => {
 
     let fullTitle = theClass ? `[${theClass}] ` : ''
     fullTitle += title
-    let headerTitle = brdname ? `${brdname} - ${fullTitle}  (${rank}/${nRecommend}/${nComments})` : ''
+    let headerTitle = brdname ? `${brdname} - ${fullTitle}` : ''
 
     let loadPre = (item: Line) => {
         if (!comments.length) {
@@ -211,17 +211,7 @@ export default (props: Props) => {
         )
     }
 
-    let rankUp = () => {
-        doArticlePage.Rank(myID, bid, aid, 1)
-    }
-
-    let rankDown = () => {
-        doArticlePage.Rank(myID, bid, aid, -1)
-    }
-
     let loptions = [
-        { text: '☝', action: rankUp, hotkey: '↑' },
-        { text: '☟', action: rankDown, hotkey: '↓' },
         { text: "推/噓", action: startRecommend, hotkey: 'X' },
         { render: renderRecommend }
     ]

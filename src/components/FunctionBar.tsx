@@ -19,7 +19,7 @@ export default (props: Props) => {
         let { text, action, url, render, hotkey } = val
 
         let renderTooltip = (props: TooltipProps) => (
-            <Tooltip {...props}>快捷鍵：{hotkey}</Tooltip>
+            <Tooltip {...props}>快速鍵：{hotkey}</Tooltip>
         )
 
         let renderInner = () => {
