@@ -16,7 +16,7 @@ const _RECOMMEND_TYPES = [
     { value: 3, label: '3. →' },
 ]
 
-const MAX_RECOMMEND_LENGTH = EDIT_SCREEN_WIDTH - 2 - 11 - 15
+const MAX_RECOMMEND_LENGTH = EDIT_SCREEN_WIDTH - 2 - 11 - 1
 
 type Props = {
     recommendType: number
@@ -27,10 +27,12 @@ type Props = {
     recommendTypeRef: MutableRefObject<HTMLDivElement | null>
     submit: Function
     cancel: Function
+    prefixLength: number
+    setIsRecommending: Dispatch<SetStateAction<boolean>>
 }
 
 export default (props: Props) => {
-    const { recommendType, setRecommendStyle: setRecommendTyle, recommend, setRecommend, isRecommend, recommendTypeRef, submit, cancel } = props
+    const { recommendType, setRecommendStyle, recommend, setRecommend, isRecommend, recommendTypeRef, submit, cancel, prefixLength, setIsRecommending } = props
 
     const [searchTerm, setSearchTerm] = useState('')
 
@@ -46,7 +48,8 @@ export default (props: Props) => {
 
     let theSetRecommend = (value: string) => {
         let length = _countRune(value)
-        if (length >= MAX_RECOMMEND_LENGTH) {
+        if (length >= MAX_RECOMMEND_LENGTH - prefixLength) {
+            console.log('theSetRecommend: length > threshold: length:', length, 'prefixLength:', prefixLength, 'threshold:', MAX_RECOMMEND_LENGTH - prefixLength)
             return
         }
         setRecommend(value)
@@ -83,17 +86,17 @@ export default (props: Props) => {
             case '1':
             case '推':
                 item = ''
-                setRecommendTyle(1)
+                setRecommendStyle(1)
                 break
             case '2':
             case '噓':
                 item = ''
-                setRecommendTyle(2)
+                setRecommendStyle(2)
                 break
             case '3':
             case '→':
                 item = ''
-                setRecommendTyle(3)
+                setRecommendStyle(3)
                 break
             case 'X':
                 item = ''
@@ -112,7 +115,7 @@ export default (props: Props) => {
             value = 1
         }
         setSearchTerm('')
-        setRecommendTyle(value)
+        setRecommendStyle(value)
     }
 
     let onSelect = (item: RecommendType | null) => {
@@ -122,7 +125,7 @@ export default (props: Props) => {
             value = 1
         }
         setSearchTerm('')
-        setRecommendTyle(value)
+        setRecommendStyle(value)
     }
 
     let onClickCancel = () => {
@@ -133,10 +136,18 @@ export default (props: Props) => {
         submit(recommendType, recommend)
     }
 
+    let onFocusInput = () => {
+        setIsRecommending(true)
+    }
+
+    let onBlurInput = () => {
+        setIsRecommending(false)
+    }
+
     return (
         <div className={styles['recommend']} style={style}>
             <DropdownList ref={recommendTypeRef} style={classStyle} data={_RECOMMEND_TYPES} value={recommendType} dataKey='value' textField='label' onChange={onChange} dropUp={true} onSearch={onSearch} searchTerm={searchTerm} filter={'contains'} onSelect={onSelect} />
-            <input className={styles['recommend-input'] + ' ' + styles['recommend-offset']} onChange={(e) => theSetRecommend(e.target.value)} value={recommend} onKeyDown={(e) => onKeyDown(e)} />
+            <input className={styles['recommend-input'] + ' ' + styles['recommend-offset']} onChange={(e) => theSetRecommend(e.target.value)} value={recommend} onKeyDown={(e) => onKeyDown(e)} onFocus={onFocusInput} onBlur={onBlurInput} />
             <OverlayTrigger placement='top' trigger={['hover', 'hover']} overlay={renderCancelTooltip}>
                 <button className={'btn btn-secondary ' + styles['recommend-offset']} onClick={onClickCancel}>取消</button>
             </OverlayTrigger>
