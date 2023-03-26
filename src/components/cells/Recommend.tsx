@@ -16,7 +16,7 @@ const _RECOMMEND_TYPES = [
     { value: 3, label: '3. →' },
 ]
 
-const MAX_RECOMMEND_LENGTH = EDIT_SCREEN_WIDTH - 2 - 11 - 1
+const MAX_RECOMMEND_LENGTH = EDIT_SCREEN_WIDTH - 3 - 12 - 2
 
 type Props = {
     recommendType: number
