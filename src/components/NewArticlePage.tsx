@@ -21,49 +21,15 @@ import FunctionBar from './FunctionBar'
 import Editor from './Editor'
 
 import { COLOR_FOREGROUND_WHITE, COLOR_BACKGROUND_BLACK } from '../constants'
-import { Line, PttClass } from '../types'
+import { Line } from '../types'
+import Empty from './Empty'
+import InitConsts from './InitConsts'
 
-const _DEFAULT_CLASSES: PttClass[] = [
-    { value: '問題', label: '[問題]' },
-    { value: '建議', label: '[建議]' },
-    { value: '討論', label: '[討論]' },
-    { value: '心得', label: '[心得]' },
-    { value: '閒聊', label: '[閒聊]' },
-    { value: '請益', label: '[請益]' },
-    { value: '情報', label: '[情報]' },
-    { value: '公告', label: '[公告]' },
-    { value: '爆卦', label: '[爆卦]' },
-    { value: '問卦', label: '[問卦]' },
-    { value: '活動', label: '[活動]' },
-]
 
 type Props = {
 
 }
 
-const defaultState = (): DoNewArticlePage.State => ({
-    theDate: new Date(0),
-    bid: '',
-    content: [],
-    brdname: '',
-    title: '',
-    flag: 0,
-    type: '',
-    class: '',
-    nuser: 0,
-    moderators: [],
-    reason: '',
-    read: false,
-    total: 0,
-    last_post_time: 0,
-    stat_attr: 0,
-    level_idx: '',
-    gid: 0,
-    url: '',
-    pttbid: 0,
-    idx: '',
-    scrollTo: undefined,
-})
 
 export default (props: Props) => {
     const [stateNewArticlePage, doNewArticlePage] = useReducer(DoNewArticlePage)
@@ -83,6 +49,8 @@ export default (props: Props) => {
 
     // eslint-disable-next-line
     const [errMsg, setErrMsg] = useState('')
+
+    const [isInitConsts, setIsInitConsts] = useState(false)
 
     //init
     let { bid } = useParams()
@@ -106,14 +74,14 @@ export default (props: Props) => {
         }
         setHeaderHeight(headerRef.current.clientHeight)
 
-    }, [headerRef])
+    }, [headerRef.current])
 
     useEffect(() => {
         if (funcbarRef.current === null) {
             return
         }
         setFuncbarHeight(funcbarRef.current.clientHeight)
-    }, [funcbarRef])
+    }, [funcbarRef.current])
 
     useEffect(() => {
         if (focusRef.current === null) {
@@ -122,16 +90,9 @@ export default (props: Props) => {
         focusRef.current.focus()
     }, [focusRef.current])
 
-    //get data
-    let newArticlePage = getRoot(stateNewArticlePage)
-    if (!newArticlePage) {
-        newArticlePage = defaultState()
-    }
-    let myID = getRootID(stateNewArticlePage)
-    let errmsg = newArticlePage.errmsg || ''
-    let brdname = newArticlePage.brdname
-
-    let content: Line[] = newArticlePage.content || [{ 'runes': [{ 'text': '', color0: { foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK } }] }]
+    const { width: innerWidth, height: innerHeight } = useWindowSize()
+    let screenWidth = innerWidth
+    let screenHeight = innerHeight - headerHeight - funcbarHeight
 
     const [selectedRow, setSelectedRow] = useState(0)
     const [selectedColumn, setSelectedColumn] = useState(0)
@@ -139,13 +100,17 @@ export default (props: Props) => {
     const [title, setTitle] = useState('')
     const [theClass, setTheClass] = useState('問題')
 
-    useEffect(() => {
-        if (!errmsg) {
-            return
-        }
+    //get data
+    let newArticlePage = getRoot(stateNewArticlePage)
+    if (!newArticlePage) {
+        return (<Empty />)
+    }
+    let myID = getRootID(stateNewArticlePage)
+    let errmsg = newArticlePage.errmsg || ''
+    let brdname = newArticlePage.brdname
+    let postTypes = newArticlePage.post_type.map(each => ({ value: each, label: '[' + each + ']' }))
 
-        setTimeout(() => cleanErrMsg(), 1000)
-    }, [errmsg])
+    let content: Line[] = newArticlePage.content || [{ 'runes': [{ 'text': '', color0: { foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK } }] }]
 
     //render
     let updateText = (row: number, col: number, text: string) => {
@@ -184,10 +149,6 @@ export default (props: Props) => {
         setSelectedRow(selectedRow + 1)
         return
     }
-
-    const { width: innerWidth, height: innerHeight } = useWindowSize()
-    let screenWidth = innerWidth
-    let screenHeight = innerHeight - headerHeight - funcbarHeight
 
     let submit = (e: FormEvent) => {
         if (!theClass) {
@@ -249,7 +210,7 @@ export default (props: Props) => {
         return (
             <div className={'col ' + styles['title']}>
                 <span>{brdname} - </span>
-                <DropdownList style={classStyle} containerClassName={styles['title-class']} data={_DEFAULT_CLASSES} value={theClass} dataKey='value' textField='label' onChange={(item) => { setTheClass(item.value) }} />
+                <DropdownList style={classStyle} containerClassName={styles['title-class']} data={postTypes} value={theClass} dataKey='value' textField='label' onChange={(item) => { setTheClass(item.value) }} />
                 <input className={styles['title-input']} onChange={(e) => setTitle(e.target.value)} value={title} onMouseDown={onMouseDown} placeholder={'標題:'} />
             </div>
         )
@@ -266,6 +227,7 @@ export default (props: Props) => {
             <div ref={funcbarRef}>
                 <FunctionBar optionsLeft={loptions} optionsRight={roptions} />
             </div>
+            <InitConsts windowWidth={innerWidth} isMobile={false} isInitConsts={isInitConsts} setIsInitConsts={setIsInitConsts} />
         </div>
     )
 }

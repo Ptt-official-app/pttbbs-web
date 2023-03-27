@@ -1,5 +1,5 @@
 import config from 'config'
-import { AccessToken, ArticleDetail, ArticleList, ArticleSummary, BoardList, BoardSummary, CommentList, Content, Data, ManArticle, ManArticleList, Rank_t, UserDetail, UserID, Username } from '../types'
+import { AccessToken, ArticleDetail, ArticleList, ArticleSummary, BoardList, BoardSummary, BoardDetail, CommentList, Content, Data, ManArticle, ManArticleList, Rank_t, UserDetail, UserID, Username } from '../types'
 import { Query, CallAPI } from './api'
 
 const LIST_LIMIT = config.LIST_LIMIT || 50
@@ -114,6 +114,19 @@ export const GetBoardSummary = (bid: string): CallAPI<BoardSummary> => ({
     endpoint: '/api/board/' + bid + '/summary',
     method: 'get',
 })
+
+export const GetBoardDetail = (bid: string, fields: string[]): CallAPI<BoardDetail> => {
+    let fieldsStr: string = fields.join(',')
+
+    let endpoint = '/api/board/' + bid
+    if (fieldsStr.length > 0) {
+        endpoint += '?fields=' + fieldsStr
+    }
+    return {
+        endpoint,
+        method: 'get',
+    }
+}
 
 export const LoadFavoriteBoards = (userID: string, level: string, startIdx: string, desc: boolean): CallAPI<BoardList> => ({
     endpoint: '/api/user/' + userID + '/favorites',
