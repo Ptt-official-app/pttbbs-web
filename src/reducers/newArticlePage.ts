@@ -4,15 +4,28 @@ import * as ServerUtils from './ServerUtils'
 import api from './api'
 
 import { COLOR_FOREGROUND_WHITE, COLOR_BACKGROUND_BLACK } from '../constants'
-import { BoardSummary, Line, Maybe, State_t } from '../types'
+import { Line, Maybe, State_t } from '../types'
 
 export const myClass = 'demo-pttbbs/NewArticlePage'
 
-export interface State extends State_t, BoardSummary {
+const _DEFAULT_POST_TYPES = [
+    '問題',
+    '建議',
+    '討論',
+    '心得',
+    '閒聊',
+    '請益',
+    '情報',
+    '公告',
+]
+
+export interface State extends State_t {
     theDate: Date
     bid: string
     scrollTo: any
     content: Line[]
+    brdname: string
+    post_type: string[]
 }
 
 export interface State_m extends Maybe<State> { }
@@ -34,7 +47,9 @@ export const init = (myID: string, bid: string): Thunk<State> => {
                                 background: COLOR_BACKGROUND_BLACK,
                             }
                         }]
-                }]
+                }],
+            brdname: '',
+            post_type: _DEFAULT_POST_TYPES,
         }
         dispatch(_init({ myID, state }))
         dispatch(_getBoardSummary(myID, bid))
@@ -45,7 +60,8 @@ const _getBoardSummary = (myID: string, bid: string): Thunk<State> => {
     return async (dispatch, _) => {
 
         // Get board information
-        const { data, errmsg, status } = await api(ServerUtils.GetBoardSummary(bid))
+        let fields = ['brdname', 'post_type']
+        const { data, errmsg, status } = await api(ServerUtils.GetBoardDetail(bid, fields))
         if (status !== 200) {
             dispatch(_setData(myID, { errmsg }))
             return
