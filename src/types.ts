@@ -534,3 +534,8 @@ export type Consts = {
     LINE_HEIGHT: number
     IS_INIT: boolean
 }
+
+export type Menu_t = {
+    prompt: string
+    handle: Function
+}

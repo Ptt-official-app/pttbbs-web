@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { MutableRefObject, useState } from 'react'
 
 import CSS from 'csstype'
 
@@ -15,7 +15,8 @@ import Idx from './cells/Idx'
 import Moderators from './cells/Moderators'
 
 import { CHAR_WIDTH } from './utils'
-import { BoardSummary_i, PttColumn, TableData } from '../types'
+import { BoardSummary_i, PttColumn, TableData, Menu_t } from '../types'
+import SubMenu from './cells/SubMenu'
 
 const _COLUMNS: PttColumn[] = [
     { Header: '', accessor: '', width: 0, fixed: true, type: 'rest' },
@@ -27,6 +28,7 @@ const _COLUMNS: PttColumn[] = [
     { Header: '中文敘述', accessor: 'title', width: CHAR_WIDTH * 48, fixed: true },
     { Header: '人氣', accessor: 'nuser', width: CHAR_WIDTH * 5, fixed: true },
     { Header: '板主', accessor: 'moderators', width: CHAR_WIDTH * 38, fixed: true, type: 'moderator' },
+    { Header: '', accessor: '', width: CHAR_WIDTH * 2, fixed: true, type: 'menu' },
     { Header: '', accessor: '', width: 0, fixed: true, type: 'rest' },
 ]
 
@@ -34,11 +36,13 @@ type Props = {
     boards: BoardSummary_i[]
     width: number
     height: number
+    containerRef?: MutableRefObject<HTMLDivElement | null>
     loadPre?: (item: BoardSummary_i) => void
     loadNext?: (item: BoardSummary_i) => void
     scrollToRow?: number
     onVerticalScroll?: (scrollPos: number) => boolean
     scrollTop?: number
+    menu?: Menu_t[]
 }
 
 type IdxProps = {
@@ -48,7 +52,7 @@ type IdxProps = {
 }
 
 export default (props: Props) => {
-    const { boards, width, height, loadPre, loadNext, scrollToRow, onVerticalScroll, scrollTop } = props
+    const { boards, width, height, loadPre, loadNext, scrollToRow, onVerticalScroll, scrollTop, menu, containerRef } = props
 
     const [selectedRow, setSeletedRow] = useState(-1)
 
@@ -63,6 +67,14 @@ export default (props: Props) => {
 
     let renderCell = (column: PttColumn, data: TableData, fontSize: number) => {
         let renderer = null
+
+        if (column.type === 'menu') {
+            if (!menu) {
+                return <Cell className={screenStyles['default']}></Cell>
+            }
+
+            return <SubMenu menu={menu} data={data} containerRef={containerRef!} />
+        }
 
         switch (column.accessor) {
             case 'numIdx':

@@ -19,7 +19,7 @@ import SearchBar from './SearchBar'
 
 import QueryString from 'query-string'
 import Empty from './Empty'
-import { BoardSummary_i } from '../types'
+import { BoardSummary_i, Menu_t } from '../types'
 
 type Props = {
 
@@ -40,6 +40,7 @@ export default (props: Props) => {
     const [funcbarHeight, setFuncbarHeight] = useState(0)
     const headerRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
     const funcbarRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
+    const bodyRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
     const { width: innerWidth, height: innerHeight } = useWindowSize()
     const [scrollTop, setScrollTop] = useState(0)
     const [searching, setSearching] = useState(false)
@@ -132,6 +133,15 @@ export default (props: Props) => {
 
     // eslint-disable-next-line
     let allErrMsg = errors.mergeErr(errMsg, errmsg)
+
+    let addFavorite = (item: any, data: any[], rowIndex: number, columnKey: string) => {
+        console.log('GeneralBoardsPage: addFavorite: item:', item)
+    }
+
+    let menu: Menu_t[] = [{
+        prompt: '加入最愛',
+        handle: addFavorite,
+    }]
     let renderBoards = () => {
         if (boards.length === 0) {
             let style = {
@@ -144,7 +154,7 @@ export default (props: Props) => {
             )
         } else {
             return (
-                <BoardList boards={boards} width={width} height={listHeight} loadPre={loadPre} loadNext={loadNext} scrollToRow={scrollToRow} onVerticalScroll={onVerticalScroll} scrollTop={scrollTop} />
+                <BoardList boards={boards} width={width} height={listHeight} loadPre={loadPre} loadNext={loadNext} scrollToRow={scrollToRow} onVerticalScroll={onVerticalScroll} scrollTop={scrollTop} menu={menu} containerRef={bodyRef} />
             )
         }
     }
@@ -201,7 +211,9 @@ export default (props: Props) => {
             <div ref={headerRef}>
                 <Header title={headerTitle} stateHeader={stateHeader} renderHeader={renderHeader} />
             </div>
-            {renderBoards()}
+            <div ref={bodyRef}>
+                {renderBoards()}
+            </div>
             <div ref={funcbarRef}>
                 <FunctionBar optionsLeft={loptions} optionsRight={roptions} />
             </div>
