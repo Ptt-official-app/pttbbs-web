@@ -19,6 +19,8 @@ const _DEFAULT_POST_TYPES = [
     '公告',
 ]
 
+const _DEFAULT_POST_TYPE = _DEFAULT_POST_TYPES[0]
+
 export interface State extends State_t {
     theDate: Date
     bid: string
@@ -26,6 +28,7 @@ export interface State extends State_t {
     content: Line[]
     brdname: string
     post_type: string[]
+    theClass: string
 }
 
 export interface State_m extends Maybe<State> { }
@@ -49,7 +52,8 @@ export const init = (myID: string, bid: string): Thunk<State> => {
                         }]
                 }],
             brdname: '',
-            post_type: _DEFAULT_POST_TYPES,
+            post_type: [],
+            theClass: '',
         }
         dispatch(_init({ myID, state }))
         dispatch(_getBoardSummary(myID, bid))
@@ -69,7 +73,18 @@ const _getBoardSummary = (myID: string, bid: string): Thunk<State> => {
         if (!data) {
             return
         }
-        dispatch(_setData(myID, data))
+
+        data.post_type = data.post_type || _DEFAULT_POST_TYPES
+        // @ts-ignore
+        let toUpdate: State_m = Object.assign({}, data)
+        let postTypes = data.post_type || []
+        if (postTypes.length > 0) {
+            toUpdate.theClass = postTypes[0]
+        } else {
+            toUpdate.theClass = ''
+        }
+
+        dispatch(_setData(myID, toUpdate))
     }
 }
 

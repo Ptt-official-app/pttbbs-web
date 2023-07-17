@@ -193,7 +193,7 @@ export type BoardDetail = {
     last_set_time: number
     post_expire: number
     end_gamble: number
-    post_type: string
+    post_type: string[]
     fast_recommend_pause: number
 }
 

@@ -18,7 +18,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-    window.location = location
+    // window.location = location
 })
 
 test('renders greeting', async () => {

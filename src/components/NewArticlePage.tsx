@@ -98,7 +98,6 @@ export default (props: Props) => {
     const [selectedColumn, setSelectedColumn] = useState(0)
 
     const [title, setTitle] = useState('')
-    const [theClass, setTheClass] = useState('問題')
 
     //get data
     let newArticlePage = getRoot(stateNewArticlePage)
@@ -111,6 +110,11 @@ export default (props: Props) => {
     let postTypes = newArticlePage.post_type.map(each => ({ value: each, label: '[' + each + ']' }))
 
     let content: Line[] = newArticlePage.content || [{ 'runes': [{ 'text': '', color0: { foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK } }] }]
+
+    let theClass = newArticlePage.theClass
+    let setTheClass = (newClass: string) => {
+        doNewArticlePage.setData(myID, { theClass: newClass })
+    }
 
     //render
     let updateText = (row: number, col: number, text: string) => {
