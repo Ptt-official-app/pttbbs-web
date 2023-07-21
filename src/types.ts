@@ -22,7 +22,7 @@ export type List<T extends IdxData> = {
     next_idx: string
 }
 
-export type TableData = any[]
+export type TableData<T> = T[]
 
 export type Color = {
     foreground?: number
@@ -32,7 +32,7 @@ export type Color = {
     reset?: boolean
 }
 
-export type Rune_t = {
+export interface Rune_t {
     text: string
     color0: Color
     color1?: Color
@@ -40,6 +40,13 @@ export type Rune_t = {
 }
 
 export type Runes_t = Rune_t[]
+
+export interface EditRune_t extends Rune_t {
+    isEdit: boolean
+    isTail: boolean
+}
+
+export type EditRunes_t = EditRune_t[]
 
 export type AccessToken = {
     user_id: string
@@ -82,6 +89,13 @@ export type Line = {
     runes: Runes_t
     idx?: string
     background?: number
+}
+
+export type EditLine = {
+    runes: EditRunes_t
+    idx?: string
+    background?: number
+    isTail: boolean
 }
 
 export type Maybe<T> = {

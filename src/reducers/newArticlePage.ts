@@ -4,7 +4,7 @@ import * as ServerUtils from './ServerUtils'
 import api from './api'
 
 import { COLOR_FOREGROUND_WHITE, COLOR_BACKGROUND_BLACK } from '../constants'
-import { Line, Maybe, State_t } from '../types'
+import { EditLine, Maybe, State_t } from '../types'
 
 export const myClass = 'demo-pttbbs/NewArticlePage'
 
@@ -25,7 +25,7 @@ export interface State extends State_t {
     theDate: Date
     bid: string
     scrollTo: any
-    content: Line[]
+    content: EditLine[]
     brdname: string
     post_type: string[]
     theClass: string
@@ -40,17 +40,7 @@ export const init = (myID: string, bid: string): Thunk<State> => {
             theDate,
             bid,
             scrollTo: null,
-            content: [
-                {
-                    'runes': [
-                        {
-                            'text': '',
-                            color0: {
-                                foreground: COLOR_FOREGROUND_WHITE,
-                                background: COLOR_BACKGROUND_BLACK,
-                            }
-                        }]
-                }],
+            content: [],
             brdname: '',
             post_type: [],
             theClass: '',
@@ -88,7 +78,7 @@ const _getBoardSummary = (myID: string, bid: string): Thunk<State> => {
     }
 }
 
-export const UpdateContent = (myID: string, content: Line[]): Thunk<State> => {
+export const UpdateContent = (myID: string, content: EditLine[]): Thunk<State> => {
     return async (dispatch, _) => {
         dispatch(_setData(myID, { content }))
     }
@@ -100,7 +90,7 @@ export const setData = (myID: string, data: State_m): Thunk<State> => {
     }
 }
 
-export const Submit = (myID: string, bid: string, theClass: string, title: string, content: Line[]): Thunk<State> => {
+export const Submit = (myID: string, bid: string, theClass: string, title: string, content: EditLine[]): Thunk<State> => {
     return async (dispatch, _) => {
         let uploadContent = content.map((each) => each.runes)
         const { errmsg, status } = await api(ServerUtils.CreateArticle(bid, theClass, title, uploadContent))

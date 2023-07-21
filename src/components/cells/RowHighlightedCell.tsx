@@ -3,7 +3,7 @@ import { Cell } from 'fixed-data-table-2'
 import Empty from '../Empty'
 
 type Props = {
-    data: TableData
+    data: TableData<any>
     rowIndex?: number
     columnKey?: string | number
     fontSize: number

@@ -1,3 +1,4 @@
+import { EditRunes_t, Runes_t, EditRune_t, Rune_t } from '../../types'
 import styles from './ContentRenderer.module.css'
 
 const _runeAttrs = ['foreground', 'background', 'blink', 'highlight']
@@ -37,3 +38,18 @@ export const getClassNamesFromColor = (color: any, part: string = '') => {
     return classNames
 }
 
+export const calcRunesCount = (runes: Runes_t): number => {
+    return runes.reduce((r, x, i) => {
+        r += calcTextCount(x.text)
+        return r
+    }, 0)
+}
+
+export const calcTextCount = (text: string): number => {
+    return text.split('').reduce((r, x, i) => {
+        if (x >= ' ' && x <= '~') {
+            return r + 1
+        }
+        return r + 2
+    }, 0)
+}

@@ -42,7 +42,7 @@ type Props = {
 }
 
 type IdxProps = {
-    data: TableData
+    data: TableData<any>
     rowIndex?: number
     columnKey?: string
 }
@@ -61,7 +61,7 @@ export default (props: Props) => {
         return (<Idx data={data} rowIndex={rowIndex} columnKey={columnKey} loadPre={loadPre} loadNext={loadNext} />)
     }
 
-    let renderCell = (column: PttColumn, data: TableData, fontSize: number) => {
+    let renderCell = (column: PttColumn, data: TableData<any>, fontSize: number) => {
         let renderer = null
 
         switch (column.accessor) {

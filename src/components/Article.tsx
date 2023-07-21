@@ -39,7 +39,7 @@ export default (props: Props) => {
         backgroundColor: '#333',
     }
 
-    let renderCell = (column: any, data: TableData, fontSize: number) => {
+    let renderCell = (column: any, data: TableData<any>, fontSize: number) => {
 
         let renderer = null
 

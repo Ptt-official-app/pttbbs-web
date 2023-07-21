@@ -10,19 +10,14 @@ export const CHAR_WIDTH = 10
 export const SCREEN_WIDTH = 90
 export const EDIT_SCREEN_WIDTH = 80
 
-export const BASE_COLUMN_WIDTH = CHAR_WIDTH * SCREEN_WIDTH
-
-export const BASE_LINE_HEIGHT = 25
-
 const MAX_SCALE = 1.2
-
-const FONT_SIZE_SCALE = 0.70
 
 const DEFAULT_CHAR_WIDTH = 10
 const DEFAULT_SCREEN_WIDTH = 90
 
 export const CONSTS = {
     FONT_SIZE: 20,
+    HALF_FONT_SIZE: 10,
     SCALE: 1,
     WINDOW_WIDTH: 3840,
     SCREEN_WIDTH: 90,
@@ -31,6 +26,7 @@ export const CONSTS = {
     LINE_HEIGHT: 25,
     IS_MOBILE: false,
     IS_INIT: false,
+    BASE_COLUMN_WIDTH: 10 * 90, // CHAR_WIDTH * SCREEN_WIDTH
 }
 
 const calcScreenWidth = (windowWidth: number, isMobile: boolean) => {
@@ -72,17 +68,23 @@ export const CalcFontSizeScaleScreenWidth = (windowWidth: number, isMobile: bool
 }
 
 export const InitCONSTS = (windowWidth: number, lineHeight: number, isMobile: boolean, fontSize: number, scale: number, screenWidth: number) => {
+    let halfFontSize = Math.floor(fontSize / 2)
     let toUpdate = {
         WINDOW_WIDTH: windowWidth,
         IS_MOBILE: isMobile,
 
         FONT_SIZE: fontSize,
+        HALF_FONT_SIZE: halfFontSize,
         SCALE: scale,
         SCREEN_WIDTH: screenWidth,
+
+        CHAR_WIDTH: halfFontSize,
 
         LINE_HEIGHT: lineHeight,
 
         IS_INIT: true,
+
+        BASE_COLUMN_WIDTH: halfFontSize * screenWidth
     }
     Object.assign(CONSTS, toUpdate)
 

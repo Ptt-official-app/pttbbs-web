@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.6.2",
-    "fixed-data-table-2": "^1.2.15",
+    "fixed-data-table-2": "^1.2.22",
     "js-cookie": "^2.2.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",

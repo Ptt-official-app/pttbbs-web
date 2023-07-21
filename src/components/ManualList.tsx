@@ -45,7 +45,7 @@ export default (props: Props) => {
         backgroundColor: '#333',
     }
 
-    let renderCell = (column: PttColumn, data: TableData, fontSize: number) => {
+    let renderCell = (column: PttColumn, data: TableData<any>, fontSize: number) => {
         let renderer = null
         switch (column.accessor) {
             case 'numIdx':
