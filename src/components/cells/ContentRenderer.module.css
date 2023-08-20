@@ -148,6 +148,7 @@
     height: 100%;
     padding: 0px 0px 0px 0px;
     outline-color: rgba(0, 0, 0, 0);
+    background-color: #888888;
     border-width: 0px;
     border-radius: 0px;
     border-left: 0px;
@@ -155,6 +156,7 @@
     border-top: 0px;
     border-bottom: 0px;
 }
+
 .input:focus {
     outline: none;
 }

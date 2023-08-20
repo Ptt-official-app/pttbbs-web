@@ -21,13 +21,13 @@ import FunctionBar from './FunctionBar'
 import Editor from './Editor'
 
 import { COLOR_FOREGROUND_WHITE, COLOR_BACKGROUND_BLACK } from '../constants'
-import { Line } from '../types'
+import { EditLine } from '../types'
 import Empty from './Empty'
 import InitConsts from './InitConsts'
+import { CONSTS } from './utils'
 
 
 type Props = {
-
 }
 
 
@@ -41,11 +41,6 @@ export default (props: Props) => {
     const funcbarRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
     const [isShowCursor, setIsShowCursor] = useState(true)
     const isShowCursorRef = useRef(isShowCursor)
-
-    const focusRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
-    const lengthRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
-    const [editWidth, setEditWidth] = useState(0)
-    const [isFocusTitle, setIsFocusTitle] = useState(false)
 
     // eslint-disable-next-line
     const [errMsg, setErrMsg] = useState('')
@@ -69,6 +64,13 @@ export default (props: Props) => {
     }, [])
 
     useEffect(() => {
+        if (!isInitConsts) {
+            return
+        }
+
+    }, [isInitConsts])
+
+    useEffect(() => {
         if (headerRef.current === null) {
             return
         }
@@ -83,13 +85,6 @@ export default (props: Props) => {
         setFuncbarHeight(funcbarRef.current.clientHeight)
     }, [funcbarRef.current])
 
-    useEffect(() => {
-        if (focusRef.current === null) {
-            return
-        }
-        focusRef.current.focus()
-    }, [focusRef.current])
-
     const { width: innerWidth, height: innerHeight } = useWindowSize()
     let screenWidth = innerWidth
     let screenHeight = innerHeight - headerHeight - funcbarHeight
@@ -98,6 +93,8 @@ export default (props: Props) => {
     const [selectedColumn, setSelectedColumn] = useState(0)
 
     const [title, setTitle] = useState('')
+
+    const [content, setContent] = useState<EditLine[]>([])
 
     //get data
     let newArticlePage = getRoot(stateNewArticlePage)
@@ -109,49 +106,9 @@ export default (props: Props) => {
     let brdname = newArticlePage.brdname
     let postTypes = newArticlePage.post_type.map(each => ({ value: each, label: '[' + each + ']' }))
 
-    let content: Line[] = newArticlePage.content || [{ 'runes': [{ 'text': '', color0: { foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK } }] }]
-
     let theClass = newArticlePage.theClass
     let setTheClass = (newClass: string) => {
         doNewArticlePage.setData(myID, { theClass: newClass })
-    }
-
-    //render
-    let updateText = (row: number, col: number, text: string) => {
-        let newRune = Object.assign({}, content[row].runes[col])
-        newRune.text = text
-        content[row].runes[col] = newRune
-        let newContent = content.map((each) => each)
-        doNewArticlePage.UpdateContent(myID, newContent)
-    }
-
-    let newLine = () => {
-        let contentNewLine = [{ 'runes': [{ 'text': '', color0: { foreground: COLOR_FOREGROUND_WHITE, background: COLOR_BACKGROUND_BLACK } }] }]
-        let row = selectedRow + 1
-        let contentPre = content.slice(0, row)
-        let contentNext = content.slice(row)
-        let newContent = contentPre.concat(contentNewLine).concat(contentNext)
-        doNewArticlePage.UpdateContent(myID, newContent)
-        setSelectedRow(row)
-        setSelectedColumn(0)
-    }
-
-    let upLine = () => {
-        if (selectedRow === 0) {
-            return
-        }
-
-        setSelectedRow(selectedRow - 1)
-        return
-    }
-
-    let nextLine = () => {
-        if (selectedRow === content.length - 1) {
-            return
-        }
-
-        setSelectedRow(selectedRow + 1)
-        return
     }
 
     let submit = (e: FormEvent) => {
@@ -182,13 +139,16 @@ export default (props: Props) => {
         { render: renderError },
     ]
     let roptions = [
+        { text: (selectedRow + 1) + ',' + (selectedColumn + 1) },
         { text: "離開", url: `/board/${bid}/articles` },
     ]
 
     let onFocus = (e: FocusEvent) => {
+        //console.log('NewArticlePage: onFocus: start')
     }
 
     let onBlur = (e: FocusEvent) => {
+        //console.log('NewArticlePage: onBlur: start')
     }
 
     let showErrMsg = (text: string) => {
@@ -201,8 +161,8 @@ export default (props: Props) => {
         doNewArticlePage.setData(myID, { errmsg: '' })
     }
 
-    let onMouseDown = (e: MouseEvent) => {
-        setIsFocusTitle(true)
+    let onMouseDownHeader = (e: MouseEvent) => {
+        //console.log('NewArticlePage: onMouseDownHeader: start')
     }
 
     let classStyle = {
@@ -215,7 +175,7 @@ export default (props: Props) => {
             <div className={'col ' + styles['title']}>
                 <span>{brdname} - </span>
                 <DropdownList style={classStyle} containerClassName={styles['title-class']} data={postTypes} value={theClass} dataKey='value' textField='label' onChange={(item) => { setTheClass(item.value) }} />
-                <input className={styles['title-input']} onChange={(e) => setTitle(e.target.value)} value={title} onMouseDown={onMouseDown} placeholder={'標題:'} />
+                <input className={styles['title-input']} onChange={(e) => setTitle(e.target.value)} defaultValue={title} onMouseDown={onMouseDownHeader} placeholder={'標題:'} />
             </div>
         )
     }
@@ -226,7 +186,17 @@ export default (props: Props) => {
                 <Header title={''} renderHeader={renderHeader} stateHeader={stateHeader} />
             </div>
 
-            <Editor lines={content} width={screenWidth} height={screenHeight} selectedRow={selectedRow} setSelectedRow={setSelectedRow} selectedColumn={selectedColumn} setSelectedColumn={setSelectedColumn} focusRef={focusRef} lengthRef={lengthRef} editWidth={editWidth} setEditWidth={setEditWidth} updateText={updateText} newLine={newLine} upLine={upLine} nextLine={nextLine} isFocus={!isFocusTitle} setIsFocus={(val) => setIsFocusTitle(!val)} />
+            <Editor
+                contentLines={content}
+                setContentLines={setContent}
+
+                width={screenWidth}
+                height={screenHeight}
+                selectedRow={selectedRow}
+                setSelectedRow={setSelectedRow}
+                selectedColumn={selectedColumn}
+                setSelectedColumn={setSelectedColumn}
+            />
 
             <div ref={funcbarRef}>
                 <FunctionBar optionsLeft={loptions} optionsRight={roptions} />

@@ -4699,10 +4699,10 @@
     "locate-path" "^6.0.0"
     "path-exists" "^4.0.0"
 
-"fixed-data-table-2@^1.2.15":
-  "integrity" "sha512-owIu6WbCuP9jcKXvjNJm8QhEGLfeSXyD+IDT3ZctMTPGCGbmUwQl8jyJoXDgXeS9jdlvhFGzLGBoAyStlOFlBQ=="
-  "resolved" "https://registry.npmjs.org/fixed-data-table-2/-/fixed-data-table-2-1.2.15.tgz"
-  "version" "1.2.15"
+"fixed-data-table-2@^1.2.22":
+  "integrity" "sha512-JAw8Dae1kEDrGrmCT9P7fByHOhudbSb0ajTvtWKnyyAh+lqQ5PnDaTDGDI1fDFDPSdI/tHBKvfsI0d7X7LG8fw=="
+  "resolved" "https://registry.npmjs.org/fixed-data-table-2/-/fixed-data-table-2-1.2.22.tgz"
+  "version" "1.2.22"
   dependencies:
     "lodash" "^4.17.4"
     "prop-types" "^15.7.2"

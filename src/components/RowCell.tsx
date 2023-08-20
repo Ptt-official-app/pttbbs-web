@@ -4,7 +4,7 @@ import CSS from 'csstype'
 import Empty from './Empty'
 
 type Props = {
-    data: TableData
+    data: TableData<any>
     fontSize: number
     rowIndex?: number
     columnKey?: string | number

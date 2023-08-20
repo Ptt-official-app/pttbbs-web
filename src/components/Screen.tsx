@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { HTMLAttributes, useEffect } from 'react'
 
 import { Table, Column, Cell } from 'fixed-data-table-2'
 
 import styles from './Screen.module.css'
 import runeStyles from './cells/ContentRenderer.module.css'
 
-import { CalcScreenScale, BASE_COLUMN_WIDTH } from './utils'
+import { CalcScreenScale, CONSTS } from './utils'
 
 import LineCell from './cells/LineCell'
 import { PttColumn, TableData, TableProps_m } from '../types'
 
 const _DEFAULT_COLUMNS: PttColumn[] = [
     { Header: '', accessor: '', width: 0, fixed: true, 'type': 'rest' },
-    { Header: '', accessor: 'line', width: BASE_COLUMN_WIDTH, fixed: true, 'type': 'line' },
+    { Header: '', accessor: 'line', width: CONSTS.BASE_COLUMN_WIDTH, fixed: true, 'type': 'line' },
     { Header: '', accessor: '', width: 0, fixed: true, 'type': 'rest' },
 ]
 
@@ -30,16 +30,19 @@ type Props = {
     width: number
     height: number
     columns?: PttColumn[]
-    data: TableData
+    data: TableData<any>
     renderCell: Function
     renderHeader?: Function
+
     scrollTop?: number
     onVerticalScroll?: (scrollPos: number) => boolean
-    scrollToRow?: number
+    scrollToRow?: number | null
+    onScrollStart?: ((x: number, y: number, firstRowIndex: number, endRowIndex: number) => void)
+    onScrollEnd?: ((x: number, y: number, firstRowIndex: number, endRowIndex: number) => void)
 }
 
 export default (props: Props) => {
-    const { width, height, columns: propsColumns, data, renderCell: propsRenderCell, renderHeader, scrollTop, onVerticalScroll, scrollToRow } = props
+    const { width, height, columns: propsColumns, data, renderCell: propsRenderCell, renderHeader, scrollTop, onVerticalScroll, scrollToRow, onScrollStart, onScrollEnd } = props
 
     useEffect(_initBlink, [])
 
@@ -47,14 +50,14 @@ export default (props: Props) => {
 
     let { scale, lineHeight, fontSize } = CalcScreenScale(width)
 
-    console.log('Screen: scale:', scale, 'lineHeight:', lineHeight, 'fontSize:', fontSize)
+    //console.log('Screen: scale:', scale, 'lineHeight:', lineHeight, 'fontSize:', fontSize)
     let headerHeight = (typeof renderHeader !== 'undefined') ? lineHeight : 0
     let rowHeight = lineHeight
     let scaleWidth = columns.reduce((r, x, i) => r + Math.floor(x.width * scale), 0)
     let theRestWidth = Math.floor((width - scaleWidth) / 2)
 
     //render-cell
-    let defaultRenderCell = (column: PttColumn, data: TableData, fontSize: number) => {
+    let defaultRenderCell = (column: PttColumn, data: TableData<any>, fontSize: number) => {
         switch (column.type) {
             case 'line':
                 return <LineCell column={column} data={data} fontSize={fontSize} />
@@ -65,7 +68,7 @@ export default (props: Props) => {
 
     let renderCell = propsRenderCell || defaultRenderCell
 
-    let renderColumn = (column: PttColumn, idx: number, data: TableData) => {
+    let renderColumn = (column: PttColumn, idx: number, data: TableData<any>) => {
         let columnWidth = column.type === 'rest' ? theRestWidth : Math.floor(column.width * scale)
         return (
             <Column
@@ -81,13 +84,23 @@ export default (props: Props) => {
     let scroll: TableProps_m = {}
 
     if (typeof scrollToRow !== 'undefined' && scrollToRow !== null) {
-        scroll.scrollTop = scrollToRow * rowHeight
+        scroll.scrollToRow = scrollToRow
     } else if (typeof scrollTop !== 'undefined' && scrollTop !== null) {
         scroll.scrollTop = scrollTop
     }
 
     if (typeof onVerticalScroll !== 'undefined' && onVerticalScroll !== null) {
         scroll.onVerticalScroll = onVerticalScroll
+    }
+
+    if (typeof onScrollStart !== 'undefined' && onScrollStart !== null) {
+        // @ts-ignore
+        scroll.onScrollStart = onScrollStart
+    }
+
+    if (typeof onScrollEnd !== 'undefined' && onScrollEnd !== null) {
+        // @ts-ignore
+        scroll.onScrollEnd = onScrollEnd
     }
 
     return (

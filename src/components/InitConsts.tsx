@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './InitConsts.module.css'
 import { CONSTS, CalcFontSizeScaleScreenWidth, InitCONSTS } from './utils'
 
@@ -14,8 +14,10 @@ type Props = {
 export default (props: Props) => {
     const { windowWidth, isMobile, isInitConsts, setIsInitConsts } = props
     const ref: React.MutableRefObject<HTMLSpanElement | null> = useRef(null)
-
     let { fontSize, scale, screenWidth } = CalcFontSizeScaleScreenWidth(windowWidth, isMobile)
+
+    const [style, setStyle] = useState<CSS.Properties>({ fontSize: `${fontSize}px` })
+
     useEffect(() => {
         console.log('InitConsts.useEffect: current:', ref.current, 'isInitConsts:', isInitConsts, 'CONSTS.IS_INIT', CONSTS.IS_INIT)
         if (!ref.current) {
@@ -23,6 +25,7 @@ export default (props: Props) => {
         }
 
         if (isInitConsts) {
+            setStyle({ display: 'none', fontSize: `${fontSize}px` })
             return
         }
         if (CONSTS.IS_INIT) {
@@ -36,9 +39,6 @@ export default (props: Props) => {
         setIsInitConsts(true)
     }, [ref.current, isInitConsts])
 
-    let style: CSS.Properties = {
-        fontSize: `${fontSize}px`,
-    }
 
     return (<span ref={ref} className={styles['root']} style={style}>█</span>)
 }

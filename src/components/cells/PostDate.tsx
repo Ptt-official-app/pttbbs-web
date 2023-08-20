@@ -2,7 +2,7 @@ import moment from 'moment'
 import { TableData } from '../../types'
 
 type Props = {
-    data: TableData
+    data: TableData<any>
     rowIndex: number
     columnKey: string
 }

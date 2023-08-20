@@ -3,7 +3,7 @@ import { PttColumn, TableData } from '../../types'
 import Empty from '../Empty'
 
 type Props = {
-    data: TableData
+    data: TableData<any>
     fontSize: number
     rowIndex?: number
     columnKey?: string
@@ -12,13 +12,8 @@ type Props = {
 
 export default (props: Props) => {
     const { data, fontSize, rowIndex, columnKey } = props
-    if (typeof rowIndex === 'undefined') {
-        return (<Empty />)
-    }
-    if (typeof columnKey === 'undefined') {
-        return (<Empty />)
-    }
 
+    // @ts-ignore
     let item = data[rowIndex]
     let renderLine = item[columnKey]
 
