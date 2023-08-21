@@ -42,7 +42,7 @@ export default (props: Props) => {
 
     let text = rune.isTail ? '' : rune.text
 
-    console.log('EditCell: rune.isTail:', rune.isTail, 'rune.text:', rune.text || '', 'text:', text)
+    // console.log('EditCell: rune.isTail:', rune.isTail, 'rune.text:', rune.text || '', 'text:', text)
 
     let [classNames0] = getClassNamesFromRune(rune)
     if (rune.pullright) {
@@ -65,7 +65,7 @@ export default (props: Props) => {
     }
 
     let onKeyDownInput = (e: KeyboardEvent) => {
-        console.log('EditCell.onKeyDownInput: e:', e, 'isComposing:', e.nativeEvent.isComposing, 'focus:', document.activeElement, 'key:', e.key, 'key.length:', e.key.length, 'altKey:', e.altKey, 'ctrlKey:', e.ctrlKey, 'shiftKey:', e.shiftKey, 'metaKey:', e.metaKey, 'isComposing:', e.nativeEvent.isComposing, 'value:', focusInputRef.current?.value)
+        // console.log('EditCell.onKeyDownInput: e:', e, 'isComposing:', e.nativeEvent.isComposing, 'focus:', document.activeElement, 'key:', e.key, 'key.length:', e.key.length, 'altKey:', e.altKey, 'ctrlKey:', e.ctrlKey, 'shiftKey:', e.shiftKey, 'metaKey:', e.metaKey, 'isComposing:', e.nativeEvent.isComposing, 'value:', focusInputRef.current?.value)
 
         if (focusInputRef.current === null) {
             return
@@ -208,13 +208,8 @@ export default (props: Props) => {
         }
 
         updateContent(selectedRow, selectedColumn, focusInputRef.current.value)
-        let runeCount = calcTextCount(text)
-        newInputWidth = runeCount * CONSTS.CHAR_WIDTH
-        if (newInputWidth < 1) {
-            newInputWidth = 1
-        }
-        //console.log('EditCell.onKeyUpInput: after updateContent: to setInputWidth: text:', text, 'runeCount:', runeCount, 'newInputWidth:', newInputWidth)
-        setInputWidth(newInputWidth)
+        setInputWidth(1)
+        focusInputRef.current.value = ''
     }
 
     let onFocusInput = (e: FocusEvent) => {
@@ -237,7 +232,7 @@ export default (props: Props) => {
         onMouseDown(e, rowIndex, idx)
     }
 
-    console.log('EditCell: to render: rowIndex:', rowIndex, 'idx:', idx, 'classNames0:', classNames0, 'text:', text, 'inputWidth:', inputWidth, 'selectStart:', focusInputRef.current?.selectionStart, 'selectEnd:', focusInputRef.current?.selectionEnd)
+    // console.log('EditCell: to render: rowIndex:', rowIndex, 'idx:', idx, 'classNames0:', classNames0, 'text:', text, 'inputWidth:', inputWidth, 'selectStart:', focusInputRef.current?.selectionStart, 'selectEnd:', focusInputRef.current?.selectionEnd)
 
     let className0 = classNames0.join(' ')
     let cellKey = 'edit-cell-' + selectedRow + '-' + idx
