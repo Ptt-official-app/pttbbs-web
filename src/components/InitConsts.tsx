@@ -34,11 +34,11 @@ export default (props: Props) => {
 
         let rect = ref.current.getBoundingClientRect()
         let theStyle = getComputedStyle(ref.current)
-        console.log('InitConsts: width:', rect.width, 'height:', rect.height, 'fontSize:', theStyle.fontSize, 'fontFamily:', theStyle.fontFamily)
-        InitCONSTS(windowWidth, rect.height, isMobile, fontSize, scale, screenWidth)
+        let lineHeight = rect.height - 0.5
+        console.log('InitConsts: width:', rect.width, 'height:', rect.height, 'windowWidth:', windowWidth, 'lineHeight:', lineHeight, 'fontSize:', theStyle.fontSize, 'fontFamily:', theStyle.fontFamily)
+        InitCONSTS(windowWidth, lineHeight, isMobile, fontSize, scale, screenWidth)
         setIsInitConsts(true)
     }, [ref.current, isInitConsts])
-
 
     return (<span ref={ref} className={styles['root']} style={style}>█</span>)
 }

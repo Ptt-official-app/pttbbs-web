@@ -114,6 +114,12 @@
     z-index: -2; /* Draw below the selectable text */
 }
 
+.halves-group { /* Container for a .halves rune group */
+    /* Prevent .halves elements from being drawn below the background */
+    position: relative;
+    z-index: 1;
+}
+
 .rune {
     white-space: pre;
     height: 100%;
@@ -125,12 +131,6 @@
 }
 .extend {
     width: 100%;
-}
-
-.halves-group { /* Container for a .halves rune group */
-    /* Prevent .halves elements from being drawn below the background */
-    position: relative;
-    z-index: 2;
 }
 
 .calc {
