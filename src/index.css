@@ -1,8 +1,12 @@
 @import url(//fonts.googleapis.com/css?family=Inconsolata);
+@font-face {
+    font-family: SymMingLiu;
+    src: url(assets/symmingliu.aaa394dd81dbe129da06687a75bfe002.woff) format("woff")
+}
 
 body {
     margin: 0;
-    font-family: "細明體", "AR PL UMing TW", "Inconsolata", "LiSongPro", "BiauKaiTC", Menlo, Monaco, Consolas, "Inconsolata", monospace;
+    font-family: "MingLiu", "SymMingLiu", monospace;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

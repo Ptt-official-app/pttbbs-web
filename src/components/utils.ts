@@ -10,7 +10,7 @@ export const CHAR_WIDTH = 10
 export const SCREEN_WIDTH = 90
 export const EDIT_SCREEN_WIDTH = 80
 
-const MAX_SCALE = 1.2
+const MAX_SCALE = 1.5
 
 const DEFAULT_CHAR_WIDTH = 10
 const DEFAULT_SCREEN_WIDTH = 90
