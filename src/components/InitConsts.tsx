@@ -25,7 +25,6 @@ export default (props: Props) => {
         }
 
         if (isInitConsts) {
-            setStyle({ display: 'none', fontSize: `${fontSize}px` })
             return
         }
         if (CONSTS.IS_INIT) {
