@@ -13,6 +13,24 @@ The corresponding backend repository of this website is:
 
 The architecture is based on [中台架構-站台部屬規劃(20210126版本for測試計畫)](https://hackmd.io/@twbbs/Root#%E6%9E%B6%E6%A7%8B%E5%9C%96).
 
+## Edit and Apply Configuration
+
+Configuration is required for running this demo.
+
+You can refer to examples `config.test/` or `config.tmpl/` for setting up your own configuration.
+
+Your project directory needs to have the following file layout:
+
+* `config/` - your configuration directory (must be this name)
+    * `index.js` - contains all the configuration needed by the project.
+        * Ensure that `API_ROOT` has been set to the API URL of a running openbbs-middleware instance.
+
+When done editing `index.js`, remember to copy `config/` into the directory `node_modules/`.
+
+```sh
+cp -r config node_modules/
+```
+
 ## Starting server at localhost
 
 ``` sh
