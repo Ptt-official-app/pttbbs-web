@@ -23,20 +23,17 @@ export default (props: Props) => {
         rowIndex = rowIndex || 0
         onMouseDown(e, rowIndex, idx)
     }
+    classNames0.push(...classNamesGroup)
+    let className0 = classNames0.join(' ')
     if (isTwoColor) {
-        classNamesGroup.push(styles['halves-group'])
-        let classNameGroup = classNamesGroup.join(' ')
-        let className0 = classNames0.join(' ')
         return (
-            <span className={classNameGroup}>
+            <>
                 {[...rune.text].map((ch, idx) => (
                     <span key={`${runeKey}-${idx}`} className={className0} onMouseDown={_onMouseDown} data-text={ch}>{ch}</span>
                 ))}
-            </span>
+            </>
         )
     } else {
-        classNames0.push(...classNamesGroup)
-        let className0 = classNames0.join(' ')
         return (
             <span key={runeKey} className={className0} onMouseDown={_onMouseDown}>{rune.text}</span>
         )

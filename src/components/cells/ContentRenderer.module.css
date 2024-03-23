@@ -94,30 +94,24 @@
     color: transparent;
 }
 
-.halves-group > .halves { /* Container for the two halves of a character; selectable */
+.halves { /* Container for the two halves of a character; selectable */
+    position: relative;
+    /* Prevent .halves elements from being drawn below the background */
+    z-index: 1;
     color: transparent;
     background: transparent;
 }
-.halves-group > .halves:before { /* The left half of a character; not selectable */
+.halves:before, .halves:after { /* The halves of a character; not selectable */
     content: attr(data-text);
     position: absolute;
-    width: 1ch;
-    clip-path: inset(-0.5px); /* 0px causes wierd border line on Chrome and Edge */
+    left: 0px; /* for the left half */
+    width: 50%;
+    overflow: hidden;
     z-index: -1; /* Draw below the selectable text */
 }
-.halves-group > .halves:after { /* The right half of a character; not selectable */
-    content: attr(data-text);
-    position: absolute;
-    margin-left: -1ch;
-    text-indent: -1ch;
-    clip-path: inset(-0.5px); /* 0px causes wierd border line on Chrome and Edge */
-    z-index: -2; /* Draw below the selectable text */
-}
-
-.halves-group { /* Container for a .halves rune group */
-    /* Prevent .halves elements from being drawn below the background */
-    position: relative;
-    z-index: 1;
+.halves:after { /* The right half of a character; not selectable */
+    left: 50%;
+    text-indent: -100%;
 }
 
 .rune {
