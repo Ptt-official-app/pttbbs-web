@@ -41,8 +41,8 @@ const calcScreenWidth = (windowWidth: number, isMobile: boolean) => {
     }
 }
 
-const calcScale = (windowWidth: number, isMobile: boolean, screenWidth: number) => {
-    if (CONSTS.IS_INIT) {
+const calcScale = (windowWidth: number, isMobile: boolean, screenWidth: number, useCONSTS: boolean = true) => {
+    if (useCONSTS && CONSTS.IS_INIT) {
         return CONSTS.SCALE
     }
     if (!isMobile) {
@@ -53,13 +53,13 @@ const calcScale = (windowWidth: number, isMobile: boolean, screenWidth: number) 
     }
 }
 
-export const CalcFontSizeScaleScreenWidth = (windowWidth: number, isMobile: boolean) => {
-    if (CONSTS.IS_INIT) {
+export const CalcFontSizeScaleScreenWidth = (windowWidth: number, isMobile: boolean, useCONSTS: boolean = true) => {
+    if (useCONSTS && CONSTS.IS_INIT) {
         return { fontSize: CONSTS.FONT_SIZE, scale: CONSTS.SCALE, screenWidth: CONSTS.SCREEN_WIDTH }
     }
     if (!isMobile) {
         let screenWidth = calcScreenWidth(windowWidth, isMobile)
-        let scale = calcScale(windowWidth, isMobile, screenWidth)
+        let scale = calcScale(windowWidth, isMobile, screenWidth, useCONSTS)
         let fontSize = Math.floor(scale * DEFAULT_CHAR_WIDTH * 2)
         return { fontSize, scale, screenWidth }
     } else {

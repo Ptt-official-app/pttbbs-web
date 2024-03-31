@@ -45,7 +45,8 @@ export default (props: Props) => {
     // eslint-disable-next-line
     const [errMsg, setErrMsg] = useState('')
 
-    const [isInitConsts, setIsInitConsts] = useState(false)
+    const [nInitConsts, increaseNInitConsts] = React.useReducer((x: number) => x + 1, 0)
+    const hasInitConsts = nInitConsts > 0;
 
     //init
     let { bid } = useParams()
@@ -64,11 +65,11 @@ export default (props: Props) => {
     }, [])
 
     useEffect(() => {
-        if (!isInitConsts) {
+        if (!hasInitConsts) {
             return
         }
 
-    }, [isInitConsts])
+    }, [hasInitConsts])
 
     useEffect(() => {
         if (headerRef.current === null) {
@@ -201,7 +202,7 @@ export default (props: Props) => {
             <div ref={funcbarRef}>
                 <FunctionBar optionsLeft={loptions} optionsRight={roptions} />
             </div>
-            <InitConsts windowWidth={innerWidth} isMobile={false} isInitConsts={isInitConsts} setIsInitConsts={setIsInitConsts} />
+            <InitConsts windowWidth={innerWidth} isMobile={false} nInitConsts={nInitConsts} increaseNInitConsts={increaseNInitConsts} />
         </div>
     )
 }

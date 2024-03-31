@@ -35,7 +35,8 @@ export default (props: Props) => {
     const [stateHeader, doHeader] = useReducer(DoHeader)
     const [headerID] = useState(genUUID())
 
-    const [isInitConsts, setIsInitConsts] = useState(false)
+    const [nInitConsts, increaseNInitConsts] = React.useReducer((x: number) => x + 1, 0)
+    const hasInitConsts = nInitConsts > 0;
 
     //init
     let { bid, aid } = useParams()
@@ -103,7 +104,7 @@ export default (props: Props) => {
     }, [isRecommend])
 
     useEffect(() => {
-        if (!isInitConsts) {
+        if (!hasInitConsts) {
             return
         }
         doHeader.init(headerID)
@@ -112,7 +113,7 @@ export default (props: Props) => {
         let startIdx = query.start_idx || ''
 
         doArticlePage.init(articlePageID, bid, aid, startIdx)
-    }, [isInitConsts])
+    }, [hasInitConsts])
 
     useEffect(() => {
         if (headerRef.current === null) {
@@ -133,7 +134,7 @@ export default (props: Props) => {
     if (!articlePage) {
         return (
             <div className={pageStyles['root']}>
-                <InitConsts windowWidth={innerWidth} isMobile={false} isInitConsts={isInitConsts} setIsInitConsts={setIsInitConsts} />
+                <InitConsts windowWidth={innerWidth} isMobile={false} nInitConsts={nInitConsts} increaseNInitConsts={increaseNInitConsts} />
             </div>
         )
     }
@@ -241,7 +242,7 @@ export default (props: Props) => {
             <div ref={funcbarRef}>
                 <FunctionBar optionsLeft={loptions} optionsRight={roptions} />
             </div>
-            <InitConsts windowWidth={innerWidth} isMobile={false} isInitConsts={isInitConsts} setIsInitConsts={setIsInitConsts} />
+            <InitConsts windowWidth={innerWidth} isMobile={false} nInitConsts={nInitConsts} increaseNInitConsts={increaseNInitConsts} />
         </div>
     )
 }

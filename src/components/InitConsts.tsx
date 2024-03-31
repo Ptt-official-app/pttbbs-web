@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useReducer } from 'react'
 import styles from './InitConsts.module.css'
 import { CONSTS, CalcFontSizeScaleScreenWidth, InitCONSTS } from './utils'
 
@@ -7,37 +7,38 @@ import CSS from 'csstype'
 type Props = {
     windowWidth: number
     isMobile: boolean
-    isInitConsts: boolean
-    setIsInitConsts: any
+    nInitConsts: number
+    increaseNInitConsts: any
 }
 
 export default (props: Props) => {
-    const { windowWidth, isMobile, isInitConsts, setIsInitConsts } = props
+    const { windowWidth, isMobile, nInitConsts, increaseNInitConsts } = props
     const ref: React.MutableRefObject<HTMLSpanElement | null> = useRef(null)
-    let { fontSize, scale, screenWidth } = CalcFontSizeScaleScreenWidth(windowWidth, isMobile)
-
-    const [style, setStyle] = useState<CSS.Properties>({ fontSize: `${fontSize}px` })
+    const [nResetConsts, increaseNResetConsts] = useReducer((x: number) => x + 1, 0)
+    const [style, setStyle] = useState<CSS.Properties>({})
 
     useEffect(() => {
-        console.log('InitConsts.useEffect: current:', ref.current, 'isInitConsts:', isInitConsts, 'CONSTS.IS_INIT', CONSTS.IS_INIT)
+        console.log('InitConsts.useEffect: current:', ref.current, 'nInitConsts:', nInitConsts, 'CONSTS.IS_INIT', CONSTS.IS_INIT)
         if (!ref.current) {
             return
         }
+        let { fontSize } = CalcFontSizeScaleScreenWidth(windowWidth, isMobile, false)
+        setStyle({ fontSize: `${fontSize}px` })
+        increaseNResetConsts()
+    }, [ref.current, windowWidth])
 
-        if (isInitConsts) {
+    useEffect(() => {
+        if (!ref.current) {
             return
         }
-        if (CONSTS.IS_INIT) {
-            return
-        }
-
+        let { fontSize, scale, screenWidth } = CalcFontSizeScaleScreenWidth(windowWidth, isMobile, false)
         let rect = ref.current.getBoundingClientRect()
         let theStyle = getComputedStyle(ref.current)
         let lineHeight = rect.height - 0.5
         console.log('InitConsts: width:', rect.width, 'height:', rect.height, 'windowWidth:', windowWidth, 'lineHeight:', lineHeight, 'fontSize:', theStyle.fontSize, 'fontFamily:', theStyle.fontFamily)
         InitCONSTS(windowWidth, lineHeight, isMobile, fontSize, scale, screenWidth)
-        setIsInitConsts(true)
-    }, [ref.current, isInitConsts])
+        increaseNInitConsts()
+    }, [nResetConsts])
 
     return (<span ref={ref} className={styles['root']} style={style}>█</span>)
 }
