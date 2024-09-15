@@ -4,7 +4,7 @@ import * as ServerUtils from './ServerUtils'
 import api from './api'
 import { State_t, UserDetail } from '../types'
 
-export const myClass = 'demo-pttbbs/UserInfoPage'
+export const myClass = 'pttbbs-web/UserInfoPage'
 
 export interface State extends State_t, UserDetail {
     theDate: Date

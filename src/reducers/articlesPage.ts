@@ -7,7 +7,7 @@ import api from './api'
 import { MergeIdxList } from './utils'
 import { ArticleList, ArticleSummary_i, BoardSummary, Maybe, State_t } from '../types'
 
-export const myClass = 'demo-pttbbs/ArticlesPage'
+export const myClass = 'pttbbs-web/ArticlesPage'
 
 export interface State extends State_t, BoardSummary {
     theDate: Date

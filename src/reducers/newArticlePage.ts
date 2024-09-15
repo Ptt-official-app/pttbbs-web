@@ -6,7 +6,7 @@ import api from './api'
 import { COLOR_FOREGROUND_WHITE, COLOR_BACKGROUND_BLACK } from '../constants'
 import { EditLine, Maybe, State_t } from '../types'
 
-export const myClass = 'demo-pttbbs/NewArticlePage'
+export const myClass = 'pttbbs-web/NewArticlePage'
 
 const _DEFAULT_POST_TYPES = [
     '問題',

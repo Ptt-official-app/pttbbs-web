@@ -6,7 +6,7 @@ import api from './api'
 import { MergeList, SantizeBoard } from './utils'
 import { BoardSummary_i, Maybe, State_t } from '../types'
 
-export const myClass = 'demo-pttbbs/GeneralBoardsPage'
+export const myClass = 'pttbbs-web/GeneralBoardsPage'
 
 export interface State extends State_t {
     theDate: Date

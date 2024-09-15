@@ -6,7 +6,7 @@ import api from './api'
 import { GoUserHome } from './utils'
 import { State_t } from '../types'
 
-export const myClass = 'demo-pttbbs/ChangeEmailPage'
+export const myClass = 'pttbbs-web/ChangeEmailPage'
 
 export interface State extends State_t {
     theDate: Date

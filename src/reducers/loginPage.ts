@@ -7,7 +7,7 @@ import * as errors from './errors'
 import { State_t } from '../types'
 
 
-export const myClass = 'demo-pttbbs/LoginPage'
+export const myClass = 'pttbbs-web/LoginPage'
 
 export interface State extends State_t {
     theDate: Date

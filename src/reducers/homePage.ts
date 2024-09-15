@@ -1,6 +1,6 @@
 import { init as _init, createReducer, State as rState, Thunk } from 'react-reducer-utils'
 
-export const myClass = 'demo-pttbbs/HomePage'
+export const myClass = 'pttbbs-web/HomePage'
 
 export interface State extends rState {
     theDate: Date,

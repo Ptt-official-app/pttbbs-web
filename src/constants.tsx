@@ -4,7 +4,7 @@ export const MIN_IDLEN = 2
 export const MAX_PWLEN = 30
 export const MIN_PWLEN = 6
 
-export const GITHUB_LINK = 'https://github.com/Ptt-official-app/demo-pttbbs'
+export const GITHUB_LINK = 'https://github.com/Ptt-official-app/pttbbs-web'
 
 //https://github.com/Ptt-official-app/go-pttbbs/blob/main/ptttype/board_stat.go
 export const NBRD_INVALID = 0

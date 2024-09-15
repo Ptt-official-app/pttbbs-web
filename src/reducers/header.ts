@@ -5,7 +5,7 @@ import api from './api'
 import * as errors from './errors'
 import { State_t, Maybe } from '../types'
 
-export const myClass = 'demo-pttbbs/Header'
+export const myClass = 'pttbbs-web/Header'
 
 
 export interface State extends State_t {

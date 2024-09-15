@@ -29,7 +29,7 @@ import {
     COMMENT_TYPE_REPLY
 } from '../constants'
 
-export const myClass = 'demo-pttbbs/ArticlePage'
+export const myClass = 'pttbbs-web/ArticlePage'
 
 export interface State extends State_t, ArticleDetail {
     theDate: Date

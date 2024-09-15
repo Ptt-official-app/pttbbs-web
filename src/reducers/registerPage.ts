@@ -8,7 +8,7 @@ import { GoUserHome } from './utils'
 import { State_t } from '../types'
 
 
-export const myClass = 'demo-pttbbs/RegisterPage'
+export const myClass = 'pttbbs-web/RegisterPage'
 
 export interface State extends State_t {
     theDate: Date

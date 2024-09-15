@@ -6,7 +6,7 @@ import api from './api'
 
 import { Content, Line, Maybe, State_t } from '../types'
 
-export const myClass = 'demo-pttbbs/ManualPage'
+export const myClass = 'pttbbs-web/ManualPage'
 
 export interface State extends State_t {
     theDate: Date

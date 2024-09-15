@@ -5,7 +5,7 @@ import api from './api'
 import * as errors from './errors'
 import { State_t } from '../types'
 
-export const myClass = 'demo-pttbbs/ChangePasswdPage'
+export const myClass = 'pttbbs-web/ChangePasswdPage'
 
 export interface State extends State_t {
     theDate: Date

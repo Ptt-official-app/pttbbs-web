@@ -7,7 +7,7 @@ import api from './api'
 import { MergeIdxList, SantizeBoard } from './utils'
 import { BoardSummary_i, Maybe, State_t } from '../types'
 
-export const myClass = 'demo-pttbbs/HotBoardsPage'
+export const myClass = 'pttbbs-web/HotBoardsPage'
 
 export interface State extends State_t {
     theDate: Date
