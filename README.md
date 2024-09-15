@@ -1,5 +1,5 @@
-# demo-pttbbs
-This is the demo of web-based pttbbs using openbbs-middleware.
+# pttbbs-web
+This is the demo of web-based pttbbs using go-pttbbsweb.
 
 # Getting Started
 
@@ -8,7 +8,7 @@ You can get started by visiting the following website:
 [https://www.devptt.dev](https://www.devptt.dev)
 
 The corresponding backend repository of this website is:
-* [go-openbbsmiddleware](https://github.com/Ptt-official-app/go-openbbsmiddleware)
+* [go-pttbbsweb](https://github.com/Ptt-official-app/go-pttbbsweb)
 * [go-pttbbs](https://github.com/Ptt-official-app/go-pttbbs)
 
 The architecture is based on [中台架構-站台部屬規劃(20210126版本for測試計畫)](https://hackmd.io/@twbbs/Root#%E6%9E%B6%E6%A7%8B%E5%9C%96).
