@@ -1,1 +1,1 @@
-dev.tsx
+all.tsx
