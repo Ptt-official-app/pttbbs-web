@@ -45,7 +45,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chhsiao1981/use-thunk": "^10.1.2",
+    "@chhsiao1981/use-thunk": "^10.4.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "fixed-data-table-2": "^2.0.22",
