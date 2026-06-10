@@ -61,7 +61,7 @@
     "web-vitals": "^5.1.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.6",
+    "@biomejs/biome": "2.4.16",
     "@types/fixed-data-table-2": "^1.0.2",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.16",
