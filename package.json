@@ -63,7 +63,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.6",
     "@types/fixed-data-table-2": "^1.0.2",
-    "@types/node": "^24.10.1",
+    "@types/node": "^25.9.2",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^4.2.2",
