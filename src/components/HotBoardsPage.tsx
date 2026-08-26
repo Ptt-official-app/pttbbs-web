@@ -1,6 +1,6 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import config from "config";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
+import { useThunk } from "use-thunk";
 import useWindowSize from "../hooks/useWindowSize";
 import * as DoHeader from "../thunks/header";
 import * as DoHotBoardsPage from "../thunks/hotBoardsPage";

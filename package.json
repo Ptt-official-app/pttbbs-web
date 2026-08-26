@@ -15,7 +15,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@chhsiao1981/use-thunk": "^16.1.1",
+    "use-thunk": "^16.1.2",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "fixed-data-table-2": "^2.0.22",

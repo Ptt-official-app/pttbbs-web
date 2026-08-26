@@ -1,4 +1,4 @@
-import { type Thunk, update } from "@chhsiao1981/use-thunk";
+import { type Thunk, update } from "use-thunk";
 import * as serverUtils from "./serverUtils";
 
 //import * as errors from './errors'

@@ -1,4 +1,3 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import {
   type FocusEvent,
   type MouseEvent,
@@ -9,6 +8,7 @@ import {
 } from "react";
 import { useParams } from "react-router-dom";
 import { DropdownList } from "react-widgets";
+import { useThunk } from "use-thunk";
 import useWindowSize from "../hooks/useWindowSize";
 import * as DoNewArticlePage from "../thunks/newArticlePage";
 import type { EditLine } from "../types";

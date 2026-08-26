@@ -1,7 +1,7 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useKey } from "react-use";
+import { useThunk } from "use-thunk";
 import useWindowSize from "../hooks/useWindowSize";
 import * as DoArticlePage from "../thunks/articlePage";
 import type { CharMap, Line } from "../types";

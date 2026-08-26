@@ -1,7 +1,7 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import config from "config";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useThunk } from "use-thunk";
 import useWindowSize from "../hooks/useWindowSize";
 import * as DoGeneralBoardsPage from "../thunks/generalBoardsPage";
 import * as DoHeader from "../thunks/header";

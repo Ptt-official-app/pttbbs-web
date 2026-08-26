@@ -1,6 +1,6 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import { useEffect } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { useThunk } from "use-thunk";
 import ChangePasswdPage from "../components/ChangePasswdPage";
 import * as DoHeader from "../thunks/header";
 

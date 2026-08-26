@@ -43,4 +43,4 @@ export default {
     usernameStartsWithDot: 'username canoot start with "."',
     usernameEndsWithDot: 'username cannot end with "."',
   },
-} satisfies I18n;
+} as I18n;

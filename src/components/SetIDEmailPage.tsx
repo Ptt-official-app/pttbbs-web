@@ -1,7 +1,7 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import QueryString from "query-string";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useThunk } from "use-thunk";
 import useWindowSize from "../hooks/useWindowSize";
 import * as DoSetIDEmailPage from "../thunks/setIDEmailPage";
 import Empty from "./Empty";

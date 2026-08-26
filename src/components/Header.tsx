@@ -1,7 +1,7 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import config from "config";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { useThunk } from "use-thunk";
 import { GITHUB_LINK } from "../constants";
 import * as DoHeader from "../thunks/header";
 import Empty from "./Empty";

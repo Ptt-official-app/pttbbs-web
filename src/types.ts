@@ -1,7 +1,7 @@
 //https://doc.devptt.dev/
 
-import type { State as State_r } from "@chhsiao1981/use-thunk";
 import type CSS from "csstype";
+import type { State as State_r } from "use-thunk";
 
 export type Err = string;
 

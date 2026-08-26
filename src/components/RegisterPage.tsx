@@ -1,4 +1,3 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import {
   type CSSProperties,
   type SubmitEventHandler,
@@ -6,6 +5,7 @@ import {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { useThunk } from "use-thunk";
 import useWindowSize from "../hooks/useWindowSize";
 import * as DoRegisterPage from "../thunks/registerPage";
 import * as errors from "./errors";

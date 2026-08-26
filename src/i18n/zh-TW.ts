@@ -43,4 +43,4 @@ export default {
     usernameStartsWithDot: 'username 不能以 "." 開始',
     usernameEndsWithDot: 'username 不能以 "." 結尾',
   },
-} satisfies I18n;
+} as I18n;

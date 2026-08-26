@@ -1,9 +1,9 @@
 import "../vendors";
 import "../index.css";
-import { registerThunk } from "@chhsiao1981/use-thunk";
 import config from "config";
 import { type FC, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { registerThunk } from "use-thunk";
 import reportWebVitals from "../reportWebVitals";
 import * as DoArticlePage from "../thunks/articlePage";
 import * as DoArticlesPage from "../thunks/articlesPage";
@@ -53,6 +53,7 @@ export default (Routes: FC) => {
   document.getElementsByTagName("title")[0].innerHTML = config.BRAND;
 
   //react
+  // biome-ignore lint/style/noNonNullAssertion: root is always in html.
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <Routes />

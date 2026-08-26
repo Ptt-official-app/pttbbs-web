@@ -1,4 +1,3 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import {
   type ChangeEventHandler,
   type CSSProperties,
@@ -7,6 +6,7 @@ import {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { useThunk } from "use-thunk";
 import useWindowSize from "../hooks/useWindowSize";
 import * as DoHeader from "../thunks/header";
 import * as DoInitPage from "../thunks/initPage";

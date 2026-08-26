@@ -1,8 +1,8 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import config from "config";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
+import { useThunk } from "use-thunk";
 import { OIDC_AUTH_REQUEST_ID } from "../constants";
 import useWindowSize from "../hooks/useWindowSize";
 import * as DoLoginPage from "../thunks/loginPage";

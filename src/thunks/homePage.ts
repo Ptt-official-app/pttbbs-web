@@ -1,4 +1,4 @@
-import type { State as rState, Thunk } from "@chhsiao1981/use-thunk";
+import type { State as rState, Thunk } from "use-thunk";
 
 export const name = "pttbbs-web/HomePage";
 

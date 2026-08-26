@@ -1,4 +1,4 @@
-import type { Thunk } from "@chhsiao1981/use-thunk";
+import type { Thunk } from "use-thunk";
 import type {
   ArticleSummary_i,
   BoardSummary,

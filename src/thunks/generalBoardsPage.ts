@@ -1,4 +1,4 @@
-import type { Thunk } from "@chhsiao1981/use-thunk";
+import type { Thunk } from "use-thunk";
 import type { BoardSummary_i, State as State_t } from "../types";
 import * as serverUtils from "./serverUtils";
 import { mergeList, santizeBoard } from "./utils";

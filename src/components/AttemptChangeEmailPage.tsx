@@ -1,6 +1,6 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useThunk } from "use-thunk";
 import useWindowSize from "../hooks/useWindowSize";
 import * as DoAttemptChangeEmailPage from "../thunks/attemptChangeEmailPage";
 import Empty from "./Empty";

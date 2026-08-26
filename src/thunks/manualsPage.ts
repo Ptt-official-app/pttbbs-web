@@ -1,4 +1,4 @@
-import type { Thunk } from "@chhsiao1981/use-thunk";
+import type { Thunk } from "use-thunk";
 import * as serverUtils from "./serverUtils";
 
 //import * as errors from './errors'
