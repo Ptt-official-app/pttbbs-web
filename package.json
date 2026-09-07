@@ -28,7 +28,7 @@
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.8",
     "react-i18next": "^17.0.12",
-    "react-router-dom": "^6.30.3",
+    "react-router-dom": "^7.18.3",
     "react-use": "^17.6.1",
     "react-widgets": "^5.8.6",
     "web-vitals": "^5.1.0"
