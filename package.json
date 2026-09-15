@@ -15,7 +15,6 @@
     "test": "vitest"
   },
   "dependencies": {
-    "use-thunk": "^16.1.2",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "fixed-data-table-2": "^2.0.22",
@@ -31,10 +30,11 @@
     "react-router-dom": "^6.30.3",
     "react-use": "^17.6.1",
     "react-widgets": "^5.8.6",
+    "use-thunk": "^16.1.2",
     "web-vitals": "^5.1.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.10",
+    "@biomejs/biome": "2.5.13",
     "@types/fixed-data-table-2": "^1.0.2",
     "@types/node": "^26.4.1",
     "@types/react": "^19.2.18",
