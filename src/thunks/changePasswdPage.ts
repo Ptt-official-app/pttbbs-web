@@ -1,7 +1,7 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type { State as State_t } from "../types";
 import * as errors from "./errors";
-import * as serverUtils from "./serverUtils";
 
 export const name = "pttbbs-web/ChangePasswdPage";
 
@@ -31,7 +31,7 @@ export const changePasswd = (
   passwordConfirm: string,
 ): Thunk<State> => {
   return async (set) => {
-    const { data, errmsg, status } = await serverUtils.changePasswd(
+    const { data, errmsg, status } = await api.changePasswd(
       userID,
       origPassword,
       password,

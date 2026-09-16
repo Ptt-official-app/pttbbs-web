@@ -1,5 +1,5 @@
 import type { Thunk } from "use-thunk";
-import * as serverUtils from "./serverUtils";
+import * as api from "../api";
 //import * as errors from './errors'
 
 import type { Content, Line, State as State_t } from "../types";
@@ -53,11 +53,7 @@ export const getManualContent = (
   startIdx: string,
 ): Thunk<State> => {
   return async (set, get) => {
-    const { data, errmsg, status } = await serverUtils.getManual(
-      bid,
-      path,
-      startIdx,
-    );
+    const { data, errmsg, status } = await api.getManual(bid, path, startIdx);
 
     console.log(
       "getManualContent: data:",

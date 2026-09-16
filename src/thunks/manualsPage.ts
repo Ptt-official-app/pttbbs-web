@@ -1,5 +1,5 @@
 import type { Thunk } from "use-thunk";
-import * as serverUtils from "./serverUtils";
+import * as api from "../api";
 
 //import * as errors from './errors'
 
@@ -87,7 +87,7 @@ const getBoardSummary = (
 ): Thunk<State> => {
   return async (set) => {
     // Get board information
-    const { data, errmsg, status } = await serverUtils.getBoardSummary(bid);
+    const { data, errmsg, status } = await api.getBoardSummary(bid);
     if (status !== 200) {
       set(myID, { errmsg });
       return;
@@ -154,11 +154,7 @@ export const getManuals = (
 
     set(myID, { isBusyLoading: true });
 
-    const { data, errmsg, status } = await serverUtils.loadManuals(
-      bid,
-      path,
-      desc,
-    );
+    const { data, errmsg, status } = await api.loadManuals(bid, path, desc);
     if (status !== 200) {
       set(myID, { errmsg, isBusyLoading: false });
       return;

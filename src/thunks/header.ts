@@ -1,7 +1,7 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type { State as State_t } from "../types";
 import * as errors from "./errors";
-import * as serverUtils from "./serverUtils";
 
 export const name = "pttbbs-web/Header";
 
@@ -34,7 +34,7 @@ export const setUsername = (myID: string, username: string): Thunk<State> => {
 
 const getData = (myID: string): Thunk<State> => {
   return async (set) => {
-    const { data, errmsg, status } = await serverUtils.getUsername();
+    const { data, errmsg, status } = await api.getUsername();
     console.info("header: after getData: data:", data);
 
     if (!status) {

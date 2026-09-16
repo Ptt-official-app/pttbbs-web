@@ -1,7 +1,7 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import { STATUS_OK } from "../constants";
 import type { State as State_t, UserDetail } from "../types";
-import * as serverUtils from "./serverUtils";
 
 export const name = "pttbbs-web/ProfilePage";
 
@@ -98,7 +98,7 @@ export const init = (myID: string): Thunk<State> => {
 
 export const getData = (myID: string, username: string): Thunk<State> => {
   return async (set) => {
-    const { data, errmsg, status } = await serverUtils.getUserInfo(username);
+    const { data, errmsg, status } = await api.getUserInfo(username);
 
     if (status !== 200) {
       set(myID, { errmsg });
@@ -114,7 +114,7 @@ export const getData = (myID: string, username: string): Thunk<State> => {
 
 export const requestGovermentID = (myID: string): Thunk<State> => {
   return async (set) => {
-    const { errmsg, status } = await serverUtils.requestGovernmentID();
+    const { errmsg, status } = await api.requestGovernmentID();
     if (errmsg) {
       set(myID, { errmsg });
       return;

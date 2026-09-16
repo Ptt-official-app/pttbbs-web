@@ -1,7 +1,7 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type { State as State_t } from "../types";
 import * as errors from "./errors";
-import * as serverUtils from "./serverUtils";
 import { goUserHome } from "./utils";
 
 export const name = "pttbbs-web/RegisterPage";
@@ -28,7 +28,7 @@ export const init = (myID: string): Thunk<State> => {
 
 export const attemptRegister = (myID: string, email: string): Thunk<State> => {
   return async (set) => {
-    const { errmsg, status } = await serverUtils.attemptRegister(email);
+    const { errmsg, status } = await api.attemptRegister(email);
     if (errmsg) {
       set(myID, { errmsg });
       return;
@@ -54,7 +54,7 @@ export const register = (
   verifyCode: string,
 ): Thunk<State> => {
   return async (set) => {
-    const { data, errmsg, status } = await serverUtils.register(
+    const { data, errmsg, status } = await api.register(
       username,
       password,
       passwordConfirm,

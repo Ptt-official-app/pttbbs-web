@@ -1,7 +1,7 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type { State as State_t } from "../types";
 import * as errors from "./errors";
-import * as serverUtils from "./serverUtils";
 
 export const name = "pttbbs-web/LoginPage";
 
@@ -27,10 +27,7 @@ export const attemptLogin = (
 ): Thunk<State> => {
   return async (set) => {
     set(myID, { isRequested: true });
-    const { errmsg, status } = await serverUtils.attemptLogin(
-      input,
-      authRequestID,
-    );
+    const { errmsg, status } = await api.attemptLogin(input, authRequestID);
     if (errmsg) {
       set(myID, { errmsg });
       return;
@@ -68,7 +65,7 @@ export const login = (
   verifyCode: string,
 ): Thunk<State> => {
   return async (set) => {
-    const { data, errmsg, status } = await serverUtils.login(input, verifyCode);
+    const { data, errmsg, status } = await api.login(input, verifyCode);
 
     if (errmsg) {
       set(myID, { errmsg });

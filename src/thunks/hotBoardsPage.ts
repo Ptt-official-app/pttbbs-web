@@ -1,6 +1,6 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type { BoardSummary_i, State as State_t } from "../types";
-import * as serverUtils from "./serverUtils";
 import { mergeIdxList, santizeBoard } from "./utils";
 
 export const name = "pttbbs-web/HotBoardsPage";
@@ -29,7 +29,7 @@ export const init = (myID: string): Thunk<State> => {
 const getData = (myID: string): Thunk<State> => {
   return async (set) => {
     set(myID, { isBusyLoading: true });
-    const { data, errmsg, status } = await serverUtils.loadPopularBoards();
+    const { data, errmsg, status } = await api.loadPopularBoards();
 
     if (status !== 200) {
       set(myID, { errmsg, isBusyLoading: false });

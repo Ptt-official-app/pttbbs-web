@@ -1,10 +1,10 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type {
   ArticleSummary_i,
   BoardSummary,
   State as State_t,
 } from "../types";
-import * as serverUtils from "./serverUtils";
 import { mergeIdxList } from "./utils";
 
 export const name = "pttbbs-web/ArticlesPage";
@@ -97,7 +97,7 @@ export const getBoardSummary = (
   return async (set) => {
     // Get board information
     set(myID, { isBusyLoadingBoardSummary: true });
-    const { data, errmsg, status } = await serverUtils.getBoardSummary(bid);
+    const { data, errmsg, status } = await api.getBoardSummary(bid);
     set(myID, { errmsg, isBusyLoadingBoardSummary: false });
     if (status !== 200) {
       return;
@@ -120,7 +120,7 @@ export const setData = (myID: string, data: Partial<State>): Thunk<State> => {
 const getBottomArticles = (myID: string, bid: string): Thunk<State> => {
   return async (set, get) => {
     set(myID, { isBusyLoadingBottom: true });
-    const { data, errmsg, status } = await serverUtils.loadBottomArticles(bid);
+    const { data, errmsg, status } = await api.loadBottomArticles(bid);
     set(myID, { isBusyLoadingBottom: false });
     if (status !== 200) {
       set(myID, { errmsg });
@@ -221,7 +221,7 @@ export const getArticles = (
     console.info("articlesPage: getArticles: to set isBusyLoading");
     set(myID, { isBusyLoading: true });
 
-    const { data, errmsg, status } = await serverUtils.loadArticles(
+    const { data, errmsg, status } = await api.loadArticles(
       bid,
       searchTitle,
       startIdx,
