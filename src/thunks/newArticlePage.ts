@@ -1,6 +1,6 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type { EditLine, State as State_t } from "../types";
-import * as serverUtils from "./serverUtils";
 
 export const name = "pttbbs-web/NewArticlePage";
 
@@ -47,10 +47,7 @@ const getBoardSummary = (myID: string, bid: string): Thunk<State> => {
   return async (set) => {
     // Get board information
     const fields = ["brdname", "post_type"];
-    const { data, errmsg, status } = await serverUtils.getBoardDetail(
-      bid,
-      fields,
-    );
+    const { data, errmsg, status } = await api.getBoardDetail(bid, fields);
     if (status !== 200) {
       set(myID, { errmsg });
       return;
@@ -96,7 +93,7 @@ export const submit = (
 ): Thunk<State> => {
   return async (set) => {
     const uploadContent = content.map((each) => each.runes);
-    const { errmsg, status } = await serverUtils.createArticle(
+    const { errmsg, status } = await api.createArticle(
       bid,
       theClass,
       title,

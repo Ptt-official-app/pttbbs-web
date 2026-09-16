@@ -1,7 +1,7 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type { State as State_t } from "../types";
 import * as errors from "./errors";
-import * as serverUtils from "./serverUtils";
 import { goUserHome } from "./utils";
 
 export const name = "pttbbs-web/attemptSetIDEmailPage";
@@ -33,7 +33,7 @@ export const SetIDEmail = (
   email: string,
 ): Thunk<State> => {
   return async (set) => {
-    const { errmsg, status } = await serverUtils.attemptSetIDEmail(
+    const { errmsg, status } = await api.attemptSetIDEmail(
       userID,
       password,
       email,

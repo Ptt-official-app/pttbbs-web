@@ -1,15 +1,17 @@
 import config from "config";
 
 export type Query = {
+  // biome-ignore lint/suspicious/noExplicitAny: query can be any type.
   [key: string]: any;
 };
 
 export type Params = {
+  // biome-ignore lint/suspicious/noExplicitAny: params can be any type.
   [key: string]: any;
 };
 
 export type Files = {
-  [key: string]: any;
+  [key: string]: File;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,6 +21,7 @@ export type ApiParams = {
   method?: string;
   params?: Params;
   files?: Files;
+  // biome-ignore lint/suspicious/noExplicitAny: json can be any type.
   json?: any;
   accessToken?: string;
 };
@@ -29,6 +32,7 @@ export type ApiResult<T> = {
   errmsg?: string;
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: data can be any type.
 const serialize = (data: any): string => {
   if (typeof data === "object") {
     data = JSON.stringify(data);
@@ -42,7 +46,9 @@ const queryToString = (query: Query | Params) =>
     .map((k) => `${serialize(k)}=${serialize(query[k])}`)
     .join("&");
 
-export default <T>(apiParams: ApiParams): Promise<ApiResult<T>> => {
+const apiParamsToFetchParams = (
+  apiParams: ApiParams,
+): [string, RequestInit] => {
   const {
     endpoint: propsEndpoint,
     query,
@@ -52,6 +58,7 @@ export default <T>(apiParams: ApiParams): Promise<ApiResult<T>> => {
     json,
     accessToken: propsAccessToken,
   } = apiParams;
+
   const method = propsMethod || "get";
   const accessToken = propsAccessToken || "";
 
@@ -70,13 +77,18 @@ export default <T>(apiParams: ApiParams): Promise<ApiResult<T>> => {
   }
 
   const headers: HeadersInit = {};
-  let body: string | undefined;
+  let body: string | FormData | undefined;
   if (files) {
-    for (const _name in files) {
+    const formData = new FormData();
+    for (const [name, file] of Object.entries(files)) {
+      formData.append(name, file, file.name);
     }
-    // eslint-disable-next-line
-    for (const _k in params) {
+    if (params) {
+      for (const [key, val] of Object.entries(params)) {
+        formData.append(key, val);
+      }
     }
+    body = formData;
   } else if (params) {
     const paramsStr = queryToString(params);
     headers["Content-Type"] = "application/x-www-form-urlencoded";
@@ -87,7 +99,7 @@ export default <T>(apiParams: ApiParams): Promise<ApiResult<T>> => {
   }
 
   if (accessToken) {
-    headers.Authorization = "bearer " + accessToken;
+    headers.Authorization = `bearer ${accessToken}`;
   }
 
   const csrftokenDOM = document.getElementById("__csrftoken__");
@@ -102,26 +114,31 @@ export default <T>(apiParams: ApiParams): Promise<ApiResult<T>> => {
     credentials: "include",
   };
 
-  return fetch(endpoint, options)
-    .then((res) => {
-      const status = res.status;
-      return res
-        .json()
-        .then((data) => {
-          if (res.status >= 400) {
-            // error messages
-            const msg = data.Msg || "";
-            return { status, errmsg: msg };
-          } else {
-            return { status: res.status, data: data };
-          }
-        })
-        .catch((err) => {
-          console.log("api: json: err:", err);
-          return { status: 598, errmsg: err.message };
-        });
-    })
-    .catch((err) => {
+  return [endpoint, options];
+};
+
+export const _testing = {
+  apiParamsToFetchParams,
+};
+
+export default async <T>(apiParams: ApiParams): Promise<ApiResult<T>> => {
+  try {
+    const [endpoint, options] = apiParamsToFetchParams(apiParams);
+
+    const res = await fetch(endpoint, options);
+    const status = res.status;
+    const data = await res.json();
+    if (status >= 400) {
+      const msg = data.Msg || "";
+      return { status, errmsg: msg };
+    }
+
+    return { status, data };
+  } catch (err) {
+    if (err instanceof Error) {
       return { status: 599, errmsg: err.message };
-    });
+    }
+
+    return { status: 599, errmsg: String(err) };
+  }
 };

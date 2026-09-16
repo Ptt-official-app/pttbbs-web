@@ -5,11 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "npm run dev",
-
     "build": "rm -rf dist && tsc -b && vite build && mv dist/htmls/*.html dist/ && ln -s all.html dist/index.html",
     "dev": "vite",
     "preview": "vite preview",
-
     "fmt": "biome format --write .",
     "lint": "biome lint .",
     "test": "vitest"
@@ -40,9 +38,11 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "@vitejs/plugin-react": "^6.1.1",
+    "@vitest/coverage-v8": "^5.0.1",
     "globals": "^17.11.0",
+    "happy-dom": "^20.14.5",
     "typescript": "~7.0.2",
     "vite": "^8.2.2",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.1"
   }
 }

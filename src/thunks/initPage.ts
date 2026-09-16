@@ -1,7 +1,7 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import { STATUS_OK } from "../constants";
 import type { State as State_t } from "../types";
-import * as serverUtils from "./serverUtils";
 
 export const name = "pttbbs-web/InitPage";
 
@@ -25,11 +25,7 @@ export const submit = (
   birthDate: string,
 ): Thunk<State> => {
   return async (set) => {
-    const { status, errmsg } = await serverUtils.init(
-      username,
-      realName,
-      birthDate,
-    );
+    const { status, errmsg } = await api.init(username, realName, birthDate);
     if (errmsg) {
       set(myID, { errmsg });
       return;

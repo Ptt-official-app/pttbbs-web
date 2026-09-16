@@ -1,6 +1,6 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type { BoardSummary_i, State as State_t } from "../types";
-import * as serverUtils from "./serverUtils";
 import { mergeList, santizeBoard } from "./utils";
 
 export const name = "pttbbs-web/GeneralBoardsPage";
@@ -104,8 +104,8 @@ export const getBoards = (
     set(myID, { isBusyLoading: true });
 
     const loadBoards = isByClass
-      ? serverUtils.loadGeneralBoardsByClass
-      : serverUtils.loadGeneralBoards;
+      ? api.loadGeneralBoardsByClass
+      : api.loadGeneralBoards;
 
     const { data, errmsg, status } = await loadBoards(
       searchKeyword,

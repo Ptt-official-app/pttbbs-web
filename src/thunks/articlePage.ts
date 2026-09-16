@@ -1,5 +1,5 @@
 import { type Thunk, update } from "use-thunk";
-import * as serverUtils from "./serverUtils";
+import * as api from "../api";
 
 //import * as errors from './errors'
 
@@ -155,7 +155,7 @@ export const addRecommend = (
   recommend: Content,
 ): Thunk<State> => {
   return async (set) => {
-    const { data, errmsg, status } = await serverUtils.addRecommend(
+    const { data, errmsg, status } = await api.addRecommend(
       bid,
       aid,
       recommendType,
@@ -194,7 +194,7 @@ export const rank = (
   rank: number,
 ): Thunk<State> => {
   return async (set) => {
-    const { data, errmsg, status } = await serverUtils.rank(bid, aid, rank);
+    const { data, errmsg, status } = await api.rank(bid, aid, rank);
     if (status !== 200) {
       set(myID, { errmsg });
       return;
@@ -249,7 +249,7 @@ export const getComments = (
 
     set(update(myID, { isBusyLoading: true }));
 
-    const { data, errmsg, status } = await serverUtils.getComments(
+    const { data, errmsg, status } = await api.getComments(
       bid,
       aid,
       startIdx,
@@ -347,7 +347,7 @@ export const getArticleContent = (
     console.log("articlePage.GetArticleContent: to api");
 
     set(myID, { isBusyLoading: true });
-    const { data, errmsg, status } = await serverUtils.getArticle(bid, aid);
+    const { data, errmsg, status } = await api.getArticle(bid, aid);
     set(myID, { isBusyLoading: false });
 
     console.log(

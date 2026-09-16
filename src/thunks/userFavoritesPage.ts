@@ -1,6 +1,6 @@
 import type { Thunk } from "use-thunk";
+import * as api from "../api";
 import type { BoardSummary_i, State as State_t } from "../types";
-import * as serverUtils from "./serverUtils";
 import { mergeList, santizeBoard } from "./utils";
 
 export const name = "pttbbs-web/UserFavoritesPage";
@@ -88,7 +88,7 @@ export const getBoards = (
 
     set(myID, { isBusyLoading: true });
 
-    const { data, errmsg, status } = await serverUtils.loadFavoriteBoards(
+    const { data, errmsg, status } = await api.loadFavoriteBoards(
       userID,
       level,
       startIdx,
