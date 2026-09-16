@@ -92,7 +92,7 @@ export default () => {
 
   const width = innerWidth;
   const listHeight = innerHeight - headerHeight - funcbarHeight;
-  const headerTitle = brdname + " - " + title;
+  const headerTitle = `${brdname} - ${title}`;
 
   // event handlers
   const loadPre = (item: ArticleSummary_i) => {

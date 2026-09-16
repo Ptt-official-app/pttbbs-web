@@ -105,7 +105,7 @@ export default (props: Props) => {
 
   const renderHeader = (column: PttColumn, fontSize: number) => {
     const style: CSSProperties = {
-      fontSize: fontSize + "px",
+      fontSize: `${fontSize}px`,
     };
     const textAlign = column.headerTextAlign;
     if (textAlign) {

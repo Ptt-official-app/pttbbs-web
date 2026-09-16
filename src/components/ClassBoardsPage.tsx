@@ -127,7 +127,7 @@ export default () => {
     roptions.push({
       text: "我的最愛",
       action: () => {
-        window.location.href = "/user/" + userID + "/favorites";
+        window.location.href = `/user/${userID}/favorites`;
       },
     });
   }

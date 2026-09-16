@@ -188,7 +188,7 @@ export default (props: Props) => {
         onSelect={onSelect}
       />
       <input
-        className={styles["recommend-input"] + " " + styles["recommend-offset"]}
+        className={`${styles["recommend-input"]} ${styles["recommend-offset"]}`}
         onChange={(e) => theSetRecommend(e.target.value)}
         value={recommend}
         onKeyDown={(e) => onKeyDown(e)}
@@ -198,7 +198,7 @@ export default (props: Props) => {
       <OverlayTrigger placement="top" overlay={renderCancelTooltip}>
         <button
           type="button"
-          className={"btn btn-secondary " + styles["recommend-offset"]}
+          className={`btn btn-secondary ${styles["recommend-offset"]}`}
           onClick={onClickCancel}
         >
           取消
@@ -207,7 +207,7 @@ export default (props: Props) => {
       <OverlayTrigger placement="top" overlay={renderSubmitTooltip}>
         <button
           type="button"
-          className={"btn btn-primary " + styles["recommend-offset"]}
+          className={`btn btn-primary ${styles["recommend-offset"]}`}
           onClick={onClickSubmit}
         >
           送出

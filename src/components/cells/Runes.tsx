@@ -29,10 +29,10 @@ export default (props: Props) => {
   }
 
   return (
-    <div className={styles["c" + background]}>
+    <div className={styles[`c${background}`]}>
       {runes.map((each, idx) => (
         <Rune
-          key={"runes-" + idx}
+          key={`runes-${idx}`}
           rune={each}
           rowIndex={rowIndex}
           idx={idx}

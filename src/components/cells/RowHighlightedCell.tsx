@@ -29,7 +29,7 @@ export default (props: Props) => {
   let style = {
     display: "block",
     height: "100%",
-    fontSize: fontSize + "px",
+    fontSize: `${fontSize}px`,
   };
   if (typeof rowIndex === "undefined") {
     // for ts

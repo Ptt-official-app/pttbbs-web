@@ -134,7 +134,7 @@ export default () => {
     "col-3 d-none d-sm-none d-md-block d-lg-block d-xl-block";
 
   return (
-    <div className={"vh-100 " + styles.root} style={rootStyle}>
+    <div className={`vh-100 ${styles.root}`} style={rootStyle}>
       <Header title={title} />
       <div className={"container mt-5 "}>
         <div className="row">

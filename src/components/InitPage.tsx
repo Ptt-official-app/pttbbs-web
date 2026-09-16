@@ -75,7 +75,7 @@ export default () => {
   const classNameErrMsg = `${styles.errMsg} mt-2`;
 
   return (
-    <div className={"vh-100 " + styles.root} style={rootStyle}>
+    <div className={`vh-100 ${styles.root}`} style={rootStyle}>
       <Header title={t("init.title")} />
       <div className="container mt-4">
         <form onSubmit={onSubmit}>

@@ -16,7 +16,7 @@ export const mergeErr = (errMsg: string, errmsg: string): string => {
   let allErrMsg = errMsg;
   if (errmsg) {
     if (allErrMsg) {
-      allErrMsg += "," + errmsg;
+      allErrMsg += `,${errmsg}`;
     } else {
       allErrMsg = errmsg;
     }

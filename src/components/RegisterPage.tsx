@@ -81,7 +81,7 @@ export default () => {
   };
 
   return (
-    <div className={"vh-100 " + pageStyles.root} style={rootStyle}>
+    <div className={`vh-100 ${pageStyles.root}`} style={rootStyle}>
       <Header title={title} />
       <div className="container mt-4">
         <div className="col-12 col-md-6 mx-auto">

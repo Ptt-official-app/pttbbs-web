@@ -92,8 +92,7 @@ export const login = (
       return;
     }
 
-    const redirectURI =
-      data.redirect_uri || "/user/" + data.username + "/favorites";
+    const redirectURI = data.redirect_uri || `/user/${data.username}/favorites`;
 
     window.location.href = redirectURI;
   };

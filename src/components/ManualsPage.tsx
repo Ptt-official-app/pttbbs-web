@@ -28,7 +28,7 @@ export default () => {
   const path = paramsPath || "";
   const pathList = path.split("/");
   const dirname = pathList.slice(0, pathList.length - 1).join("/");
-  const parentUrl = `/board/${bid}/manual${dirname === "" ? "" : "/" + dirname}`;
+  const parentUrl = `/board/${bid}/manual${dirname === "" ? "" : `/${dirname}`}`;
 
   const [_errMsg, _setErrMsg] = useState("");
 
@@ -67,7 +67,7 @@ export default () => {
   const width = innerWidth;
   const listHeight = innerHeight - headerHeight - funcbarHeight;
 
-  const headerTitle = "(精華區) " + brdname + " - " + title;
+  const headerTitle = `(精華區) ${brdname} - ${title}`;
 
   const loadPre = (_item: ManArticleSummary_i) => {};
 

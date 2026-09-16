@@ -24,7 +24,7 @@ export default () => {
   const dirname = pathList.slice(0, pathList.length - 1).join("/");
   let parentUrl = `/board/${bid}/manual`;
   if (dirname !== "") {
-    parentUrl += "/" + dirname;
+    parentUrl += `/${dirname}`;
   }
 
   const [searchParams] = useSearchParams();

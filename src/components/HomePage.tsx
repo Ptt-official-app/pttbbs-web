@@ -32,7 +32,7 @@ export default () => {
     if (username === config.PTT_GUEST) {
       window.location.href = "/boards/popular";
     } else {
-      window.location.href = "/user/" + username + "/favorites";
+      window.location.href = `/user/${username}/favorites`;
     }
   }, [username]);
 

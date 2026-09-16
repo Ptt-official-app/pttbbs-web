@@ -68,10 +68,10 @@ export default (props: Props) => {
   if (item.isTail) {
     //console.log('Edit: rowIndex:', rowIndex, 'to render tail')
     return (
-      <div key={"edit-" + rowIndex} className={styles["c" + background]}>
+      <div key={`edit-${rowIndex}`} className={styles[`c${background}`]}>
         {runes.map((each, idx) => (
           <Rune
-            key={"edit-" + idx}
+            key={`edit-${idx}`}
             rune={each}
             idx={idx}
             onMouseDown={onMouseDownTail}
@@ -95,7 +95,7 @@ export default (props: Props) => {
 
     return (
       <Render
-        key={"edit-" + idx}
+        key={`edit-${idx}`}
         rune={rune}
         idx={idx}
         onMouseDown={onMouseDownCell}
@@ -111,8 +111,8 @@ export default (props: Props) => {
 
   return (
     <div
-      key={"edit-" + rowIndex}
-      className={styles["c" + background]}
+      key={`edit-${rowIndex}`}
+      className={styles[`c${background}`]}
       style={theStyle}
     >
       {runes.map((each, idx) => render(each, idx))}

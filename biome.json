@@ -37,6 +37,11 @@
       "types": "recommended",
       "react": "recommended",
       "test": "recommended"
+    },
+    "rules": {
+      "suspicious": {
+        "noArrayIndexKey": "off"
+      }
     }
   },
   "vcs": {
