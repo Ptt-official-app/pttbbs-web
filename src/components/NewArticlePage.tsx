@@ -27,7 +27,7 @@ export default () => {
   const { errmsg, brdname, post_type, theClass } = newArticlePage;
   const postTypes = post_type.map((each) => ({
     value: each,
-    label: "[" + each + "]",
+    label: `[${each}]`,
   }));
 
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -102,7 +102,7 @@ export default () => {
   }
   const renderError = () => {
     return (
-      <span className={"nav-link " + styles.error}>{allErrMsg.join(",")}</span>
+      <span className={`nav-link ${styles.error}`}>{allErrMsg.join(",")}</span>
     );
   };
 
@@ -111,7 +111,7 @@ export default () => {
     { render: renderError },
   ];
   const roptions = [
-    { text: selectedRow + 1 + "," + (selectedColumn + 1) },
+    { text: `${selectedRow + 1},${selectedColumn + 1}` },
     { text: "離開", url: `/board/${bid}/articles` },
   ];
 
@@ -144,7 +144,7 @@ export default () => {
 
   const renderHeader = () => {
     return (
-      <div className={"col " + styles.title}>
+      <div className={`col ${styles.title}`}>
         <span>{brdname} - </span>
         <DropdownList
           style={classStyle}

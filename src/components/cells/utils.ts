@@ -23,18 +23,18 @@ export const getClassNamesFromColor = (color: any, part: string = "") => {
   const classNames = [];
   if (color.foreground) {
     if (color.highlight) {
-      classNames.push(styles[part + "h" + color.foreground]);
+      classNames.push(styles[`${part}h${color.foreground}`]);
     } else {
-      classNames.push(styles[part + "c" + color.foreground]);
+      classNames.push(styles[`${part}c${color.foreground}`]);
     }
   }
 
   if (color.background) {
-    classNames.push(styles[part + "c" + color.background]);
+    classNames.push(styles[`${part}c${color.background}`]);
   }
 
   if (color.blink) {
-    classNames.push(styles[part + "c5"]);
+    classNames.push(styles[`${part}c5`]);
   }
 
   return classNames;

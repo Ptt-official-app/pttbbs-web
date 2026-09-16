@@ -15,5 +15,5 @@ export default (props: Props) => {
     text = "其他";
   }
 
-  return <div>{"[" + text + "]"}</div>;
+  return <div>{`[${text}]`}</div>;
 };

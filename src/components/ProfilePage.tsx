@@ -57,7 +57,7 @@ export default () => {
 
   // renderers
   const renderPost = () => {
-    const badposts = !bad_post ? "" : " (被退 " + bad_post + " 篇)";
+    const badposts = !bad_post ? "" : ` (被退 ${bad_post} 篇)`;
 
     return (
       <span>
@@ -92,7 +92,7 @@ export default () => {
 
   //render
   return (
-    <div className={"vh-100 " + pageStyles.root} style={rootStyle}>
+    <div className={`vh-100 ${pageStyles.root}`} style={rootStyle}>
       <Header title={title} />
       <div className={"container"}>
         <div className="row">

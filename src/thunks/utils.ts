@@ -4,7 +4,7 @@ import { NBRD_BOARD, NBRD_FAV, NBRD_FOLDER, NBRD_LINE } from "../constants";
 import type { BoardSummary, IdxData } from "../types";
 
 export const goUserHome = (userID: string) => {
-  window.location.href = "/user/" + userID;
+  window.location.href = `/user/${userID}`;
 };
 
 export const goHome = () => {
@@ -123,7 +123,7 @@ export const getBoardURL = (board: BoardSummary) => {
     case NBRD_BOARD:
       return `/board/${board.bid}/articles`;
     case NBRD_FOLDER:
-      return window.location.pathname + `?level=${board.level_idx}`;
+      return `${window.location.pathname}?level=${board.level_idx}`;
     default:
       return "";
   }

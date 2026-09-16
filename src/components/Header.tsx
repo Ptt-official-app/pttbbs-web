@@ -30,7 +30,7 @@ export default (props: Props) => {
     const url = isValidUsername ? `/profile` : "/login";
 
     return (
-      <a className={"pull-right " + styles["navbar-link"]} href={url}>
+      <a className={`pull-right ${styles["navbar-link"]}`} href={url}>
         {text}
       </a>
     );
@@ -60,11 +60,9 @@ export default (props: Props) => {
   };
 
   return (
-    <nav className={"navbar navbar-dark " + styles.root}>
+    <nav className={`navbar navbar-dark ${styles.root}`}>
       <a
-        className={
-          styles["navbar-brand"] + " " + "navbar-brand " + styles["navbar-link"]
-        }
+        className={`${styles["navbar-brand"]} navbar-brand ${styles["navbar-link"]}`}
         href={"/"}
       >
         {config.BRAND}
@@ -73,7 +71,7 @@ export default (props: Props) => {
       {renderHeader()}
       {renderUserHome()}
       <a className={styles["navbar-link"]} href={GITHUB_LINK}>
-        <i className={"ml-3 bi bi-github " + styles.logo}></i>
+        <i className={`ml-3 bi bi-github ${styles.logo}`}></i>
       </a>
     </nav>
   );

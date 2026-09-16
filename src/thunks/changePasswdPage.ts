@@ -56,7 +56,7 @@ export const changePasswd = (
       return;
     }
 
-    window.location.href = "/user/" + data.username;
+    window.location.href = `/user/${data.username}`;
   };
 };
 

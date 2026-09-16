@@ -74,7 +74,7 @@ export default (props: Props) => {
   classNames0.push(styles.input);
 
   const theStyles = {
-    width: inputWidth + "px",
+    width: `${inputWidth}px`,
   };
 
   const onChangeText: ChangeEventHandler = (e) => {
@@ -258,7 +258,7 @@ export default (props: Props) => {
   // console.log('EditCell: to render: rowIndex:', rowIndex, 'idx:', idx, 'classNames0:', classNames0, 'text:', text, 'inputWidth:', inputWidth, 'selectStart:', focusInputRef.current?.selectionStart, 'selectEnd:', focusInputRef.current?.selectionEnd)
 
   const className0 = classNames0.join(" ");
-  const inputKey = "edit-cell-input-" + selectedRow + "-" + idx;
+  const inputKey = `edit-cell-input-${selectedRow}-${idx}`;
   return (
     <>
       <input

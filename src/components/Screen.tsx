@@ -113,7 +113,7 @@ export default (props: Props) => {
       column.type === "rest" ? theRestWidth : Math.floor(column.width * scale);
     return (
       <Column
-        key={"column" + idx}
+        key={`column${idx}`}
         columnKey={column.accessor}
         header={
           typeof renderHeader !== "undefined"

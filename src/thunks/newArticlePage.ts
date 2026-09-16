@@ -104,6 +104,6 @@ export const submit = (
       return;
     }
 
-    window.location.href = "/board/" + bid + "/articles";
+    window.location.href = `/board/${bid}/articles`;
   };
 };

@@ -14,7 +14,7 @@ export default (props: Props) => {
   let { rune, rowIndex, idx, onMouseDown } = props;
   const [classNames0, isTwoColor] = getClassNamesFromRune(rune);
   const classNamesGroup = rune.pullright ? [styles["pull-right"]] : [];
-  const runeKey = "rune-" + rowIndex + "-" + idx;
+  const runeKey = `rune-${rowIndex}-${idx}`;
   const _onMouseDown = (e: MouseEvent) => {
     if (!onMouseDown) {
       return;

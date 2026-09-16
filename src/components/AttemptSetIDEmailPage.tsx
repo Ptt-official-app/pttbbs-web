@@ -52,7 +52,7 @@ export default () => {
   //render
   const { height: innerHeight } = useWindowSize();
   const style = {
-    height: innerHeight + "px",
+    height: `${innerHeight}px`,
   };
 
   const cleanErr = () => {

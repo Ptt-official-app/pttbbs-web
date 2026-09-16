@@ -99,7 +99,7 @@ export const requestGovernmentID = () =>
 
 export const getUserInfo = (username: string) =>
   api<UserDetail>({
-    endpoint: "/api/user/" + username,
+    endpoint: `/api/user/${username}`,
     method: "get",
   });
 
@@ -116,7 +116,7 @@ export const changePasswd = (
   passwordConfirm: string,
 ) =>
   api<AccessToken>({
-    endpoint: "/api/user/" + username + "/updatepasswd",
+    endpoint: `/api/user/${username}/updatepasswd`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -134,7 +134,7 @@ export const attemptChangeEmail = (
   email: string,
 ) =>
   api<Username>({
-    endpoint: "/api/user/" + username + "/attemptchangeemail",
+    endpoint: `/api/user/${username}/attemptchangeemail`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -147,7 +147,7 @@ export const attemptChangeEmail = (
 
 export const changeEmail = (username: string, token: string) =>
   api<Data>({
-    endpoint: "/api/user/" + username + "/changeemail",
+    endpoint: `/api/user/${username}/changeemail`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -162,7 +162,7 @@ export const attemptSetIDEmail = (
   email: string,
 ) =>
   api<Username>({
-    endpoint: "/api/user/" + username + "/attemptsetidemail",
+    endpoint: `/api/user/${username}/attemptsetidemail`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -175,7 +175,7 @@ export const attemptSetIDEmail = (
 
 export const setIDEmail = (username: string, token: string) =>
   api<Data>({
-    endpoint: "/api/user/" + username + "/setidemail",
+    endpoint: `/api/user/${username}/setidemail`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -186,14 +186,14 @@ export const setIDEmail = (username: string, token: string) =>
 
 export const getBoardSummary = (bid: string) =>
   api<BoardSummary>({
-    endpoint: "/api/board/" + bid + "/summary",
+    endpoint: `/api/board/${bid}/summary`,
     method: "get",
   });
 
 export const getBoardDetail = (bid: string, fields: string[]) => {
-  let endpoint = "/api/board/" + bid;
+  let endpoint = `/api/board/${bid}`;
   if (fields.length > 0) {
-    endpoint += "?fields=" + fields.join(",");
+    endpoint += `?fields=${fields.join(",")}`;
   }
   return api<BoardDetail>({
     endpoint,
@@ -208,7 +208,7 @@ export const loadFavoriteBoards = (
   desc: boolean,
 ) =>
   api<BoardList>({
-    endpoint: "/api/user/" + username + "/favorites",
+    endpoint: `/api/user/${username}/favorites`,
     method: "get",
     query: {
       level_idx: level || "",
@@ -259,7 +259,7 @@ export const loadClassBoards = (
   desc: boolean,
 ) =>
   api<BoardList>({
-    endpoint: "/api/cls/" + clsID,
+    endpoint: `/api/cls/${clsID}`,
     query: {
       start_idx: startIdx || "",
       asc: !desc,
@@ -274,7 +274,7 @@ export const loadArticles = (
   desc: boolean,
 ) =>
   api<ArticleList>({
-    endpoint: "/api/board/" + bid + "/articles",
+    endpoint: `/api/board/${bid}/articles`,
     method: "get",
     query: {
       title: title || "",
@@ -286,13 +286,13 @@ export const loadArticles = (
 
 export const loadBottomArticles = (bid: string) =>
   api<ArticleList>({
-    endpoint: "/api/board/" + bid + "/articles/bottom",
+    endpoint: `/api/board/${bid}/articles/bottom`,
     method: "get",
   });
 
 export const getArticle = (bid: string, aid: string) =>
   api<ArticleDetail>({
-    endpoint: "/api/board/" + bid + "/article/" + aid,
+    endpoint: `/api/board/${bid}/article/${aid}`,
     method: "get",
   });
 
@@ -303,7 +303,7 @@ export const getComments = (
   desc: boolean,
 ) =>
   api<CommentList>({
-    endpoint: "/api/board/" + bid + "/article/" + aid + "/comments",
+    endpoint: `/api/board/${bid}/article/${aid}/comments`,
     method: "get",
     query: {
       start_idx: startIdx || "",
@@ -319,7 +319,7 @@ export const createArticle = (
   content: Content,
 ) =>
   api<ArticleSummary>({
-    endpoint: "/api/board/" + bid + "/article",
+    endpoint: `/api/board/${bid}/article`,
     method: "post",
     json: {
       class: theClass,

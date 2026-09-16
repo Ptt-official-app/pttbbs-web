@@ -36,7 +36,7 @@ export default class Idx extends Component<Props> {
 
     let styleClasses = styles.idx;
     if (text === "★") {
-      styleClasses += " " + styles.bottomArticle;
+      styleClasses += ` ${styles.bottomArticle}`;
     }
 
     return <div className={styleClasses}>{text}</div>;

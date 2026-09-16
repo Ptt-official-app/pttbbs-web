@@ -44,7 +44,7 @@ export default (props: Props) => {
   let style: CSSProperties = {
     display: "block",
     height: "100%",
-    fontSize: fontSize + "px",
+    fontSize: `${fontSize}px`,
   };
   if (!rowIndex) {
     style.display = "none";

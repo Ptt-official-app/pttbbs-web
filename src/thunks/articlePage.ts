@@ -415,7 +415,7 @@ const parseHeader = (header: Content) => {
     },
   };
   const authorRune = {
-    text: " " + author.slice(4),
+    text: ` ${author.slice(4)}`,
     color0: {
       foreground: COLOR_FOREGROUND_WHITE,
       background: COLOR_BACKGROUND_BLUE,
@@ -433,7 +433,7 @@ const parseHeader = (header: Content) => {
     pullright: true,
   };
   const boardRune = {
-    text: " " + board + " ",
+    text: ` ${board} `,
     color0: {
       foreground: COLOR_FOREGROUND_WHITE,
       background: COLOR_BACKGROUND_BLUE,
@@ -450,7 +450,7 @@ const parseHeader = (header: Content) => {
     },
   };
   const titleRune = {
-    text: " " + title[0].text.slice(4),
+    text: ` ${title[0].text.slice(4)}`,
     color0: {
       foreground: COLOR_FOREGROUND_WHITE,
       background: COLOR_BACKGROUND_BLUE,
@@ -466,7 +466,7 @@ const parseHeader = (header: Content) => {
     },
   };
   const datetimeRune = {
-    text: " " + theDateTime[0].text.slice(4),
+    text: ` ${theDateTime[0].text.slice(4)}`,
     color0: {
       foreground: COLOR_FOREGROUND_WHITE,
       background: COLOR_BACKGROUND_BLUE,
@@ -568,7 +568,7 @@ const parseRegularComment = (comment: Comment): Line[] => {
 
   //comment-owner
   const ownerRune: Rune_t = {
-    text: " " + owner,
+    text: ` ${owner}`,
     color0: { foreground: COLOR_FOREGROUND_YELLOW, highlight: true },
   };
   runes.push(ownerRune);

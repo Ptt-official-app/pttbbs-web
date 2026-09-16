@@ -25,7 +25,7 @@ export default (props: Props) => {
         return render();
       } else if (url) {
         return (
-          <a className={styles["navbar-link"] + " nav-link"} href={url}>
+          <a className={`${styles["navbar-link"]} nav-link`} href={url}>
             {text}
           </a>
         );
@@ -35,7 +35,7 @@ export default (props: Props) => {
         return (
           <button
             type="button"
-            className={styles["navbar-link"] + " nav-link"}
+            className={`${styles["navbar-link"]} nav-link`}
             onClick={action}
           >
             {text}
@@ -46,7 +46,7 @@ export default (props: Props) => {
 
     if (hotkey) {
       return (
-        <li key={"func-" + idx} className="nav-item">
+        <li key={`func-${idx}`} className="nav-item">
           <OverlayTrigger
             placement="top"
             trigger={["hover", "hover"]}
@@ -58,7 +58,7 @@ export default (props: Props) => {
       );
     } else {
       return (
-        <li key={"func-" + idx} className="nav-item">
+        <li key={`func-${idx}`} className="nav-item">
           {renderInner()}
         </li>
       );
@@ -75,7 +75,7 @@ export default (props: Props) => {
 
   return (
     <nav
-      className={"fixed-buttom navbar justify-content-between " + styles.root}
+      className={`fixed-buttom navbar justify-content-between ${styles.root}`}
     >
       {renderOptions(optionsLeft)}
       {renderOptions(optionsRight)}

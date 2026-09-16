@@ -18,7 +18,7 @@ export default () => {
   };
 
   return (
-    <div className={"vh-100 " + pageStyles.root} style={rootStyle}>
+    <div className={`vh-100 ${pageStyles.root}`} style={rootStyle}>
       <Header title={t("error.title")} />
       <div className="container mt-4">
         <p>{t("error.prompt")}</p>

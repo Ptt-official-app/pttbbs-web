@@ -214,7 +214,7 @@ export default (props: Props) => {
       (_each, _idx) => ({
         runes: [
           {
-            text: "~" + " ".repeat(SCREEN_WIDTH - 1),
+            text: `~${" ".repeat(SCREEN_WIDTH - 1)}`,
             color0: {},
             isEdit: false,
             isTail: false,
