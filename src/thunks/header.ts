@@ -7,13 +7,11 @@ export const name = "pttbbs-web/Header";
 
 export interface State extends State_t {
   username: string;
-  nickname: string;
   isInit: boolean;
 }
 
 export const defaultState: State = {
   username: "",
-  nickname: "",
   isInit: false,
 
   errmsg: "",
