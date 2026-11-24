@@ -3,7 +3,7 @@ import moment from "moment-timezone";
 import type { Err } from "../types";
 
 export const tsToDateTimeStr = (ts: number) => {
-  const datetimeStr = moment.unix(ts).format("YYYY-MM-DD hh:mm:ss");
+  const datetimeStr = moment.unix(ts).format("YYYY-MM-DD HH:mm:ss");
   return datetimeStr;
 };
 

@@ -130,9 +130,9 @@ export const getBoardURL = (board: BoardSummary) => {
 };
 
 export const dateMdHM = (milliTS: number) => {
-  return moment(milliTS).tz("Asia/Taipei").format("MM/DD hh:mm");
+  return moment(milliTS).tz("Asia/Taipei").format("MM/DD HH:mm");
 };
 
 export const dateYYYYMdHMS = (milliTS: number) => {
-  return moment(milliTS).tz("Asia/Taipei").format("YYYY/MM/DD hh:mm:ss");
+  return moment(milliTS).tz("Asia/Taipei").format("YYYY/MM/DD HH:mm:ss");
 };
