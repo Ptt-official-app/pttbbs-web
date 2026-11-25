@@ -34,7 +34,7 @@ export const attemptLogin = (input: string, oidc_id: string) =>
     },
   });
 
-export const login = (input: string, verify_code: string) =>
+export const login = (input: string, verify_code: string, oidc_id: string) =>
   api<AccessToken>({
     endpoint: "/api/account/login",
     method: "post",
@@ -44,6 +44,7 @@ export const login = (input: string, verify_code: string) =>
 
       input,
       verify_code,
+      oidc_id,
     },
   });
 
