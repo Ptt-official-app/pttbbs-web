@@ -109,7 +109,7 @@ export default () => {
 
   const onLogin = () => {
     const verifyCode = `${code0}${code1}${code2}${code3}${code4}${code5}`;
-    doLoginPage.login(loginPageID, theInput, verifyCode);
+    doLoginPage.login(loginPageID, theInput, verifyCode, authRequestID);
   };
 
   const onRegister = () => {

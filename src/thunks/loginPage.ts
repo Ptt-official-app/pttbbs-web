@@ -63,9 +63,14 @@ export const login = (
   myID: string,
   input: string,
   verifyCode: string,
+  authRequestID: string,
 ): Thunk<State> => {
   return async (set) => {
-    const { data, errmsg, status } = await api.login(input, verifyCode);
+    const { data, errmsg, status } = await api.login(
+      input,
+      verifyCode,
+      authRequestID,
+    );
 
     if (errmsg) {
       set(myID, { errmsg });
