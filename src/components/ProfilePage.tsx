@@ -47,7 +47,7 @@ export default () => {
     if (!username) {
       return;
     }
-    doProfilePage.getData(profilePageID, username);
+    doProfilePage.getData(profilePageID);
   }, [username]);
 
   // event handlers
