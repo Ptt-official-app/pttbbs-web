@@ -98,9 +98,9 @@ export const requestGovernmentID = () =>
     method: "post",
   });
 
-export const getUserInfo = (username: string) =>
+export const getMyUserInfo = () =>
   api<UserDetail>({
-    endpoint: `/api/user/${username}`,
+    endpoint: "/api/user/me",
     method: "get",
   });
 

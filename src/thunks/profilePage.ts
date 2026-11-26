@@ -96,9 +96,9 @@ export const init = (myID: string): Thunk<State> => {
   };
 };
 
-export const getData = (myID: string, username: string): Thunk<State> => {
+export const getData = (myID: string): Thunk<State> => {
   return async (set) => {
-    const { data, errmsg, status } = await api.getUserInfo(username);
+    const { data, errmsg, status } = await api.getMyUserInfo();
 
     if (status !== 200) {
       set(myID, { errmsg });

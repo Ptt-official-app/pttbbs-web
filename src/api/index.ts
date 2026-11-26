@@ -15,7 +15,7 @@ import {
   attemptSetIDEmail,
   changeEmail,
   changePasswd,
-  getUserInfo,
+  getMyUserInfo,
   getUsername,
   setIDEmail,
 } from "./serverUtils";
@@ -25,7 +25,7 @@ export {
   attemptSetIDEmail,
   changeEmail,
   changePasswd,
-  getUserInfo,
+  getMyUserInfo,
   getUsername,
   setIDEmail,
 };
