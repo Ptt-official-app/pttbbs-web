@@ -17,7 +17,7 @@ import type {
   UserDetail,
   Username,
 } from "../types";
-import api from "./api";
+import api, { apiPath, encodeSubPath } from "./api";
 
 const LIST_LIMIT = config.LIST_LIMIT || 50;
 
@@ -117,7 +117,7 @@ export const changePasswd = (
   passwordConfirm: string,
 ) =>
   api<AccessToken>({
-    endpoint: `/api/user/${username}/updatepasswd`,
+    endpoint: apiPath`/api/user/${username}/updatepasswd`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -135,7 +135,7 @@ export const attemptChangeEmail = (
   email: string,
 ) =>
   api<Username>({
-    endpoint: `/api/user/${username}/attemptchangeemail`,
+    endpoint: apiPath`/api/user/${username}/attemptchangeemail`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -148,7 +148,7 @@ export const attemptChangeEmail = (
 
 export const changeEmail = (username: string, token: string) =>
   api<Data>({
-    endpoint: `/api/user/${username}/changeemail`,
+    endpoint: apiPath`/api/user/${username}/changeemail`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -163,7 +163,7 @@ export const attemptSetIDEmail = (
   email: string,
 ) =>
   api<Username>({
-    endpoint: `/api/user/${username}/attemptsetidemail`,
+    endpoint: apiPath`/api/user/${username}/attemptsetidemail`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -176,7 +176,7 @@ export const attemptSetIDEmail = (
 
 export const setIDEmail = (username: string, token: string) =>
   api<Data>({
-    endpoint: `/api/user/${username}/setidemail`,
+    endpoint: apiPath`/api/user/${username}/setidemail`,
     method: "post",
     json: {
       client_id: config.CLIENT_ID,
@@ -187,12 +187,12 @@ export const setIDEmail = (username: string, token: string) =>
 
 export const getBoardSummary = (bid: string) =>
   api<BoardSummary>({
-    endpoint: `/api/board/${bid}/summary`,
+    endpoint: apiPath`/api/board/${bid}/summary`,
     method: "get",
   });
 
 export const getBoardDetail = (bid: string, fields: string[]) => {
-  let endpoint = `/api/board/${bid}`;
+  let endpoint = apiPath`/api/board/${bid}`;
   if (fields.length > 0) {
     endpoint += `?fields=${fields.join(",")}`;
   }
@@ -209,7 +209,7 @@ export const loadFavoriteBoards = (
   desc: boolean,
 ) =>
   api<BoardList>({
-    endpoint: `/api/user/${username}/favorites`,
+    endpoint: apiPath`/api/user/${username}/favorites`,
     method: "get",
     query: {
       level_idx: level || "",
@@ -260,7 +260,7 @@ export const loadClassBoards = (
   desc: boolean,
 ) =>
   api<BoardList>({
-    endpoint: `/api/cls/${clsID}`,
+    endpoint: apiPath`/api/cls/${clsID}`,
     query: {
       start_idx: startIdx || "",
       asc: !desc,
@@ -275,7 +275,7 @@ export const loadArticles = (
   desc: boolean,
 ) =>
   api<ArticleList>({
-    endpoint: `/api/board/${bid}/articles`,
+    endpoint: apiPath`/api/board/${bid}/articles`,
     method: "get",
     query: {
       title: title || "",
@@ -287,13 +287,13 @@ export const loadArticles = (
 
 export const loadBottomArticles = (bid: string) =>
   api<ArticleList>({
-    endpoint: `/api/board/${bid}/articles/bottom`,
+    endpoint: apiPath`/api/board/${bid}/articles/bottom`,
     method: "get",
   });
 
 export const getArticle = (bid: string, aid: string) =>
   api<ArticleDetail>({
-    endpoint: `/api/board/${bid}/article/${aid}`,
+    endpoint: apiPath`/api/board/${bid}/article/${aid}`,
     method: "get",
   });
 
@@ -304,7 +304,7 @@ export const getComments = (
   desc: boolean,
 ) =>
   api<CommentList>({
-    endpoint: `/api/board/${bid}/article/${aid}/comments`,
+    endpoint: apiPath`/api/board/${bid}/article/${aid}/comments`,
     method: "get",
     query: {
       start_idx: startIdx || "",
@@ -320,7 +320,7 @@ export const createArticle = (
   content: Content,
 ) =>
   api<ArticleSummary>({
-    endpoint: `/api/board/${bid}/article`,
+    endpoint: apiPath`/api/board/${bid}/article`,
     method: "post",
     json: {
       class: theClass,
@@ -336,7 +336,7 @@ export const addRecommend = (
   recommend: Content,
 ) =>
   api<Comment>({
-    endpoint: `/api/board/${bid}/article/${aid}/comment`,
+    endpoint: apiPath`/api/board/${bid}/article/${aid}/comment`,
     method: "post",
     json: {
       type: recommendType,
@@ -346,7 +346,7 @@ export const addRecommend = (
 
 export const rank = (bid: string, aid: string, rank: number) =>
   api<Rank>({
-    endpoint: `/api/board/${bid}/article/${aid}/rank`,
+    endpoint: apiPath`/api/board/${bid}/article/${aid}/rank`,
     method: "post",
     json: {
       rank: rank,
@@ -355,7 +355,7 @@ export const rank = (bid: string, aid: string, rank: number) =>
 
 export const loadManuals = (bid: string, path: string, desc: boolean) =>
   api<ManArticleList>({
-    endpoint: `/api/board/${bid}/manuals`,
+    endpoint: apiPath`/api/board/${bid}/manuals`,
     method: "get",
     query: {
       level_idx: path,
@@ -365,7 +365,7 @@ export const loadManuals = (bid: string, path: string, desc: boolean) =>
 
 export const getManual = (bid: string, path: string, startIdx: string) =>
   api<ManArticle>({
-    endpoint: `/api/board/${bid}/manual/${path}`,
+    endpoint: apiPath`/api/board/${bid}/manual/` + encodeSubPath(path),
     method: "get",
     query: {
       start_idx: startIdx,
