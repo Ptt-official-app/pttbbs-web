@@ -46,6 +46,24 @@ const queryToString = (query: Query | Params) =>
     .map((k) => `${serialize(k)}=${serialize(query[k])}`)
     .join("&");
 
+// 路徑參數來自網址列，react-router 會把 %2F 解回 "/"；不編碼的話，
+// 一條連結就能讓 fetch 帶著 cookie 與 CSRF token 打到任意 API 路徑。
+export const apiPath = (
+  strings: TemplateStringsArray,
+  ...params: (string | number)[]
+) => String.raw({ raw: strings }, ...params.map((p) => encodeURIComponent(p)));
+
+export const encodeSubPath = (subPath: string) =>
+  subPath.split("/").map(encodeURIComponent).join("/");
+
+// encodeURIComponent 不編碼 "."，而 fetch 會解析 "." 與 ".." 路徑段，
+// 所以參數本身是 "." 或 ".." 時仍能跳到別的 API 路徑，在這裡統一擋下。
+const hasDotSegment = (endpoint: string) =>
+  endpoint
+    .split("?")[0]
+    .split("/")
+    .some((segment) => segment === "." || segment === "..");
+
 const apiParamsToFetchParams = (
   apiParams: ApiParams,
 ): [string, RequestInit] => {
@@ -67,6 +85,10 @@ const apiParamsToFetchParams = (
   const default_api_root = window.location.origin;
 
   const API_ROOT = CONFIG_API_ROOT || default_api_root;
+
+  if (hasDotSegment(propsEndpoint)) {
+    throw new Error(`invalid endpoint: ${propsEndpoint}`);
+  }
 
   let endpoint = propsEndpoint;
   if (endpoint.indexOf(API_ROOT) === -1) {

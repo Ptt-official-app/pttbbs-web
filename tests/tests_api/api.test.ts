@@ -1,5 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import api, { _testing, type ApiParams } from "../../src/api/api";
+import api, {
+  _testing,
+  type ApiParams,
+  apiPath,
+  encodeSubPath,
+} from "../../src/api/api";
 
 const { apiParamsToFetchParams } = _testing;
 
@@ -76,6 +81,19 @@ describe("api.apiParamsToFetchParams", () => {
     expect(options.headers).toHaveProperty("Authorization");
     // @ts-expect-error vitest
     expect(options.headers.Authorization).toBe("bearer test_access_token");
+  });
+});
+
+describe("api.apiPath", () => {
+  it("should encode path params", () => {
+    const bid = "../../../challenge/X?";
+    expect(apiPath`/api/board/${bid}/summary`).toBe(
+      "/api/board/..%2F..%2F..%2Fchallenge%2FX%3F/summary",
+    );
+  });
+
+  it("should encode each segment of a sub path", () => {
+    expect(encodeSubPath("D1/M.1.A?x#y")).toBe("D1/M.1.A%3Fx%23y");
   });
 });
 
@@ -178,5 +196,22 @@ describe("api", () => {
     expect(status).toBe(599);
     expect(errmsg).toBe("error-json-str");
     expect(data).toBeUndefined();
+  });
+
+  it("should reject dot segments without calling fetch", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    for (const bid of [".", ".."]) {
+      const { status, data, errmsg } = await api<Temp>({
+        endpoint: apiPath`/api/board/${bid}/summary`,
+        method: "get",
+      });
+
+      expect(status).toBe(599);
+      expect(errmsg).toBe(`invalid endpoint: /api/board/${bid}/summary`);
+      expect(data).toBeUndefined();
+    }
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
