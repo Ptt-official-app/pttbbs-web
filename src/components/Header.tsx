@@ -36,6 +36,26 @@ export default (props: Props) => {
     );
   };
 
+  // A form post (not fetch): the backend clears the HttpOnly token cookies
+  // and answers with a 303 redirect back to the frontend.
+  const renderLogout = () => {
+    if (!validateUsername(username)) {
+      return <Empty />;
+    }
+
+    return (
+      <form
+        className="d-inline"
+        method="post"
+        action={`${config.API_ROOT || ""}/api/account/logout`}
+      >
+        <button type="submit" className={styles["navbar-link"]}>
+          {t("header.logout")}
+        </button>
+      </form>
+    );
+  };
+
   const renderHeader = () => {
     if (propsRenderHeader) {
       return propsRenderHeader();
@@ -70,6 +90,7 @@ export default (props: Props) => {
       {renderTerm()}
       {renderHeader()}
       {renderUserHome()}
+      {renderLogout()}
       <a className={styles["navbar-link"]} href={GITHUB_LINK}>
         <i className={`ml-3 bi bi-github ${styles.logo}`}></i>
       </a>

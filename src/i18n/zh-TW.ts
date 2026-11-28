@@ -3,6 +3,7 @@ import type { I18n } from "./types";
 export default {
   header: {
     loginRegister: "登錄/註冊",
+    logout: "登出",
   },
   register: {
     title: "註冊新帳號",
