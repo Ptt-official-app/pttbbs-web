@@ -3,6 +3,7 @@ import type { I18n } from "./types";
 export default {
   header: {
     loginRegister: "Login/Register",
+    logout: "Logout",
   },
   register: {
     title: "Register New Account",

@@ -1,6 +1,7 @@
 export type I18n = {
   header: {
     loginRegister: string;
+    logout: string;
   };
   register: {
     title: string;
